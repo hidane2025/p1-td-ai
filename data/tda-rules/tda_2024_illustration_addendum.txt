@@ -1,0 +1,347 @@
+Illustration Addendum 2024 Rules  
+Version 1.0, October, 2024 
+ 
+The Poker TDA is a voluntary poker industry association founded in 2001. The TDA mission 
+is to increase global uniformity of poker tournament rules. TDA Rules supplement the rules 
+of this house. In case of conflict with a gaming agency, the agency rules apply. 
+ 
+ 
+Rule 10: Breaking Tables, 2-Step Random Process. A 2-step random or “double-blind” 
+process assures that there is no favoritism in distributing new seat assignments. An example of 
+one such process: 1) show players at the breaking table the new seat cards then scramble the 
+cards face down and form a stack; 2) the dealer then deals one playing card face up to each 
+player. The seat cards are then dealt out with the first seat card going to the player with the 
+highest playing card by suit showing. 
+ 
+ 
+Rule 11-D: Balancing Tables and Halting Play.  
+ 
+Example: NLHE 9-handed, table A has 5 players, table B has the most players with 8. Play halts 
+on table A once the BB hits an open seat. 
+ 
+ 
+Rule 16: Face Up for All-Ins. “All hands will be tabled without delay once a player is all-in and 
+all betting action by all other players in the hand is complete”. This rule means that all downcards 
+of all players will be turned up at once when at least one player is all-in and there is no chance of 
+further betting action by the other player(s). Do not wait for the showdown to turn the cards up; 
+do not wait for side pots to be divided before turning up the all-in who is only in for the main pot; 
+if betting action is finalized on any street prior to the showdown, turn the cards up at that point 
+and then run out the remaining cards. 
+ 
+
+Example 1. NLHE. Two players remain. On the turn, Player A (the shorter stack) pushes all-in 
+and is called by B. Turn both A and B’s downcards up at this point, then burn and turn the river 
+and proceed to showdown. 
+ 
+Example 2. NLHE. Three players remain.  
+Pre-flop, Player A (the shortest stack) pushes all-in and is called by both B and C. Do not turn 
+cards up yet because B and C both have chips so further betting action is possible. 
+  
+On the flop B and C check; betting is still possible so don’t turn the cards up yet.  
+ 
+On the turn B pushes all-in and C calls. Turn all hands up now (A, B, and C) because no further 
+betting is possible. Burn and turn the river then proceed to showdown. Award the side pot 
+between B and C first, then award the main pot. Notice: you do not keep A’s cards face down 
+until the side pot between B and C is awarded. 
+ 
+Example 3. NLHE.  Three players remain.  
+Pre-flop, Player A (the shortest stack) pushes all-in for 700 and is called by both B and C who 
+have several thousand each left. Do not turn cards up yet because B and C both have chips so 
+further betting action is possible.  
+ 
+On the flop B and C check; betting is still possible so don’t turn the cards up yet.  
+On the turn B bets 1000 and C calls. Since both B and C still have chips and the river remains to 
+be dealt, betting is still possible so don’t turn the cards up yet.  
+ 
+On the river both B and C check. Turn all hands up now (A, B, and C) because betting is over 
+and the hand is moving to showdown. Award the 2000 side pot between B and C first, then 
+award the main pot. Notice: do not keep A’s cards face down until the side pot between B and C 
+is awarded. 
+ 
+ 
+Rule 18: Asking to See a Hand 
+ 
+Example 1: NLHE. 3 players remain in the hand. There is no betting on the river and no player is 
+all-in. At showdown Player A discards face down and the cards are pushed into the muck by the 
+dealer. B tables his hand, showing trips. C pushes his cards forward face-down. B may ask to 
+see C’s hand because B has tabled his cards. However, B’s request is at TDs discretion; B has 
+no inalienable right to see it because there was no bet on the river thus he did not “pay to see 
+C’s hand.” Neither A nor C may ask to see a competitor’s hand because they have neither tabled 
+their cards nor retained them. 
+ 
+Example 2: NLHE. 4 players remain in the hand. On the river A bets 1000, B calls, C raises to 
+5000, and D, A and B all call. No player is all-in. B tables his hand, showing trips. D instantly 
+discards face down and the dealer kills his hand into the muck. C begins to push his cards 
+forward face-down. Both A and B have an inalienable right to see C’s hand on request because 
+1) they paid to see it as C was the last aggressor on the river and 2) both A and B retain their 
+cards. D (who also called C) relinquished his right to see C’s hand when he discarded without 
+tabling. All other requests in this situation are at TD’s discretion, such as B asking to see A’s 
+cards (the cards of another caller). 
+ 
+ 
+ 
+Rule 38: Burns After Substantial Action 
+ 
+Example 1-A: THE 50-100. SB / BB in seats 1 and 2. Pre-flop, initial cards dealt to all players. 
+SB / BB in seats 1 and 2. Seat 3 (UTG) folds and Seat 4 calls, completing substantial action with 
+2 actions with chips. Seat 5 then realizes they have only 1 card and the hand is dead because 
+SA has occurred. The dealer will burn only one card and then put out the flop. The dealer will not 
+burn 2 cards to “return to the original stub order”.  
+ 
+Example 1-B: Same game and initial deal. Seat 3 (UTG) folds and Seat 4 calls, completing 
+substantial action. Seat 5 then realizes they have 3 cards and the hand is dead because SA has 
+occurred. The dealer will burn one card and then put out the flop. The dealer will not consider 
+Seat 5’s third card as the burn and put out the flop without a burn off the stub. 
+ 
+ 
+Rule 40-A: Methods of Betting, Unclear or Contradictory Bets. “In unclear situations or 
+where verbal and chips are contradictory, the TD will determine the bet based on the 
+circumstances and Rule 1”. 
+ 
+Example 1: THE, heads-up on the river Player A verbally declares “forty-two thousand” but 
+pushes out only a 5k chip. Not everyone at the table heard the declaration. Player B pushes out 
+5k to call. Both players table and A has the best hand.  Ruling criteria is mixed: verbal came first 
+but wasn’t necessarily clear. The chip appeared to be a bet of 5k. In these unclear and 
+contradictory situations, the TD will make the fairest ruling possible using Rule 1. 
+ 
+ 
+Rule 43: Raise Amounts. “The largest prior full bet or raise of the current betting round”. 
+ 
+This line refers to the largest additional action or “last legal increment” by a preceding bettor in 
+the current round. The current round is the “current street”, i.e. pre-flop, flop, turn, river in board 
+games; 3rd – 4th – 5th – 6th – 7th street in 7-stud, etc. 
+ 
+Example 1: NLHE, Blinds 100-200. Post-flop, A opens with a bet of 600. B raises 1000 for total 
+of 1600. C re-raises 2000 for total of 3600. If D wants to raise, he must at least raise the “largest 
+bet or raise of the current round”, which is C’s raise of 2000. So, D must re-raise at least 2000 
+more for a total of 5600. Note that D’s minimum raise is not 3600 (C’s total bet), but only 2000, 
+the additional raise action that C added. 
+ 
+Example 2: NLHE, Blinds 50-100. Pre-flop A is under the gun and goes all-in for a total of 150 
+(an increase in the bet of 50). So, we have a 100 blind bet and an all-in wager that increases the 
+total by 50. Which is larger? The 100 is still the “largest bet or raise of the current round”, so if B 
+wants to re-raise he must raise at least 100 for a total of 250. 
+ 
+Example 3: NLHE, Blinds 100-200. On the turn A bets 300. B pushes out two 500 chips making 
+the total 1000 (a 700 raise). It is 1000 to C to call. If C wants to raise, it must be “at least the 
+largest bet or raise of the current round”, which is B’s raise of 700. So, C’s minimum raise would 
+be 700 for a total of 1700. Note his minimum raise is not 1000, B’s total bet. 
+ 
+Example 4-A: NLHE, Blinds 25-50. A raises 75 to 125 total. Notice that 125 total = 50 (bet) plus 
+75 (raise).  The next raise on this street must be “at least the size of the largest previous bet or 
+raise”, which is 75. B now raises the minimum (75) to 200 total. C then re-raises 300 for total of 
+500. We now have a bet of 50, two raises of 75 and a raise of 300 for total of 500. If D wants to 
+re-raise, “the raise must be at least the size of the largest previous bet or raise of the current 
+betting round”, which is now 300. So, D must raise at least 300 more to a total of 800.   
+ 
+Example 4-B: Same as 4-A. It's the same 500 to D, but there’s just been one raise of 450 by A 
+to a total of 500 and B and C have both called. So, there’s a blind bet of 50 and a raise of 450. "A 
+raise must be at least the size of the largest previous bet or raise of the current betting round", 
+which is A’s raise of 450. So, it’s 500 for D to call, and if D wants to re-raise he must raise at 
+least 450 for a total of 950. 
+ 
+ 
+Rule 45: Multiple Chip Betting.  
+“A: If facing a bet, unless raise or all-in is declared first, a multiple-chip bet (including a bet of 
+your last chips) is a call if every chip is needed to make the call; i.e. removal of just one of the 
+smallest chips leaves less than the call amount. B: If every chip is not needed to make the call; 
+i.e. removal of just one of the smallest chips leaves the call amount or more: 1) if the player has 
+chips remaining, the bet is governed by the 50% standard in Rule 43; 2) if the player’s last chips 
+are bet he or she is all-in whether reaching the 50% threshold or not.” 
+ 
+Example 1: There is not one chip that can be removed and still leave the call amount. 
+1-A: Player A opens post flop for 1200, B silently puts out two 1000’s. This is a call because 
+neither chip can be removed and still leave at least 1200. 
+ 
+1-B: NLHE, blinds 250-500. Preflop the UTG raises 600 to total of 1100. The UTG+1 silently puts 
+out one 500 and one 1000 chip. This is a call because neither the 500 nor the 1000 can be 
+removed and still leave at least 1100.  
+ 
+Example 2: Same as 1-B above except the UTG+1 puts out one 1000 and five 100s silently. 
+Four of the 100s could be removed and still leave the 1100 call amount. Therefore, this would be 
+subject to the 50% standard in Rule 43: the minimum raise is 600, 50% of 600 is 300, therefore, 
+if the UTG+1 puts out 1400 or more, he will be held to making a full raise to 1700 total. Since the 
+UTG put out 1500 he must raise in this example. 
+ 
+Example 3: Same as 2 above except the UTG+1 puts out one 1000 and three 100s silently. Two 
+of the 100s can be removed and still leave the 1100 call amount therefore this is subject to Rule 
+43. Since the player did not put out at least 50% of a minimum raise, this bet is ruled a call and 
+200 is returned to the player. 
+ 
+Example 4: Multiple-chip bet of all chips. A) If all chips are needed to make the call, this is 
+treated exactly the same as a player with chips behind (See example 1 above). B) If removing 
+just one of the smallest chips leaves the call amount or more, the player is all-in regardless of 
+whether the bet reaches the 50% raise standard.  
+ 
+Example 4-A: A opens for 1400, B (with remaining chips behind in large chip stack) silently 
+pushes out one 1000 and three 500’s. This is a mandatory min-raise to 2800 because the 50% 
+threshold of 2100 (1400+700=2100) is reached.  
+ 
+Example 4-B: Same 1400 opener, B (with remaining chips behind in large chip stack) puts out 
+one 1000 and two 500s. This is a call because it is short of the 50% threshold of 2100. NOTE: In 
+both example 4-A and 4-B, Player B would be all-in if putting out his or her last chips.  
+ 
+ 
+Rule 46: Prior Bet Chips Not Pulled In, situation examples. 
+ 
+Situation 1: If prior chips don’t cover the call AND are left alone. Ex: THE 25-50, the BB posts 
+two 25’s, button raises to 600 total (550 more to BB).  
+1: Adding an overchip is a call (drop a 1k chip onto the two 25’s).  
+2: Adding multiple new chips is a call if all new chips are needed to call a) drop two 500’s onto 
+the two 25’s or b) drop a 100 and 500 chip onto the two 25’s. In these two examples all new 
+chips when combined with the prior chips are needed to make the call. 
+3: Adding multiple new chips is a Rule 45 multiple chip bet if one of the smallest new chips is not 
+needed to make the call (drop a 1k and 500 chip onto the two 25’s is a total bet of 1550). Per 
+Rule 45, a silent multi-chip bet is a raise if it hits the 50% threshold; otherwise it is a call. 
+ 
+Situation 2: If prior chips don’t cover the call AND are fully pulled back:  
+1) Removing all prior chips and adding an overchip is a call (pull back the two 25’s, add 1k chip).  
+2) Removing all prior chips and adding new multiple chips is a Rule 45 bet (pull back two 25’s, 
+add two or more new chips). 
+ 
+Situation 3: if prior chip(s) are partly pulled back (whether or not they cover the call amount) 
+1) Partial removal of prior chips (pull back one 25, leave the other 25 out, add any new chip(s), is 
+a Rule 45 multiple-chip bet (a raise if hitting 50%, otherwise a call). 
+ 
+Situation 4: If prior chip(s) cover the call amount, adding any new chip(s) is a Rule 45 multiple 
+chip bet. Ex: THE 50-100, BB posts one 1k chip. Pre-flop raise to 700 (600 more to BB). The 1k 
+prior chip covers the raise, thus adding any new chip(s) is a Rule 45 bet of all chips. This applies 
+whether or not the initial 1k posted is pulled back or left alone. 
+ 
+Situation 5: Regardless of the above, the gesture of combining and pushing or tossing all chips 
+forward may be interpreted as intent to bet all chips under Rule 45. 
+ 
+ 
+Rule 47: Re-opening the bet. 
+  
+Example 1. Multiple short all-in wagers that cumulatively equal a full raise and therefore re-open 
+betting: 
+ 
+NLHE, Blinds 50-100. Post-flop, A opens betting for the 100 minimum.  
+ 
+B goes all in for a total of 125. C calls the 125,  
+ 
+D goes all in for 200 total and E calls 200.  
+ 
+Action returns to A who is facing a total raise of 100. Since 100 is a full raise, the betting is re-
+opened for A who can fold, call, or raise here. Note that neither B’s increment of 25 or D’s 
+increment of 75 is by itself a full raise, but when added together they total a full raise and thus re-
+open the betting to “a player who is facing at least a full raise when the action returns”.  
+ 
+Example 1-A: At the end of Example 1 above, A smooth calls the 200 total (another 100 to him). 
+The bet is now on C who only faces a 75 increment. C called 125 previously and now faces 200 
+total (75 more). C must face at least 225 total to re-open betting. Because 75 is not a full raise, 
+betting for C is not re-opened and C can either call with 75 more or fold, he cannot raise.  
+ 
+Example 1-B: At the end of Example 1 above, A raises the minimum (100), and makes it 300 
+total to C. C already has called 125 so it’s an additional 175 for C to call. 175 is more than a full 
+raise. Since C already acted and is “now facing at least a full raise”, the betting is re-opened to C 
+who can fold, call, or re-raise here. 
+ 
+Example 2: Multiple short all-ins, the min-raise is the last full valid bet or raise.  
+NLHE, Blinds 50-100. Post-flop A opens for 300, B pushes all-in for 500 total, C goes all-in for 
+650 total, D goes all-in for 800 total, E calls 800. What is the min raise for Player F? The opening 
+bet (300) sets the initial min raise. Because no single player was all-in for more than 300, the min 
+raise for F remains 300. F can either smooth call 800 or raise to at least 1100. See also Rule 43, 
+Example 2 in Illustration Addendum.   
+ 
+Example 3. Short all-in, 2 scenarios. 
+NLHE, Blinds 2000-4000. Pre-flop A calls the BB for 4000. B folds and C pushes all-in for 7500 
+total (an increment of 3500 above the 4000 BB). It’s folded around to the SB who also folds. 
+ 
+Example 3-A. It’s 3500 more to the BB who has not yet acted on his option. The BB can fold, 
+smooth call the 3500, or raise by at least 4000 for a total of 11,500. The BB smooth calls and it’s 
+3500 more to A. A has already acted and is facing 3500 which is not a full raise. Therefore, A 
+can only fold or call the 3500, he cannot raise because it is not “at least a full bet when the action 
+returns to him”. 
+ 
+Example 3-B. The BB raises the minimum (4000), for a total of 11500. It is now 7500 to A and 
+because 7500 is more than a full minimum raise, betting is now re-opened for A who can fold, 
+call, or re-raise. 
+ 
+ 
+Rule 51: Binding Declarations / Undercalls in Turn 
+ 
+Example 1: NLHE, blinds 1000-2000. Post-flop, A opens for 2000, B raises to 8000, C pushes 
+out 2000 silently. C has undercalled B’s bet. Per Rule 51-B, because B is not the opener (A is) 
+and the round is still multi-way, at TD’s discretion C may be required to make a full call or 
+allowed to forfeit the 2000 undercall and fold. 
+ 
+Example 2: NLHE, blinds 1000-2000. Post-flop 4 players remain. A opens for 8000, B silently 
+puts out 2000. Per Rule 51-B, B undercalled the opening bet and must make a full call of 8000. 
+ 
+Example 3: NLHE, blinds 1000-2000. Post-flop, A opens for 2000, B raises to 8000, C declares 
+“call”. Per Rule 51-A, C has made a general verbal declaration (“call”) in turn. C is obligated to 
+call B’s full bet of 8000. 
+ 
+Example 4: NLHE, blinds 200-400. Opener bets 400, player A raises to 1200 and Player B puts 
+out one 500 chip silently. Dealer tells B it’s 1200 and B folds. At TD’s discretion B forfeits 400 
+and 100 is returned.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Rule 52-B: Incorrect Bet Amounts, Pot-Limit Games 
+ 
+Example 1: PLO, 500-1000 blinds. Post-flop the pot totals 10,500. Player A wants to bet the pot 
+and asks the dealer for a count. Dealer replies “nine thousand five hundred”. A pushes out 
+9,500. Player B folds and Player C calls 9,500. Substantial action has occurred after the initial 
+erroneous bet. The dealer then realizes A’s pot bet should have been 10,500. Because the 
+quoted amount was less than the pot and substantial action has occurred, the 9,500 bet is 
+binding and will not be increased to 10,500. 
+ 
+Example 2: Same as example 1 above, Player B folds then the dealer realizes A’s pot bet 
+should have been 10,500. Substantial action has not occurred, so A must increase his or her bet 
+to 10,500 total. 
+ 
+Example 3: PLO, 500-1000 blinds. Post-flop the pot totals 10,500. Player A wants to bet the pot 
+and asks the dealer for a count. Dealer replies “eleven thousand five hundred”. A pushes out 
+11,500. Player B folds, Player C and D both call 11,500. Before burning and turning the next 
+card, the dealer realizes the initial bet was an illegal overbet. Despite substantial action 
+occurring, because the bet was illegal it will be reduced to 10,500 for all players calling anywhere 
+on the current street. If the next card is dealt the error will stand.  
+ 
+ 
+Rule 53-A: Action Out of Turn (OOT) 
+ 
+Example 1: THE 50-100. Post flop Seat 3 opens for 300, Seat 4 folds, action is on Seat 5 when 
+Seat 6 declares “raise to eight hundred”.  
+Step 1: Action backs up to the correct player in order (Seat 5) who is facing a bet of 300.  
+Step 2: If Seat 5 calls or folds then the action (a 300 bet) has not changed and Seat 6’s OOT 
+raise is binding (raise to 800). However, if Seat 5 raises, (say, to 600 total), then the action to 
+Seat 6 has changed from a 300 bet to a 600 bet. If action changes, the 800 chips may be 
+returned to Seat 6 who has all options open: call 600, re-raise to at least 900, or fold. 
+ 
+Example 2: THE 50-100. Post flop Seat 3 checks, Seat 4 checks, action is on Seat 5 when Seat 
+6 declares “check”.  
+Step 1: Action backs up to the correct player in order (Seat 5) who is not facing a bet.  
+Step 2: If Seat 5 checks then the action (a check) has not changed and Seat 6’s OOT check is 
+binding. However, if Seat 5 bets, (say, 300), then the action to Seat 6 has changed from a check 
+to a 300 bet. If action changes, then Seat 6 has all options open: call 300, raise to at least 600, 
+or fold. 
+ 
+ 
+Rule 53-B: Substantial Action Out of Turn (OOT). A player skipped by OOT action must 
+defend his right to act. If there is reasonable time and the skipped player has not spoken up by 
+the time substantial action (see Rule 36) OOT occurs to his left, the OOT action is binding. The 
+floor will be called to render a decision on how to treat the skipped hand. 
+ 
+Example 1: NLHE, blinds 100-200. UTG (Seat 3) makes it 600. Seat 4 is skipped when Seat 5 
+calls 600 OOT. Seat 6 thinks for a moment then folds. There are now two players acting with 
+chips involved to the left of Seat 4. Two players with chips qualifies as substantial action (Rule 
+36). Also, Seat 4 has had reasonable time to speak up and bring it to the dealer’s attention that 
+he has been skipped. The OOT call by Seat 5 is now binding due to substantial action OOT, and 
+the OOT fold by Seat 6 is binding (Rule 58). The floor is called to make a decision on the fate of 
+Seat 4’s hand. 
+ 
+Example 2: NLHE, blinds 100-200. Four players remain to see the turn. After the dealer tables 
+the turn card, the UTG (Seat 3) opens betting for 600. Seat 4 is skipped when Seat 5 checks and 
+Seat 6 calls 600 OOT. The floor is called to make a decision on the fate of Seat 4’s hand. 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,36 @@
+# 秘密情報（絶対にコミットしない）
+.env
+*.env
+.env.local
+*.key
+secrets.toml
+.streamlit/secrets.toml
+
+# SQLite DB（判断履歴が入っている、個人情報扱い）
+data/td_ai.db
+data/*.db-journal
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.pytest_cache/
+
+# macOS
+.DS_Store
+Icon?
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+logs/
+*.log
+
+# Reports（ローカル生成物）
+reports/*.json

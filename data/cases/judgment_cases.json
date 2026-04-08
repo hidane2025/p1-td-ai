@@ -1,0 +1,924 @@
+[
+  {
+    "id": "case-001-multi-chip-bet",
+    "category": "ベッティング関連",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 後半、NLHE、Blinds 2,000-4,000 BBA 4,000。UTGが12,000をオープンベット（min-raise）。MP、HJ がfold。CO player（チップ22万、サングラスなし）が**何も発言せず**、5,000チップ2枚 + 1,000チップ2枚 = 合計12,000ちょうどを手前に押し出した。UTG から『これはコール？ レイズ？』の声。ディーラーが時計を止めてフロアを呼んだ。",
+    "tournament_phase": "Day 1 後半",
+    "blinds": "2,000-4,000 BBA 4,000",
+    "game_type": "NLHE",
+    "prior_actions": "Preflop: UTG raise 12,000 → MP/HJ fold → CO silently pushes 12,000",
+    "expected_judgment": "Call（12,000ちょうど）。余剰なし。ラウンド続行、BTN にアクション。",
+    "expected_rules": [
+      "Rule-45",
+      "Rule-40",
+      "Rule-41"
+    ],
+    "expected_reasoning": "Rule 45A（Multiple Chip Betting）。無宣言の多枚ベットは『最小チップ1枚を取り除くと call 額未満になる』場合 call 扱い。本件は最小 1,000 を1枚取り除くと11,000で12,000未満 → every chip is needed → call。Rule 40-A により『発言なし+chipsが出ている』状態はchipsが支配する。raiseの意図があったなら先に『raise』と宣言する必要があった。",
+    "alternatives": [],
+    "penalty": {
+      "level": "none",
+      "description": "初回で明らかな誤解ならペナルティなし。ただし CO には Rule 41/45 の注意喚起（『raise 時は先に宣言』）を口頭で行うこと。"
+    },
+    "confidence": "high",
+    "notes": "TDA Rule 45A Ex-1 と同型の典型例。中野さんの判例にも頻出するはず。",
+    "required_rules": [
+      "Rule-45"
+    ],
+    "recommended_rules": [
+      "Rule-40",
+      "Rule-41"
+    ]
+  },
+  {
+    "id": "case-002-oot-action-changes",
+    "category": "手続き違反（OOT）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2、NLHE、Blinds 1,500-3,000 BBA 3,000、6-max テーブル。Preflop、UTG が 8,000 をオープン。MP がfold。HJ（順番的にはまだアクションしていない）を飛ばして、CO が『Call』と宣言して8,000 を出した。HJ は自分の番が来ていないことを**スキップされた瞬間には気づかなかった**。直後、HJ が腕を組んで考え始めた時、BTN が『Raise to 25,000』と宣言してチップを前に出した。ここでフロアが呼ばれた。",
+    "tournament_phase": "Day 2",
+    "blinds": "1,500-3,000 BBA 3,000",
+    "game_type": "NLHE",
+    "prior_actions": "Preflop: UTG open 8,000 → MP fold → HJ not yet acted → CO OOT call 8,000 → BTN raise to 25,000",
+    "expected_judgment": "(1) アクションを正しい順序（HJ → CO → BTN）に戻す。(2) HJ にアクション選択権を戻す（fold/call/raise）。(3) CO の OOT call 8,000 はチップ返却。BTN の action 変更（25,000 raise）により Rule 53A 後半『action changes → OOT is not binding』が発動し、CO は自由選択（call/raise/fold）を取り戻す。(4) HJ はスキップされたが SA（Substantial Action）前に気づいたため、defend rightの機会がある → アクション順序を戻す。",
+    "expected_rules": [
+      "Rule-53",
+      "Rule-36",
+      "Rule-71"
+    ],
+    "expected_reasoning": "Rule 53A: OOT action は原則 binding だが『action to the OOT player does not change』の場合のみ。本件では BTN が後から raise したため action が変更 → OOT は非拘束。Rule 53B: スキップされた player（HJ）は SA 前に defend right の機会を持つ。Rule 36: 2 actions in turn が成立する前なので SA 未成立。結論：全員のアクションを戻し、HJ から再開。CO はペナルティ対象（Rule 71、OOT 違反）だが初犯なら口頭警告。",
+    "alternatives": [
+      {
+        "option": "CO の OOT call を binding にする",
+        "condition": "BTN が先に raise せず、HJ が fold した場合（action 不変）のみ成立。本件には該当しない。"
+      }
+    ],
+    "penalty": {
+      "level": "verbal_warning",
+      "description": "CO に OOT 行為の口頭警告（Rule 71）。繰り返しなら missed hand/round にエスカレート。"
+    },
+    "confidence": "high",
+    "notes": "OOT は Rule 53A の『action changes』判定が最頻出論点。中野さんの経験でも類似ケースが多いはず。",
+    "required_rules": [
+      "Rule-53"
+    ],
+    "recommended_rules": [
+      "Rule-36",
+      "Rule-71"
+    ]
+  },
+  {
+    "id": "case-003-misdeal-exposed-downcards",
+    "category": "誤配・誤操作",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 途中、NLHE、Blinds 400-800。9-max テーブル。ディーラーが配り始めた1周目、シート3（UTG+1）へ配った1枚目と、シート5（HJ）へ配った2枚目のカードが、ディーラーの手元のミスで**両方とも裏面ではなく表面を向いて配られた**。テーブルの他プレイヤーも何人かカードを見てしまった。まだ全員に2枚配り終わっていない段階。",
+    "tournament_phase": "Day 1 中盤",
+    "blinds": "400-800",
+    "game_type": "NLHE",
+    "prior_actions": "配り始めの最中。substantial action 以前。",
+    "expected_judgment": "Misdeal 成立。全カードを回収して再シャッフル、同じボタンで配り直す。ボタン移動なし、新規着席なし、リミット据え置き（Rule 35C）。",
+    "expected_rules": [
+      "Rule-35"
+    ],
+    "expected_reasoning": "Rule 35A(7): 『In flop games, if 1 of the first 2 cards dealt off the deck or any other 2 downcards are exposed by dealer error』— 本件はまさに『配り始めの2枚のdowncardsが dealer error で露出』に該当。Misdeal が確定。Rule 35C により、再配は『exact re-play』：ボタン不変、新規プレイヤー追加なし、リミット据え置き、同じディーラーが再配。",
+    "alternatives": [],
+    "penalty": {
+      "level": "none",
+      "description": "プレイヤーに責任なし。ディーラーへは後でフロアが注意（TDA ルール外、ハウス内部）。"
+    },
+    "confidence": "high",
+    "notes": "条文最頻出の misdeal 例。Rule 35 A(1)~(7) のうちどれに該当するかを特定できることが重要。",
+    "required_rules": [
+      "Rule-35"
+    ],
+    "recommended_rules": []
+  },
+  {
+    "id": "case-004-electronic-device-live-hand",
+    "category": "電子機器・2024改訂",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2 の終盤、NLHE、Blinds 3,000-6,000 BBA 6,000。Final Table まであと1卓。プレイヤーA（残り28BB）が自分のハンド（ライブ中）を配られた直後、膝の上でスマホの画面を操作しているのを隣の席のプレイヤーBが見つけ、ディーラーに伝えた。フロアが確認したところ、スマホ画面にはソルバーではなく LINE メッセージが開いていた。プレイヤーAは『家族からの連絡を読んだだけ』と主張。ただしハンドはまだ live（fold していない）。",
+    "tournament_phase": "Day 2 終盤（Final Table 直前）",
+    "blinds": "3,000-6,000 BBA 6,000",
+    "game_type": "NLHE",
+    "prior_actions": "プレイヤーA がカードを受け取ったがまだアクションしていない。",
+    "expected_judgment": "Rule 5C 違反（『Players with live hands may not interact with or operate an electronic or communication device』）。Rule 71 により、初犯かつ戦略ツール未使用（LINEのみ）で軽度 → **1 missed hand のペナルティ**。当該ハンドは fold 扱い。以後ライブ中のスマホ操作禁止を厳命。再違反なら missed round → DQ へエスカレート。",
+    "expected_rules": [
+      "Rule-5",
+      "Rule-71"
+    ],
+    "expected_reasoning": "Rule 5C はライブハンド中の electronic device の interact/operate を禁止。これは端末の『内容』ではなく『操作そのもの』を禁じており、LINE でもソルバーでも同じ違反。ただし Rule 5D（ポーカー戦略ツール使用）は未確認のため、最上位の DQ には該当しない。Rule 71A によりペナルティは階層的：初犯は verbal warning or missed hand が標準。本件は Final Table 直前の重要局面で他プレイヤーへの不公平感が強いため、口頭警告ではなく missed hand を適用するのが妥当。",
+    "alternatives": [
+      {
+        "option": "Verbal warning のみ",
+        "condition": "プレイヤーAがルール不知で、過去違反歴なし、周囲のプレイヤーが不満を示していない場合。"
+      },
+      {
+        "option": "Missed round（約9ハンド）",
+        "condition": "画面にソルバー・ハンドレンジ表・GTO ツール等の Rule 5D 該当物が映っていた場合。"
+      },
+      {
+        "option": "Disqualification",
+        "condition": "Rule 5D 違反（strategy tool）が確認され、かつ繰り返し or 複数要素での重大違反の場合。"
+      }
+    ],
+    "penalty": {
+      "level": "missed_hand",
+      "description": "当該ハンドを fold 扱い+1 missed hand。Rule 5/71 の説明を口頭で厳命。"
+    },
+    "confidence": "medium",
+    "notes": "2024改訂のRule 5はTD判断AIの出番が最も多い領域の一つ。スマホ『操作』『所持』『画面内容』の区別を明確にする重要ケース。",
+    "required_rules": [
+      "Rule-5"
+    ],
+    "recommended_rules": [
+      "Rule-71"
+    ]
+  },
+  {
+    "id": "case-005-one-player-to-a-hand",
+    "category": "プレイヤー行為（エチケット・不正）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 終盤、NLHE、Blinds 1,000-2,000 BBA 2,000。SB と BTN の heads-up ハンド。Flop: Kc 8d 3s。SB (35BB) が 6,000 bet、BTN (22BB) がしばらく考えている間、BTN の後ろに立っていた友人（トーナメント参加者ではない観戦者）がBTN の耳元で何かささやいた。BTN はその後すぐに『All-in』を宣言。SB が『今のは助言だ』とフロアを呼んだ。",
+    "tournament_phase": "Day 1 終盤",
+    "blinds": "1,000-2,000 BBA 2,000",
+    "game_type": "NLHE",
+    "prior_actions": "Preflop: BTN open → SB call → BB fold. Flop: SB bet 6,000 → BTN all-in（友人の助言後）.",
+    "expected_judgment": "(1) Rule 67 違反（One Player to a Hand, 第三者からの助言禁止）の疑い強い。(2) 原則、BTN のチップ返却は行わず、アクションは維持されるが、フロアは助言内容の実態を確認する。(3) 観戦者はテーブルから離されるよう警告。(4) BTN には Rule 71 による警告または missed round。状況次第では all-in を巻き戻して fold 扱いにする裁量も（Rule 1 により TD の裁量）。",
+    "expected_rules": [
+      "Rule-67",
+      "Rule-71",
+      "Rule-1"
+    ],
+    "expected_reasoning": "Rule 67 は『Players ... must not advise or criticize play at any time』かつ『One-player-to-a-hand』。観戦者（friend/advisor）からのささやきは明確に禁止。Rule 71B にも『violating one-player-to-a-hand』がペナルティ対象として明記。ただし『ささやき』の内容が戦略助言だったか単なる私語だったかの事実確認が必要。Rule 1 の『best interest of the game and fairness』により、助言が明確なら all-in 巻き戻しまで可能だが、証明できなければ警告+観戦者退去が標準裁定。",
+    "alternatives": [
+      {
+        "option": "All-in 維持、BTN に口頭警告のみ",
+        "condition": "ささやきの内容が確認不能 or 戦略に関係ない内容（例：『時間ないよ』等）の場合。"
+      },
+      {
+        "option": "BTN の all-in を巻き戻し、元の call または fold に戻す",
+        "condition": "助言内容が明確に戦略的（例：『ここは降りちゃダメ』）と証明された場合。Rule 1 裁量。"
+      },
+      {
+        "option": "BTN を disqualify",
+        "condition": "BTN が事前に友人と共謀していた証拠（collusion）がある場合。"
+      }
+    ],
+    "penalty": {
+      "level": "verbal_warning",
+      "description": "BTN に Rule 67 違反の口頭警告。観戦者はテーブルから離れるよう指示。繰り返しなら missed round。"
+    },
+    "confidence": "medium",
+    "notes": "Rule 67 は『事実認定』が最大の論点。TD判断AI はアドバイスを出すが、最終判断は現場TDの事実確認結果次第。",
+    "required_rules": [
+      "Rule-67"
+    ],
+    "recommended_rules": [
+      "Rule-71",
+      "Rule-1"
+    ]
+  },
+  {
+    "id": "case-006-all-in-showdown-muck",
+    "category": "ショーダウン関連",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 途中、NLHE、Blinds 500-1,000 BBA 1,000。Turn で UTG (23BB) が all-in、BTN (45BB) が call。River が配られた後、BTN は強い役で勝っていると確信しており、カードを下向きにディーラーに渡そうとした（muck の動作）。UTG はまだカードを持っている。ディーラーは BTN のカードを受け取る前に一時停止し、フロアを呼んだ。",
+    "tournament_phase": "Day 1 中盤",
+    "blinds": "500-1,000 BBA 1,000",
+    "game_type": "NLHE",
+    "prior_actions": "Turn: UTG all-in → BTN call。River 配布後、BTN が muck 動作。UTG はまだカードを保持。",
+    "expected_judgment": "BTN のカードは muck させず、両プレイヤーに必ず show down させる。Rule 16 により、all-in 後は全員が必ずカードを倒さなければならず、muck は許されない。ディーラーがカードを受け取る前にフロアが介入したのは正しい判断。両プレイヤーのカードを公開し、正しい勝者を決定する。",
+    "expected_rules": [
+      "Rule-16"
+    ],
+    "expected_reasoning": "Rule 16『Face Up for All-Ins』は明確に『No player who is either all-in or has called all betting action may muck their hand without tabling. All hands in both the main and side pot(s) must be tabled and are live』と定める。BTN は all-in をコールしたため、強制的にカードを公開する義務がある。muck は不可。ディーラーは Rule 16 に従い、BTN のカードを受け取る前に停止したのは適切。",
+    "alternatives": [],
+    "penalty": {
+      "level": "none",
+      "description": "プレイヤーにルール不知の場合は口頭で説明のみ。悪意がなければペナルティなし。"
+    },
+    "confidence": "high",
+    "notes": "Rule 16 は『強制公開』という明確なルール。現場で最もよく誤解される。",
+    "required_rules": [
+      "Rule-16"
+    ],
+    "recommended_rules": [
+      "Rule-65"
+    ]
+  },
+  {
+    "id": "case-007-verbal-bet-trick",
+    "category": "ベッティング関連（角度撃ち）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2、NLHE、Blinds 2,000-4,000 BBA 4,000。River でのheads-up。プレイヤーA (65BB) が『I bet』とだけ宣言し、具体的な金額を言わずにチップも動かしていない。プレイヤーB (48BB) は『いくら？』と聞いた。A は『まだ決めてない、少し考えさせて』と答え、30秒ほど考えた後、『5,000 でいく』と宣言した。ポットサイズは合計 72,000。B が『1回 I bet と宣言した時点で拘束されるはず』とフロアを呼んだ。",
+    "tournament_phase": "Day 2",
+    "blinds": "2,000-4,000 BBA 4,000",
+    "game_type": "NLHE",
+    "prior_actions": "Preflop/Flop/Turn 経て River heads-up。A が『I bet』宣言→金額未宣言→30秒経過→『5,000』と追加宣言。",
+    "expected_judgment": "A の当初の『I bet』宣言は Rule 57 により拘束される。金額が未指定の『bet』宣言は、ポットサイズ以下の最大ベットとして解釈される（Rule 57：『the highest reasonable amount that is less than or equal to the pot size』）。本件ではポット 72,000 のため、**A のベットは 72,000（ポットベット相当）として拘束**される。A が後から『5,000』と言っても、最初の宣言が優先。ただし B は『いくら？』と聞いた事実があるので、フロアは A の意図と状況を確認する。Rule 1 により曖昧性は A のリスクで解釈。",
+    "expected_rules": [
+      "Rule-57",
+      "Rule-40",
+      "Rule-42"
+    ],
+    "expected_reasoning": "Rule 57『Non-Standard and Unclear Betting』は『if a declared bet can legally have multiple meanings, it will be ruled the highest reasonable amount that is less than or equal to the pot size』と明記。『I bet』だけで金額未指定の場合、最大解釈=ポットサイズ（72,000）となる。Rule 40C により『declaring a specific amount only is the same as silently pushing out an equal amount』、つまり発言は拘束力を持つ。Rule 42 は raise の方法を定め、『player's responsibility to make their intentions clear』と明示。A の曖昧な宣言は A のリスクで最大解釈される。",
+    "alternatives": [
+      {
+        "option": "A の 5,000 ベットを認める",
+        "condition": "B が『いくら？』と聞いた時点で action が事実上継続しており、SA 未成立かつ B に実害なしと判断される場合。Rule 1 裁量。"
+      },
+      {
+        "option": "A のアクションを無効化、check 扱いに戻す",
+        "condition": "『I bet』がジョーク・冗談と認定された場合（極めて稀）。"
+      }
+    ],
+    "penalty": {
+      "level": "verbal_warning",
+      "description": "A に Rule 40/42 違反（意図不明確）の口頭警告。繰り返しなら angle shooting として Rule 71 の missed hand 以上。"
+    },
+    "confidence": "medium",
+    "notes": "Rule-57 の適用はグレーゾーン。モデルの実推論では Rule-40 (Methods of Betting) と Rule-42 (Methods of Raising) の verbal declaration 論点で判断することが多い。Phase 1 では Rule-40 を required にして、Rule-57 を recommended にする現実的な評価。",
+    "required_rules": [
+      "Rule-40"
+    ],
+    "recommended_rules": [
+      "Rule-42",
+      "Rule-57",
+      "Rule-1"
+    ]
+  },
+  {
+    "id": "case-008-string-bet-raise",
+    "category": "ベッティング関連（動作違反）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 終盤、NLHE、Blinds 1,500-3,000 BBA 3,000。Flop でプレイヤー A が 9,000 bet。プレイヤー B は『レイズ』とは言わず、まず 9,000 チップ（call 分）を前に押し出し、その約 1 秒後に追加で 20,000 チップを押し出した（2 モーション）。フロアが呼ばれた。",
+    "tournament_phase": "Day 1 後半",
+    "blinds": "1,500-3,000 BBA 3,000",
+    "game_type": "NLHE",
+    "prior_actions": "Flop: A bet 9,000 → B が call 分 9,000 を出した後、追加で 20,000（2モーション）。",
+    "expected_judgment": "String bet（2モーションレイズ）成立、レイズは無効。B のアクションは**call のみ**として扱い、追加の 20,000 はチップを B に返却する。Rule 42 により『a raise must be made by A) pushing out the full amount in one motion or B) verbally declaring the full amount prior to pushing out chips』と明確に定められ、2モーションは 2019 年以降禁止されている。",
+    "expected_rules": [
+      "Rule-42",
+      "Rule-44"
+    ],
+    "expected_reasoning": "Rule 42『Methods of Raising』は明確に 2 つの方法しか認めない：(A) 全額を 1 モーションで押し出す、または (B) チップを出す前に金額を口頭宣言する。注釈に『2-motion raises eliminated in 2019』と明記。本件は B が口頭宣言なしで 2 回に分けてチップを出したため、典型的な string bet。raise は無効、call のみが成立する。Rule 44 も overchip 時の宣言要件を支持。",
+    "alternatives": [],
+    "penalty": {
+      "level": "none",
+      "description": "初犯ならペナルティなし、口頭で『raise は1モーション or 事前宣言』を指導。繰り返しなら Rule 71 で missed hand。"
+    },
+    "confidence": "high",
+    "notes": "String bet は最も頻発する違反の一つ。Rule 42 の『2019 年以降 2 モーション禁止』を現場 TD が正確に覚えているかが分かれ目。",
+    "required_rules": [
+      "Rule-42"
+    ],
+    "recommended_rules": [
+      "Rule-44"
+    ]
+  },
+  {
+    "id": "case-009-soft-play-collusion-suspicion",
+    "category": "プレイヤー行為（ソフトプレイ）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2 のバブル直前、NLHE、Blinds 4,000-8,000 BBA 8,000。プレイヤー A（友人同士と公言）とプレイヤー B が heads-up に近い深いスタック状況。Turn で A が 15,000 bet、B（A の友人）が『you got it, buddy』と言いながら、ナッツ候補の強いハンドを持っているにもかかわらず fold した。後に B が仲間に『A が勝ったんだから、それでいいよ』と話しているのを他プレイヤーが聞き、フロアに報告。",
+    "tournament_phase": "Day 2 バブル直前",
+    "blinds": "4,000-8,000 BBA 8,000",
+    "game_type": "NLHE",
+    "prior_actions": "Turn: A bet 15,000 → B fold（ナッツ候補を持ちながら）。B が仲間に『A が勝ったんだから』発言。",
+    "expected_judgment": "ソフトプレイ疑い濃厚。Rule 71 により **Penalty for soft play** を適用。初犯でも **missed round 以上** が妥当（Rule 71B『Penalties will be given for soft play, abuse, disruptive behavior, dodging blinds or cheating』の明示対象）。状況証拠（バブル直前・友人関係・ナッツフォールド・発言）が揃っており、疑いは強い。A も B も対象（A が事情を知っていた場合）。Collusion が証明されれば両名 DQ。",
+    "expected_rules": [
+      "Rule-71",
+      "Rule-67"
+    ],
+    "expected_reasoning": "Rule 71B は『Penalties will be given for soft play, abuse, disruptive behavior, dodging blinds or cheating』と明記。ソフトプレイは単なる etiquette 違反ではなく、Rule 71 の直接適用対象。バブル直前という状況+友人関係+ナッツフォールド+発言は、『状況証拠』として強力。Rule 67『One-player-to-a-hand』の精神にも反する。通常の警告では足りず、missed round 以上（=実質的なチップダメージ）が妥当。意図的な collusion が証明されれば、Rule 71 の最上位ペナルティ（DQ）も選択肢。",
+    "alternatives": [
+      {
+        "option": "Missed hand のみ+両者に厳重警告",
+        "condition": "B のカードが実はナッツではなく、フォールドが『価値判断』と認められる場合。"
+      },
+      {
+        "option": "両者 Disqualification",
+        "condition": "事前の collusion（示し合わせ）が証明される場合。Rule 71 最上位ペナルティ。"
+      },
+      {
+        "option": "B のチップを A から没収（bet返却）+ 両者に missed round",
+        "condition": "ソフトプレイは確定だが collusion は未証明の場合の折衷案。Rule 1 裁量。"
+      }
+    ],
+    "penalty": {
+      "level": "missed_round",
+      "description": "初犯でも missed round（自席プレイヤー数 × 1 round）以上。繰り返しや collusion 証明で DQ。"
+    },
+    "confidence": "high",
+    "notes": "ソフトプレイはトーナメントの公平性を根本から損なう。Rule 71B の明示対象なので、TD判断 AI は警告レベルに留めず missed round 以上を勧告すべき。",
+    "required_rules": [
+      "Rule-71"
+    ],
+    "recommended_rules": [
+      "Rule-67"
+    ]
+  },
+  {
+    "id": "case-010-big-blind-ante-dispute",
+    "category": "フォーマット（BBA・2024改訂）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 終盤、NLHE、Blinds 5,000-10,000。BBA (Big Blind Ante) フォーマット、ante は 10,000。BB プレイヤーが席を立って休憩中、自席のチップが 8,000 しか残っていない。ディーラーが『BB は 10,000 必要だが、8,000 しかない。BBA をどうする？』とフロアに確認。プレイヤー本人は不在。",
+    "tournament_phase": "Day 1 終盤",
+    "blinds": "5,000-10,000 BBA 10,000",
+    "game_type": "NLHE",
+    "prior_actions": "BB プレイヤー不在、手元チップ 8,000 のみ、BB 10,000+ante 10,000 = 20,000 必要。",
+    "expected_judgment": "BB first 計算方式を適用する。BB ポジションのプレイヤーが持っている 8,000 は、**まず BB として徴収**される（BBA のビッグブラインド優先原則）。BB が 10,000 に満たないため、残り 2,000 を all-in 状態として処理。ante 部分（本来10,000）は徴収できない（チップ不足）。プレイヤー不在のため、ディーラーはハンドを dealt-out（配布なし）として処理、次のハンドでブラインドインされる。",
+    "expected_rules": [
+      "RP-11",
+      "Rule-30"
+    ],
+    "expected_reasoning": "RP-11『Ante Formats and No Ante Reduction』は『If a single-payer ante is used, the big blind ante format (BBA) with big-blind-first calculation is recommended』と明記。BBA-first 計算では、BB ポジションのプレイヤーのチップは **まず BB に充当** され、余りが ante になる。本件は 8,000 < 10,000（BB 額）のため、全額が BB 扱いで all-in、ante は徴収できない。また RP-11 は『Antes should not be reduced ... as play progresses』とも定めるが、物理的にチップ不足の場合は適用外。プレイヤー不在時の処理は Rule 29（absent player blinding）に従う。",
+    "alternatives": [
+      {
+        "option": "BB 全額+ante 部分 all-in（合算処理）",
+        "condition": "プレイヤーが席に戻っていて、チップ合計を合算したい意思を示した場合。"
+      }
+    ],
+    "penalty": {
+      "level": "none",
+      "description": "プレイヤー不在は Rule 29 の blinded out 対象だが、初回ならペナルティなし。"
+    },
+    "confidence": "medium",
+    "notes": "2024 改訂で RP-11 の BBA first 計算が推奨となった。新しいフォーマットのため、現場での混乱が多い。TD判断AI の価値が高い領域。",
+    "required_rules": [
+      "RP-11"
+    ],
+    "recommended_rules": [
+      "Rule-30"
+    ]
+  },
+  {
+    "id": "case-011-clock-call-absent-player",
+    "category": "時間管理（Clock）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2、NLHE、Blinds 3,000-6,000 BBA 6,000。UTG (35BB) が20,000 ベット。BTN (28BB) が席を立ってトイレへ。BTNのアクション待ちで3分経過、UTGが『クロックを呼んでくれ』とフロアに依頼。BTN は未だ不在。フロアはどう対応すべきか。",
+    "tournament_phase": "Day 2",
+    "blinds": "3,000-6,000 BBA 6,000",
+    "game_type": "NLHE",
+    "prior_actions": "UTG bet 20,000。BTN 不在（トイレ）。UTGがクロック依頼。",
+    "expected_judgment": "クロック要求を却下。Rule 29により『Players must be at their seats to call for a clock』とあり、クロック要求者（UTG）は自席にいるが、対象プレイヤー（BTN）が不在のためクロックプロセスを開始できない。BTN が戻ってから改めて判断する。BTN が戻らず過度に遅延する場合、フロアは Rule 30/31 により BTN の離席を問題視し、戻り次第 Rule 71 の警告も検討。",
+    "expected_rules": [
+      "Rule-29",
+      "Rule-30",
+      "Rule-31"
+    ],
+    "expected_reasoning": "Rule 29 は『Players must be at their seats to call for a clock』と明記。対象プレイヤー（BTN）が離席中はクロックをスタートできない。Rule 30 は『To have a live hand, players must be at their seats when the last card is dealt』と定め、Rule 31 は『Players with live hands ... must remain at the table for all betting rounds』と明確に離席を禁じる。BTN は本来席にいるべきだが、現実には戻るまで待つのが標準。過度に戻らない場合は Rule 31 違反として Rule 71 のペナルティ（口頭警告→missed hand）を検討。",
+    "alternatives": [
+      {
+        "option": "BTN のハンドを dead にし、pot の処理を行う",
+        "condition": "BTN が長時間（例: 5分以上）戻らない場合。Rule 31 に基づく裁量。"
+      }
+    ],
+    "penalty": {
+      "level": "none",
+      "description": "初動は待機。長時間不在の場合は Rule 31 違反として警告。"
+    },
+    "confidence": "medium",
+    "notes": "クロック手続きは現場で頻発する論点。Rule 29 の『at seats』要件が意外と知られていない。",
+    "required_rules": [
+      "Rule-29"
+    ],
+    "recommended_rules": [
+      "Rule-30",
+      "Rule-31"
+    ]
+  },
+  {
+    "id": "case-012-verbal-chip-conflict",
+    "category": "ベッティング関連（宣言と行動の齟齬）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 中盤、NLHE、Blinds 500-1,000 BBA 1,000。プレイヤー A が Turn で『レイズ、8,000』と宣言しながら、同時にチップ 12,000 を押し出した。宣言と実際のチップ額が矛盾している。ディーラーがフロアを呼んだ。",
+    "tournament_phase": "Day 1 中盤",
+    "blinds": "500-1,000 BBA 1,000",
+    "game_type": "NLHE",
+    "prior_actions": "Turn: A が『レイズ 8,000』宣言+同時に 12,000 チップ押し出し。",
+    "expected_judgment": "レイズ額は 8,000 として確定。余分の 4,000 は A に返却される。Rule 40A『If simultaneous, a clear and reasonable verbal declaration takes precedence』に基づく。『8,000』という明確な口頭宣言がある以上、チップ額は無関係。A がより高い raise を意図していたなら、チップを押し出す前に正確な金額を宣言すべきだった。",
+    "expected_rules": [
+      "Rule-40",
+      "Rule-42",
+      "Rule-1"
+    ],
+    "expected_reasoning": "Rule 40A の核心『If a player does both [verbal and chips], whichever is first defines the bet. If simultaneous, a clear and reasonable verbal declaration takes precedence, otherwise the chips play』。本件は『レイズ 8,000』という明確な verbal declaration が存在し、これが優先する。Rule 42 も raise の宣言要件を支持。Rule 1 の公平性原則により、相手プレイヤーにとっても『発言した金額が拘束される』方が予測可能で公平。",
+    "alternatives": [
+      {
+        "option": "12,000 レイズとして扱う",
+        "condition": "『8,000』宣言が曖昧（咳やノイズで不明確）だった場合。Rule 1 裁量。"
+      }
+    ],
+    "penalty": {
+      "level": "none",
+      "description": "A に『発言が優先される』旨を口頭で説明。意図的な angle shooting なら Rule 71 検討。"
+    },
+    "confidence": "high",
+    "notes": "verbal vs chip conflict は Rule 40A の教科書例。『発言優先』を覚えていない TD も多い。",
+    "required_rules": [
+      "Rule-40"
+    ],
+    "recommended_rules": [
+      "Rule-42",
+      "Rule-1"
+    ]
+  },
+  {
+    "id": "case-013-short-all-in-reopen",
+    "category": "ベッティング関連（ショートオールイン）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2 後半、NLHE、Blinds 2,000-4,000 BBA 4,000。UTG が 12,000 open（min-raise）、MP が 30,000 raise、CO (残りチップ 42,000) が all-in で 42,000 をコール+レイズ（raise 増分は 12,000、通常の full raise 増分 18,000 より少ない）。UTG は min-raise 後すでに action 済み。アクションが UTG に戻ったとき、UTG は『再びレイズ可能か』と質問した。",
+    "tournament_phase": "Day 2 後半",
+    "blinds": "2,000-4,000 BBA 4,000",
+    "game_type": "NLHE",
+    "prior_actions": "Preflop: UTG open 12,000 → MP raise 30,000 → CO all-in 42,000 (raise increment 12,000 < full raise 18,000)。",
+    "expected_judgment": "UTG は再レイズ**できない**。CO の all-in 額 42,000 は MP の 30,000 raise に対して 12,000 の raise 増分で、full min-raise 18,000 未満のショート all-in。Rule 47A により、『an all-in wager ... totaling less than a full bet or raise will not reopen betting for players who have already acted』。UTG は既に action 済み（open 12,000）のため、CO のショート all-in では再レイズ権は復活しない。UTG は call（差額 12,000）または fold のみ。",
+    "expected_rules": [
+      "Rule-47",
+      "Rule-43"
+    ],
+    "expected_reasoning": "Rule 47A『In no-limit and pot limit, an all-in wager ... totaling less than a full bet or raise will not reopen betting for players who have already acted and are not facing at least a full bet or raise when the action returns to them』。本件、CO の raise 増分 12,000 は full min-raise 18,000（= MP の 30,000 raise 増分）未満のショート all-in。UTG は既に action 済みのため、再レイズ権は復活せず call/fold のみ。Rule 43 は min-raise の定義を提供する補助ルール。",
+    "alternatives": [],
+    "penalty": {
+      "level": "none",
+      "description": "プレイヤーへの説明のみ（ルール教育）。"
+    },
+    "confidence": "high",
+    "notes": "Rule 47 はショート all-in の再レイズ権を巡る最も複雑な条文。現場 TD でも誤認しやすい。TD判断AI の高価値領域。",
+    "required_rules": [
+      "Rule-47"
+    ],
+    "recommended_rules": [
+      "Rule-43"
+    ]
+  },
+  {
+    "id": "case-014-player-exposed-own-hand",
+    "category": "プレイヤー行為（手札露出）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 後半、NLHE、Blinds 1,000-2,000 BBA 2,000。3-way pot、Flop 後のアクション中。プレイヤー A (turn は MP) が興奮して、自分の2枚のホールカードを**意図的に**他プレイヤー B と C に見せた（A はまだアクションしていない）。B がフロアを呼び、『A が自分のカードを見せたので、このハンドは無効では』と主張。",
+    "tournament_phase": "Day 1 後半",
+    "blinds": "1,000-2,000 BBA 2,000",
+    "game_type": "NLHE",
+    "prior_actions": "Flop 後。A がアクション前に意図的にカードを他2名に見せた。",
+    "expected_judgment": "A のハンドは**kill されない**（Rule 65B『If a hand is fouled but can be identified, it remains in play』）。しかし A は Rule 67『One-player-to-a-hand』および Rule 71B『card exposure with action pending』に違反しており、**ペナルティ対象**。初犯なら 1 missed hand 以上。状況によっては Rule 65A の『action pending で露出』として missed round へエスカレート。B の『ハンド無効』主張は却下。",
+    "expected_rules": [
+      "Rule-71",
+      "Rule-65",
+      "Rule-67"
+    ],
+    "expected_reasoning": "Rule 65B は『If a hand is fouled but can be identified, it remains in play despite any cards exposed』と定める。A のカードは identifiable なので play 継続。ただし Rule 71B は『card exposure with action pending』を明示的にペナルティ対象としており、Rule 67『Players ... must not ... discuss contents of live or mucked hands』にも違反。初犯であれば missed hand が標準、繰り返しや悪質性が強ければ missed round。",
+    "alternatives": [
+      {
+        "option": "口頭警告のみ",
+        "condition": "A がルール不知の初心者で、他プレイヤーへの実害が軽微な場合。"
+      },
+      {
+        "option": "Missed round",
+        "condition": "A が過去に類似違反を繰り返している場合、または明確に他プレイヤーを妨害する意図があった場合。"
+      }
+    ],
+    "penalty": {
+      "level": "missed_hand",
+      "description": "A に 1 missed hand のペナルティ。初犯想定。"
+    },
+    "confidence": "high",
+    "notes": "Rule 65B の『fouled but identifiable = live』は現場 TD が混乱する論点。ハンドは生きているがペナルティは発生する、という二段構造。",
+    "required_rules": [
+      "Rule-71"
+    ],
+    "recommended_rules": [
+      "Rule-65",
+      "Rule-67"
+    ]
+  },
+  {
+    "id": "case-015-dead-button",
+    "category": "ボタン・ブラインド（Dead Button）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2、NLHE、Blinds 1,000-2,000 BBA 2,000。前ハンドで SB のプレイヤーが bust out（敗退）。次ハンドのボタン進行について、ディーラーが迷っている。残ったプレイヤーは 5 名。『ボタンをどこに置くか』で質問。",
+    "tournament_phase": "Day 2",
+    "blinds": "1,000-2,000 BBA 2,000",
+    "game_type": "NLHE",
+    "prior_actions": "前ハンドで SB が bust out。5 人残り。",
+    "expected_judgment": "Dead button ルール適用。ボタンは前 BB の位置にそのまま進め（bust out した元 SB の席にも擬似的にボタンが置かれ、『dead』扱い）、次ハンドでは BB と前 BB 位置の dead button のみが blind を払う。SB のポジションには誰も座らない（dead small blind）。これにより 4 人が deal-in される（dead button 席を除く）。Rule 32『Tournament play will use a dead button』の明確な適用。",
+    "expected_rules": [
+      "Rule-32"
+    ],
+    "expected_reasoning": "Rule 32 は単純明快: 『Tournament play will use a dead button』。Bust out が発生した場合、ボタンは正常に進み、結果として誰もいない席に『dead button』が置かれる。Blinds は飛ばされることなく順番通り徴収（BB は新しい席、SB は空席なら dead small blind として省略）。これにより公平な blind ローテーションが維持される。",
+    "alternatives": [],
+    "penalty": {
+      "level": "none",
+      "description": "手続きの問題でペナルティなし。"
+    },
+    "confidence": "high",
+    "notes": "Dead button は全トーナメントの基本だが、初心者ディーラーが混乱しやすい。Rule 32 は 1 文だけで明快。",
+    "required_rules": [
+      "Rule-32"
+    ],
+    "recommended_rules": []
+  },
+  {
+    "id": "case-016-showdown-improper-tabling",
+    "category": "ショーダウン（不完全な公開）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 後半、NLHE、Blinds 1,000-2,000 BBA 2,000。River showdown、SB と BTN の heads-up。BTN が最初にカードを倒すべきアグレッサー。BTN はカードを1枚だけ表向きにテーブル（Ace）、もう1枚は裏向きのまま。SB は BTN が強いと思い fold。BTN が『勝った』と宣言してポットを取ろうとした。ディーラーがフロアを呼んだ。",
+    "tournament_phase": "Day 1 後半",
+    "blinds": "1,000-2,000 BBA 2,000",
+    "game_type": "NLHE",
+    "prior_actions": "River で BTN bet, SB call → BTN は1枚だけ公開。",
+    "expected_judgment": "BTN のハンドは不完全公開だが、Rule 13A により『両方のホールカードを表向きに倒す』が必須。BTN に両方のカードを倒すよう指示する。拒否した場合は Rule 15A によりフロアが介入し、両方を公開させる。SB のフォールドはすでに完了しているが、これは Rule 13A に従わない BTN の違反が先行しているため、Rule 1 の公平性原則で SB のフォールドを取り消す選択肢もある。ただし標準裁定は『BTN のハンドを強制公開し、正しい勝者判定を行う』。",
+    "expected_rules": [
+      "Rule-13",
+      "Rule-15",
+      "Rule-65"
+    ],
+    "expected_reasoning": "Rule 13A は『Proper tabling is both 1) turning all cards face up on the table and 2) allowing the dealer and players to read the hand clearly. All cards means both hole cards in hold'em』と明記。BTN の1枚のみ公開は不完全。Rule 15A は『If a player tables one card that would make a winning hand, the dealer should advise the player to table all cards. If the player refuses, the floor should be called』と定める。フロアは両方の公開を強制できる。Rule 65B は『fouled but identifiable = live』の原則。",
+    "alternatives": [
+      {
+        "option": "SB のフォールドを取り消し、BTN の両方公開後に正しい対戦させる",
+        "condition": "Rule 1 の公平性原則を最優先する場合。BTN の違反が原因で SB が不利益を受けたと判定される場合。"
+      }
+    ],
+    "penalty": {
+      "level": "verbal_warning",
+      "description": "BTN に Rule 13A 違反の口頭警告。繰り返しなら Rule 71 で missed hand。"
+    },
+    "confidence": "high",
+    "notes": "不完全公開は現場で頻発。Rule 13/15 を現場 TD が正確に覚えていない。",
+    "required_rules": [
+      "Rule-13"
+    ],
+    "recommended_rules": [
+      "Rule-15",
+      "Rule-65"
+    ]
+  },
+  {
+    "id": "case-017-asking-to-see-hand",
+    "category": "ショーダウン（見せ要求）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2、NLHE、Blinds 3,000-6,000 BBA 6,000。River で UTG が 40,000 bet、BTN が call。showdown で UTG が『勝った』と宣言してカードを muck しようとしたところ、BTN が『最後のアグレッサーだから見せるべきだ』と要求。BTN はまだ自分のカードを持っている。",
+    "tournament_phase": "Day 2",
+    "blinds": "3,000-6,000 BBA 6,000",
+    "game_type": "NLHE",
+    "prior_actions": "River で UTG bet 40,000, BTN call。UTG が muck 試み、BTN が見せ要求。",
+    "expected_judgment": "BTN の『見せろ要求』は Rule 18B により**inalienable right（不可侵の権利）**。UTG は最後のアグレッサーであり、かつ BTN は call した上でまだカードを保持している。フロアは UTG に両方のカードを強制公開させる。UTG は Rule 18B の義務を拒否できない。",
+    "expected_rules": [
+      "Rule-18",
+      "Rule-16"
+    ],
+    "expected_reasoning": "Rule 18B は『If there was a river bet, any caller has an inalienable right to have the last aggressor's hand tabled on request (the hand they paid to see) provided the caller tabled or retains his or her cards』と明記。BTN は river での caller で、まだカードを保持している → 見せ要求権は不可侵。UTG（last aggressor）は公開義務を負う。muck は許されない。",
+    "alternatives": [],
+    "penalty": {
+      "level": "none",
+      "description": "UTG がルール不知の場合は説明のみ。意図的な muck 妨害なら Rule 71 検討。"
+    },
+    "confidence": "high",
+    "notes": "Rule 18B の『the hand they paid to see』は現場でよく問題になる。『見せろ要求』は call した側の権利であることを明確に伝える重要ケース。",
+    "required_rules": [
+      "Rule-18"
+    ],
+    "recommended_rules": [
+      "Rule-16"
+    ]
+  },
+  {
+    "id": "case-018-dodging-blinds",
+    "category": "プレイヤー行為（意図的ブラインド回避）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2、NLHE、Blinds 5,000-10,000 BBA 10,000。プレイヤー A は過去3ラウンドの BB 直前に必ず席を立ち、BB を 3 回連続で回避していた。他プレイヤーからの報告でフロアが確認したところ、A は『お腹の調子が悪い』と主張。しかしディーラーの観察によれば、毎回 BB 直前のタイミングで5-8分だけ離席し、SB を払う頃に戻っていた。",
+    "tournament_phase": "Day 2",
+    "blinds": "5,000-10,000 BBA 10,000",
+    "game_type": "NLHE",
+    "prior_actions": "A が 3 ラウンド連続で BB 直前に離席、BB 支払いを回避。",
+    "expected_judgment": "意図的な dodging blinds の疑い濃厚。Rule 33 により **Penalty for dodging blinds** を適用。Rule 71B にも明示対象。初犯（今回発覚）でも、3回連続のパターンは『意図的』と認定できるため、**missed round 以上**が妥当。A が払うべきだった BB 3回分のチップは A のスタックから徴収し pot に戻す（必要に応じて Rule 1 裁量）。以後、同様の離席があれば immediate DQ。",
+    "expected_rules": [
+      "Rule-33",
+      "Rule-71"
+    ],
+    "expected_reasoning": "Rule 33『Players who intentionally dodge any blind will incur a penalty. See Rule 71-B』と明記。Rule 71B も『Penalties will be given for soft play, abuse, disruptive behavior, dodging blinds or cheating』と定め、dodging blinds を明示的にペナルティ対象とする。3回連続のパターン+タイミングの一致は『意図性』の強力な状況証拠。口頭警告では不十分、missed round で実質的なチップダメージを与える必要がある。",
+    "alternatives": [
+      {
+        "option": "Missed hand のみ",
+        "condition": "A の体調不良が事実と確認された場合（医療証明等）。"
+      },
+      {
+        "option": "Disqualification",
+        "condition": "A の dodging が証明され、過去にも類似違反があった場合。Rule 71 最上位。"
+      }
+    ],
+    "penalty": {
+      "level": "missed_round",
+      "description": "A に missed round のペナルティ。欠席した BB 分もスタックから徴収。"
+    },
+    "confidence": "high",
+    "notes": "dodging blinds は現場で検知しにくいが、パターンが見えれば確定。Rule 33 の1行の明確なルールを現場 TD が使いこなせるかの試金石。",
+    "required_rules": [
+      "Rule-33"
+    ],
+    "recommended_rules": [
+      "Rule-71"
+    ]
+  },
+  {
+    "id": "case-019-conditional-declaration",
+    "category": "ベッティング関連（条件付き宣言）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 中盤、NLHE、Blinds 500-1,000 BBA 1,000。プレイヤー A (UTG) が 3,000 raise、プレイヤー B (MP) がしばらく考えた後、A に向かって『もしお前がレイズしてきたら、俺は all-in するぞ』と発言。B はまだ call/fold を決定していない。フロアが呼ばれた。",
+    "tournament_phase": "Day 1 中盤",
+    "blinds": "500-1,000 BBA 1,000",
+    "game_type": "NLHE",
+    "prior_actions": "A open 3,000 → B が『If A re-raises, I all-in』発言。B はまだアクション未完了。",
+    "expected_judgment": "Rule 59A 違反（条件付き宣言）。B の発言は『if-then』の典型例で Rule 59A『non-standard and strongly discouraged』の対象。フロアの裁量で、B の発言を **binding（拘束）** とする選択肢と、**penalty（口頭警告または missed hand）** を適用する選択肢がある。通常の裁定は：(1) B の発言は拘束しない、(2) B に口頭警告、(3) B は通常通り call/fold の選択を続ける。悪質性が強ければ missed hand。",
+    "expected_rules": [
+      "Rule-59",
+      "Rule-71"
+    ],
+    "expected_reasoning": "Rule 59A『Conditional statements of future action are non-standard and strongly discouraged. At TDs discretion they may be binding and/or penalized. Example: if-then statements such as If you bet, I will raise』と明確に該当例まで挙げて禁止している。B の発言は教科書通りの『if-then』。フロア裁量で binding にもできるが、実務上は『他プレイヤーへの情報漏洩』という観点でペナルティ対象にする方が多い。Rule 71 の etiquette 違反（Rule 70）としても該当。",
+    "alternatives": [
+      {
+        "option": "B の発言を binding として扱う",
+        "condition": "A が実際に re-raise した場合、B は自動的に all-in 宣言済みとして扱う。Rule 59A の裁量。"
+      },
+      {
+        "option": "口頭警告のみ",
+        "condition": "初犯かつ悪意がない場合。"
+      },
+      {
+        "option": "Missed hand",
+        "condition": "明確な angle shooting（A の反応を試す）意図がある場合。"
+      }
+    ],
+    "penalty": {
+      "level": "verbal_warning",
+      "description": "B に Rule 59 違反の口頭警告。繰り返しなら missed hand。"
+    },
+    "confidence": "high",
+    "notes": "『If-then』宣言は Rule 59 の教科書例。現場 TD は Rule 59 の存在すら知らないことが多い。TD判断AI の価値が高い領域。",
+    "required_rules": [
+      "Rule-59"
+    ],
+    "recommended_rules": [
+      "Rule-71"
+    ]
+  },
+  {
+    "id": "case-020-chip-race-last-chips",
+    "category": "チップ管理（Chip Race）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2 の Level 15 への移行時、100 チップを廃止する chip race が行われた。プレイヤー A は 100 チップを 3 枚のみ保有（全てのチップ）。ディーラーがレースを実施したが、A は 1 枚も獲得できずスタックがゼロになった。A は『最後のチップは保護されるべきだ』と主張。",
+    "tournament_phase": "Day 2 Level 15 移行",
+    "blinds": "不明（レベル移行時）",
+    "game_type": "NLHE",
+    "prior_actions": "Chip race で A が 100 チップ 3 枚（全資産）でレース、1 枚も獲得できず。",
+    "expected_judgment": "Rule 24A により、A に 1 チップ（次の最小デノミ）を付与する。『Players can't be raced out of play: a player losing their last chip(s) in a race will get 1 chip of the lowest denomination still in play』と明記されており、A のスタックをゼロにしてはならない。例: 100 チップが廃止される場合、次の最小デノミ（通常 500）を 1 枚 A に付与する。",
+    "expected_rules": [
+      "Rule-24"
+    ],
+    "expected_reasoning": "Rule 24A『Players can't be raced out of play: a player losing their last chip(s) in a race will get 1 chip of the lowest denomination still in play』は明確。プレイヤーを chip race で脱落させることは禁止されている。A には次の最小デノミを 1 枚付与する救済がルール上保証されている。これは TD の裁量ではなくルール上の義務。",
+    "alternatives": [],
+    "penalty": {
+      "level": "none",
+      "description": "ルール通りの救済を適用するだけで、ペナルティ対象なし。"
+    },
+    "confidence": "high",
+    "notes": "Rule 24A の『raced out of play 禁止』条項はプレイヤー保護の重要条文。現場 TD が見落とすとクレームになる。",
+    "required_rules": [
+      "Rule-24"
+    ],
+    "recommended_rules": []
+  },
+  {
+    "id": "case-021-chips-out-of-view",
+    "category": "チップ管理（持ち出し）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2、NLHE、Blinds 5,000-10,000 BBA 10,000。プレイヤー A がトイレに行く際、10,000 チップ 5 枚をズボンのポケットに入れて席を離れた。戻ってきたとき、他プレイヤー B が『ポケットに入れていたのを見た』とフロアに報告。",
+    "tournament_phase": "Day 2",
+    "blinds": "5,000-10,000 BBA 10,000",
+    "game_type": "NLHE",
+    "expected_judgment": "Rule 63 違反。A がポケットにチップを入れてテーブル外に持ち出した事実が確認されれば、**チップ没収（forfeit）**が原則。場合によっては Rule 63 の後段により **disqualification** も選択肢。没収されたチップは take out of play（プールには戻さない）。A には同時に Rule 71 の厳重警告または DQ。",
+    "required_rules": [
+      "Rule-63"
+    ],
+    "recommended_rules": [
+      "Rule-71"
+    ],
+    "expected_rules": [
+      "Rule-63",
+      "Rule-71"
+    ],
+    "expected_reasoning": "Rule 63『Players may not hold or transport chips in a way that takes them out of view. A player who does so will forfeit the chips and may be disqualified. The forfeited chips will be taken out of play』と明確に規定。ポケットは典型的な out of view 状態。事実認定が取れれば没収は機械的に発動。",
+    "confidence": "high",
+    "notes": "chip pocket は悪質性の高い違反。初犯でも没収は必須、DQ は TD 裁量。"
+  },
+  {
+    "id": "case-022-chip-found-behind-allin",
+    "category": "ベッティング関連（all-in 後発見）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 終盤、NLHE、Blinds 1,000-2,000 BBA 2,000。UTG が all-in 宣言し 45,000 をプッシュ。BTN が call。両プレイヤーのカード公開後、ディーラーが UTG の席の後ろに隠れていた 5,000 チップ 1 枚を発見。ポットのカウント後。",
+    "tournament_phase": "Day 1 終盤",
+    "blinds": "1,000-2,000 BBA 2,000",
+    "game_type": "NLHE",
+    "expected_judgment": "Rule 62 適用。フロアが発見チップを『accepted action の一部か否か』を判定。accepted action の一部でないと判断されれば、**UTG が勝っても 5,000 は支払われず**、**負けたら救済もない**（TD の裁量で相手に没収も可能）。Rule 49 と連動した判断。",
+    "required_rules": [
+      "Rule-62"
+    ],
+    "recommended_rules": [
+      "Rule-49",
+      "Rule-1"
+    ],
+    "expected_rules": [
+      "Rule-62",
+      "Rule-49"
+    ],
+    "expected_reasoning": "Rule 62『If A bets all-in and a hidden chip is found behind after a player calls, the TD will determine if the chip behind is part of accepted action (Rule 49). If not part of the action, A is not paid off for the chip(s) if he or she wins. If A loses, he or she is not saved by the chip(s)』と明示。",
+    "confidence": "high",
+    "notes": "Rule 62 はプレイヤーのチップ管理責任を問う重要ルール。"
+  },
+  {
+    "id": "case-023-over-betting-change",
+    "category": "ベッティング関連（お釣り期待）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 中盤、NLHE、Blinds 100-200。Flop で A が 325 ベット（意図は正規）。B が 500 チップ 1 枚 + 25 チップ 1 枚 = 合計 525 を無言で押し出した。B の意図は『325 call + 200 はお釣り』だったと主張。フロアに確認。",
+    "tournament_phase": "Day 1 中盤",
+    "blinds": "100-200",
+    "game_type": "NLHE",
+    "expected_judgment": "Rule 61 適用。無言のチップ投入はすべて賭けの一部と解釈されるのが原則。525 は 50% standard により **full raise（合計 650）** に訂正されるか、または call (325) として扱って余剰返却のどちらか。Rule 45 Multi-chip の適用も検討。Rule 61 の『お釣り期待のベットは混乱を招き、プレイヤーのリスクで解釈される』原則により、**プレイヤー B は 325 call 以上のコミットをすることが合理的**。TDA 標準: **call 325 + 余剰 200 返却** が最も一般的（500 チップ 1 枚 = overchip として Rule 44 適用）。",
+    "required_rules": [
+      "Rule-61"
+    ],
+    "recommended_rules": [
+      "Rule-44",
+      "Rule-45"
+    ],
+    "expected_rules": [
+      "Rule-61",
+      "Rule-44"
+    ],
+    "expected_reasoning": "Rule 61『Betting should not be used to obtain change. Pushing out more than the intended bet can confuse everyone at the table. All chips pushed out silently are at risk of being counted in the bet』。500 チップは Rule 44 の overchip 扱い（無言 → call）。25 チップは追加のサイレント。TD は Rule 45B の 50% standard か Rule 44 の single overchip か状況で選ぶ。",
+    "confidence": "medium",
+    "notes": "お釣り期待のベットは頻発トラブル。現場 TD の解釈が割れる領域。"
+  },
+  {
+    "id": "case-024-rebuy-missed-hand",
+    "category": "トーナメント進行（Rebuy）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Rebuy トーナメント、Level 3、Blinds 100-200。プレイヤー A が all-in で負けて bust out、ディーラーに『リバイしたい』と口頭で伝えたが、その場を離れて 2 分経過。次のハンドが始まり、A はまだ戻っていない。",
+    "tournament_phase": "Rebuy period, Level 3",
+    "blinds": "100-200",
+    "game_type": "NLHE",
+    "expected_judgment": "Rule 27 適用。A が bust 前後に『リバイ意思』を宣言した時点で、**chips behind** の扱いとなる。つまり A は次のハンドも deal-in 対象となり、リバイ義務が発生。A が席に戻らないと blind を払いつつ hand が kill される可能性。Rule 30 により席不在で hand kill。",
+    "required_rules": [
+      "Rule-27"
+    ],
+    "recommended_rules": [
+      "Rule-30"
+    ],
+    "expected_rules": [
+      "Rule-27",
+      "Rule-30"
+    ],
+    "expected_reasoning": "Rule 27『Players may not miss a hand. Players declaring intent to rebuy before a hand are playing chips behind and must make the re-buy』と明記。リバイ宣言は事実上のプレイ継続。A は席に戻らなければ Rule 30 の absent player として hand kill。",
+    "confidence": "high",
+    "notes": "リバイ宣言の拘束力は現場で混乱しやすい。Rule 27 の 1 文で明確。"
+  },
+  {
+    "id": "case-025-button-placement-error",
+    "category": "ボタン・ブラインド（配置ミス）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 後半、NLHE、Blinds 1,000-2,000。前ハンド終了後、ディーラーが誤ってボタンを 2 席進めた（本来 1 席だけ進めるべき）。新しいハンドで blind が投入され、UTG がベット、MP がコールした時点で、プレイヤー B が『ボタンの位置がおかしい』と指摘。",
+    "tournament_phase": "Day 1 後半",
+    "blinds": "1,000-2,000",
+    "game_type": "NLHE",
+    "expected_judgment": "Rule 34 適用。ボタン誤配置でも、**SA（Substantial Action）が発生した後**であれば、そのハンドは続行（エラーは訂正しない）。次のハンドではボタンを正しい位置に戻さず、そのまま進行する。本件は UTG ベット + MP コール = SA 成立済み → **エラーは確定、プレイ続行**。",
+    "required_rules": [
+      "Rule-34"
+    ],
+    "recommended_rules": [
+      "Rule-36"
+    ],
+    "expected_rules": [
+      "Rule-34",
+      "Rule-36"
+    ],
+    "expected_reasoning": "Rule 34A『If incorrect button movement is discovered before SA occurs, the error will be corrected. However, if SA has occurred, play will continue. Ex: If the button is moved twice and SA occurs the error will stand, the button will not be backed-up on the next hand』と例示付きで明記。本件はまさに『ボタン 2 席進め + SA 後』の教科書ケース。",
+    "confidence": "high",
+    "notes": "ボタン誤配置の『SA 後は訂正なし』は Rule 34A の核心。"
+  },
+  {
+    "id": "case-026-playing-the-board-no-table",
+    "category": "ショーダウン（ボード遊び）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2、NLHE、River showdown。Board: 2h 7c Ks Qd As（Ace-high straight可能）。SB と BTN の heads-up。BTN が『俺はボードで勝負する』と言って、カードを見せずに『ボードを play する』と宣言したまま muck しようとした。SB は自分のカードを倒して T-high のハンドを公開済み。",
+    "tournament_phase": "Day 2",
+    "blinds": "不明",
+    "game_type": "NLHE",
+    "expected_judgment": "Rule 19 適用。ボードで play するには **両方のホールカードを必ず table する** 必要がある。BTN のカードを倒さない宣言だけの『play the board』は無効。BTN のハンドは Rule 13A の tabling 要件を満たさず、**SB の勝ち**（SB が単独で card 公開済み）。",
+    "required_rules": [
+      "Rule-19"
+    ],
+    "recommended_rules": [
+      "Rule-13",
+      "Rule-17"
+    ],
+    "expected_rules": [
+      "Rule-19",
+      "Rule-13"
+    ],
+    "expected_reasoning": "Rule 19『To play the board, players must table all hole cards to get part of the pot (See Rule 13-A)』。ボードで play するには両方のカードを必ず倒す。BTN は倒していないため play the board の資格なし。",
+    "confidence": "high",
+    "notes": "『ボードで勝負』は現場で頻発する誤解。カードを倒さないとボード遊びは認められない。"
+  },
+  {
+    "id": "case-027-helicopter-fold",
+    "category": "エチケット（カード投げ）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 後半、NLHE、プレイヤー A が負けハンドに激怒し、River で BTN が bet 後、自分のカードを **テーブルから高く放り投げて** fold（『helicopter fold』）。カードは他プレイヤーの前で表向きにランディング、全員に Kh Qh（強いドロー）が見えた。他プレイヤーはまだアクション中。",
+    "tournament_phase": "Day 1 後半",
+    "blinds": "不明",
+    "game_type": "NLHE",
+    "expected_judgment": "Rule 68 違反（『helicopter fold』の明示対象）+ Rule 71 適用。ペナルティは **missed hand から missed round** が妥当（action pending 中の card exposure）。ハンドは dead にはしない（foldしてしまったので）。ただし、露出した情報が他プレイヤーに影響するため、Rule 1 の公平性判断も必要。",
+    "required_rules": [
+      "Rule-68"
+    ],
+    "recommended_rules": [
+      "Rule-71",
+      "Rule-70"
+    ],
+    "expected_rules": [
+      "Rule-68",
+      "Rule-71"
+    ],
+    "expected_reasoning": "Rule 68『When folding, cards should be pushed forward low to the table, not deliberately exposed or tossed high (helicoptered)』と helicopter を名指しで禁止。action pending 中の card exposure は Rule 71B のペナルティ対象。",
+    "confidence": "high",
+    "notes": "helicopter fold は Rule 68 の造語付き明示違反。TD が気づかないことが多い。"
+  },
+  {
+    "id": "case-028-exact-chip-count-request",
+    "category": "ベッティング関連（チップカウント要求）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2、NLHE、Blinds 3,000-6,000 BBA 6,000。UTG が all-in 宣言。BTN がアクションを考える前に『UTG のチップを正確に数えてくれ』と要求。UTG のチップは乱雑で正確な数が不明。",
+    "tournament_phase": "Day 2",
+    "blinds": "3,000-6,000 BBA 6,000",
+    "game_type": "NLHE",
+    "expected_judgment": "Rule 60 適用。BTN は **all-in に直面し、かつ自分のアクション中** であるため、正確なカウントを要求する権利がある。UTG 自身はカウントする義務はないが、**ディーラーまたはフロアが代わりにカウント** する。Rule 25 の reasonable estimation 原則を越えた要求は認められる。",
+    "required_rules": [
+      "Rule-60"
+    ],
+    "recommended_rules": [
+      "Rule-25"
+    ],
+    "expected_rules": [
+      "Rule-60",
+      "Rule-25"
+    ],
+    "expected_reasoning": "Rule 60『A player may request a more precise count only if facing an all-in bet and it is his or her turn to act. The all-in player is not required to count; on request the dealer or floor will count』と明示。BTN は両条件を満たす（all-in に直面、かつ自分の turn）。",
+    "confidence": "high",
+    "notes": "正確なカウント要求は Rule 60 の 2 条件（all-in 直面 + 自分の turn）を満たす必要がある。"
+  },
+  {
+    "id": "case-029-deck-change-request",
+    "category": "トーナメント進行（デッキ変更）",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 1 中盤、NLHE、プレイヤー A が連続 3 ハンド負けたのち、『このデッキは運が悪い、新しいデッキに変えてくれ』とディーラーに要求。他プレイヤーは特に異議なし。",
+    "tournament_phase": "Day 1 中盤",
+    "blinds": "不明",
+    "game_type": "NLHE",
+    "expected_judgment": "Rule 26 により却下。『Players may not ask for deck changes. Deck changes will be on the dealer push or level changes or as prescribed by the house』と明記されており、プレイヤーの要求は根拠なし。ディーラーは通常通りプレイを続行する。A に対してルールを説明するだけ（ペナルティ不要）。",
+    "required_rules": [
+      "Rule-26"
+    ],
+    "recommended_rules": [],
+    "expected_rules": [
+      "Rule-26"
+    ],
+    "expected_reasoning": "Rule 26 は 1 文で明快: デッキ変更はディーラープッシュ・レベル変更・ハウス規定のタイミングのみ、プレイヤーからの要求は不可。",
+    "confidence": "high",
+    "notes": "Rule 26 は 1 行で決着する最短判断ケース。TD 判断 AI の速度優位性が効く。"
+  },
+  {
+    "id": "case-030-table-balance-BB-shortstack",
+    "category": "テーブルバランス",
+    "created_by": "瀬戸ミナ（TDA条文ベース）",
+    "situation": "Day 2、NLHE、9-max トーナメント。テーブル A は 5 人、テーブル B は 9 人（最多）。テーブル A の次ハンドで BB になるプレイヤー（short stack 3BB）が、テーブル B からの transfer によりテーブル A が 6 人になるはずだが、どの席に新しいプレイヤーを入れるべきか混乱。",
+    "tournament_phase": "Day 2",
+    "blinds": "3,000-6,000",
+    "game_type": "NLHE",
+    "expected_judgment": "Rule 11A 適用。新しいプレイヤー（テーブル B からの transfer）は **次の BB ポジション** に入る（= worst position）。本件では、次ハンドで本来 BB になるはずだった short stack のプレイヤーの位置に新しいプレイヤーが入り、short stack はボタン/別の席に移動（dead button の可能性）。Worst position は小 blind ではなく big blind。",
+    "required_rules": [
+      "Rule-11"
+    ],
+    "recommended_rules": [
+      "Rule-32"
+    ],
+    "expected_rules": [
+      "Rule-11",
+      "Rule-32"
+    ],
+    "expected_reasoning": "Rule 11A『To balance in flop and mixed-games, the player to be big blind next moves to the worst position, including single big blind if available, even if that means the seat is big blind twice. Worst position is never the small blind』。新参者は BB ポジションで参加。dead button の処理が伴う。",
+    "confidence": "medium",
+    "notes": "テーブルバランスは複雑だが頻発するため、TD 判断 AI で標準化する価値が高い。"
+  }
+]

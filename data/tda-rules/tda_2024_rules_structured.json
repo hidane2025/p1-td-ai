@@ -1,0 +1,653 @@
+[
+  {
+    "id": "Rule-1",
+    "number": 1,
+    "kind": "rule",
+    "title": "Floor Decisions",
+    "body": "The best interest of the game and fairness are top priorities in decision-making. Unusual circumstances \noccasionally dictate that common-sense decisions in the interest of fairness take priority over technical \nrules. Floor decisions are final."
+  },
+  {
+    "id": "Rule-2",
+    "number": 2,
+    "kind": "rule",
+    "title": "Player Responsibilities",
+    "body": "Players should verify registration data and seat assignments, verify they’re dealt the correct number of \ncards before SA occurs, protect their hands, make their intentions clear, follow the action, act in turn with \nproper terminology and gestures, defend their right to act, keep cards visible and chips correctly stacked, \nremain at the table with a live hand, table all cards properly when competing at showdown, speak up if \nthey see a mistake, play in a timely manner, call for a clock when warranted, transfer tables promptly, \nfollow one player to a hand, know and comply with the rules, practice proper etiquette, inform the house if \nthey see or experience discriminatory or offensive behavior, and generally contribute to an orderly event \nwhere all players feel welcome."
+  },
+  {
+    "id": "Rule-3",
+    "number": 3,
+    "kind": "rule",
+    "title": "Official Terminology and Gestures",
+    "body": "Official betting terms are simple, unmistakable, time-honored declarations like bet, raise, call, fold, check, \nall-in, complete, and pot (pot-limit only). Regional terms may also meet this test. Also, players must use \ngestures with caution when facing action; tapping the table is a check. It is the responsibility of players to \nmake their intentions clear: using non-standard terms or gestures is at player’s risk and may result in a \nruling other than what the player intended. See also Rules 2 and 42."
+  },
+  {
+    "id": "Rule-4",
+    "number": 4,
+    "kind": "rule",
+    "title": "Player Identity",
+    "body": "Players must be clearly identifiable at all times. Tournament staff may request a player to remove any \nitem (sunglasses, hood, or other facial covering) which inhibits their identification or is a distraction to \nother participants."
+  },
+  {
+    "id": "Rule-5",
+    "number": 5,
+    "kind": "rule",
+    "title": "Electronic Devices and Communication",
+    "body": "A: Players may not talk on a phone at the table. Ring tones, music, images, video etc. should be inaudible \nand non-disturbing to others. These and other devices, tools, photography, videography, and \ncommunication must not create a nuisance, delay the game or create competitive advantage and are \nsubject to house and gaming regulations. \n\nB. Phones and other devices may not rest on the table.  \n\nC: Players with live hands may not interact with or operate an electronic or communication device. The \ndefinition of such devices may include new technologies and shall be as updated by the TD.  \n\nD: Betting apps, charts, and other poker strategy tools may not be used at the table. Nor may players \nreceive or use poker strategy data from another person or source. Violations of Rule 5 may be subject to \npenalties in Rule 71."
+  },
+  {
+    "id": "Rule-6",
+    "number": 6,
+    "kind": "rule",
+    "title": "Official Language",
+    "body": "The house will clearly post and announce acceptable language(s) at the table. \n\nSeating, Breaking and Balancing Tables"
+  },
+  {
+    "id": "Rule-7",
+    "number": 7,
+    "kind": "rule",
+    "title": "Random Correct Seating",
+    "body": "Tournament and satellite seats will be randomly assigned. A player starting in a wrong seat with a correct \nchip stack will move to the correct seat with their current total chip stack."
+  },
+  {
+    "id": "Rule-8",
+    "number": 8,
+    "kind": "rule",
+    "title": "Alternates, Late Registration, and Re-Entries",
+    "body": "A: Alternates, players registering late, and re-entries will be sold full stacks. They will randomly draw a \nseat and table by the same process and from the same seat pool then in place for new players and are \ndealt in except between the small blind and button.  \n\nB: In re-entry events, if a player is permitted to forfeit chips and buy a new stack, the forfeited chips will be \nremoved from play."
+  },
+  {
+    "id": "Rule-9",
+    "number": 9,
+    "kind": "rule",
+    "title": "Special Needs",
+    "body": "Accommodations for players with special needs will be made when possible."
+  },
+  {
+    "id": "Rule-10",
+    "number": 10,
+    "kind": "rule",
+    "title": "New Players and Players from Broken Tables",
+    "body": "A: New players entering the tournament and players from broken tables can get any seat including the \nsmall or big blind or the button and be dealt in except between the SB and button.  \n\nB: Players from a broken table will be assigned new tables and seats by a 2-step random process. See \nIllustration Addendum."
+  },
+  {
+    "id": "Rule-11",
+    "number": 11,
+    "kind": "rule",
+    "title": "Balancing Tables and Halting Play",
+    "body": "A: To balance in flop and mixed-games, the player to be big blind next moves to the worst position, \nincluding single big blind if available, even if that means the seat is big blind twice. Worst position is never \nthe small blind. In stud-only, players move by position (last seat open at the short table is the seat filled). \n\nB: In mixed games (ex: HORSE), when the game shifts from hold’em to stud, after the last hold’em hand \nthe button moves to the position it would be if the next hand was hold’em and is frozen there during stud. \nThe player moved in stud is the player who would be big blind if the game were hold’em for that hand. \nShifting to hold'em the button starts where it was frozen.  \n\nC: The table from which a player is moved will be specified by a predetermined procedure.  \n\nD: Play will halt on tables 3 or more players short (by elimination) than the table with the most players \nonce the blinds are impacted (See Illustration Addendum). Play halts on other formats (ex: 6-hand and \nturbos) at TDs discretion. TDs may waive halting play and waiver is not a misdeal. As the event \nprogresses, at TD’s discretion tables should be more tightly balanced. \n\nPots / Showdown"
+  },
+  {
+    "id": "Rule-12",
+    "number": 12,
+    "kind": "rule",
+    "title": "Declarations. Cards Speak at Showdown",
+    "body": "Cards speak to determine the winner. Verbal declarations of hand value are not binding at showdown but \ndeliberately miscalling a hand may be penalized. Dealers should read and announce hand values at \nshowdown. Any player, in the hand or not, should speak up if they think a mistake is made in reading \nhands or calculating and awarding the pot."
+  },
+  {
+    "id": "Rule-13",
+    "number": 13,
+    "kind": "rule",
+    "title": "Tabling Cards and Killing Winning Hand",
+    "body": "A: Proper tabling is both 1) turning all cards face up on the table and 2) allowing the dealer and players to \nread the hand clearly. “All cards” means both hole cards in hold’em, all 4 hole cards in Omaha, all 7 cards \nin 7-stud, etc.  \n\nB: At showdown players must protect their hands while waiting for cards to be read (See also Rule 65). \nPlayers who don’t fully table all cards, then muck thinking they’ve won, do so at their own risk. If a hand is \nnot 100% retrievable and identifiable and the TD rules it was not clearly read, the player has no claim to \nthe pot. The TDs decision on whether a hand was sufficiently tabled is final. \n\nC: Dealers cannot kill a properly tabled hand that was obviously the winner."
+  },
+  {
+    "id": "Rule-14",
+    "number": 14,
+    "kind": "rule",
+    "title": "Live Cards at Showdown",
+    "body": "Discarding non-tabled cards face down does not automatically kill them; players may change their minds \nand table cards that remain 100% identifiable and retrievable. Cards are killed by the dealer when pushed \ninto the muck or otherwise rendered irretrievable and unidentifiable."
+  },
+  {
+    "id": "Rule-15",
+    "number": 15,
+    "kind": "rule",
+    "title": "Showdown and Discarding Irregularities",
+    "body": "A: If a player tables one card that would make a winning hand, the dealer should advise the player to \ntable all cards. If the player refuses, the floor should be called. \n\nB: If a player bets then discards thinking they have won (forgetting another player is still in the hand), the \ndealer should hold the cards and call the floor (a Rule 58 exception). If cards are mucked and not \nretrievable and identifiable to 100% certainty, the player is out and not entitled to a refund of called bets. If \ncards are mucked and the player initiated a bet or raise not yet called, the uncalled amount will be \nreturned."
+  },
+  {
+    "id": "Rule-16",
+    "number": 16,
+    "kind": "rule",
+    "title": "Face Up for All-Ins",
+    "body": "All hands will be tabled without delay once a player is all-in and all betting action by all other players in \nthe hand is complete. No player who is either all-in or has called all betting action may muck their hand \nwithout tabling. All hands in both the main and side pot(s) must be tabled and are live. See Illustration \nAddendum."
+  },
+  {
+    "id": "Rule-17",
+    "number": 17,
+    "kind": "rule",
+    "title": "Non All-In Showdowns and Showdown Order",
+    "body": "A: In a non all-in showdown, if cards are not spontaneously tabled or discarded, the TD may enforce an \norder of show. The last aggressive player on the final betting round (final street) must table first. If there \nwas no final round bet, the player who would act first in a final betting round must table first (i.e. first seat \nleft of the button in flop games, high hand showing in stud, low hand in razz, etc.).  \n\nB: A non all-in showdown is uncontested if all but one player mucks face down without tabling. The last \nplayer with live cards wins and is not required to table the cards."
+  },
+  {
+    "id": "Rule-18",
+    "number": 18,
+    "kind": "rule",
+    "title": "Asking to See a Hand",
+    "body": "A: Players not still in possession of cards at showdown, or who have mucked their cards face down \nwithout tabling, lose any rights or privileges to ask to see any hand.  \n\nB: If there was a river bet, any caller has an inalienable right to have the last aggressor’s hand tabled \non request (“the hand they paid to see”) provided the caller tabled or retains his or her cards. TDs \ndiscretion governs all other requests such as to see the hand of another caller, or if there was no river \nbet. See Illustration Addendum [adopted 2013]."
+  },
+  {
+    "id": "Rule-19",
+    "number": 19,
+    "kind": "rule",
+    "title": "Playing the Board at Showdown",
+    "body": "To play the board, players must table all hole cards to get part of the pot (See Rule 13-A)."
+  },
+  {
+    "id": "Rule-20",
+    "number": 20,
+    "kind": "rule",
+    "title": "Awarding Odd Chips",
+    "body": "First, odd chips will be broken into the smallest denomination in play. A) Board games with 2 or more high \nor low hands: the odd chip goes to the first seat left of the button. B) Stud, razz, and if 2 or more high or \nlow hands in stud/8: the odd chip goes to the high card by suit in the player’s 5-card winning hand. C) H/L \nsplit: the odd chip in the total pot goes to the high side. D) Deleted 2022."
+  },
+  {
+    "id": "Rule-21",
+    "number": 21,
+    "kind": "rule",
+    "title": "Side Pots",
+    "body": "Each side pot will be split separately."
+  },
+  {
+    "id": "Rule-22",
+    "number": 22,
+    "kind": "rule",
+    "title": "Disputed Hands and Pots",
+    "body": "The reading of a tabled hand may be disputed until the next hand begins (see Rule 23). Accounting errors \nin calculating and awarding the pot may be disputed until substantial action occurs on the next hand. If a \nhand finishes during a break, the right to any dispute ends 1 minute after the pot is awarded. \n\nGeneral Procedures \n`"
+  },
+  {
+    "id": "Rule-23",
+    "number": 23,
+    "kind": "rule",
+    "title": "New Hand and New Limits",
+    "body": "A new level starts on announcement by the floor or audio signal by the clocking system. The new level \napplies to the next hand. Hands begin on the first riffle, push of the shuffler button, or on the dealer push. \nIf a hand starts at the prior level by mistake, the hand will continue at the prior level after substantial \naction occurs (Rule 36). If a new level starts during the dealer push, the incoming dealer will deal one \nhand at the prior level."
+  },
+  {
+    "id": "Rule-24",
+    "number": 24,
+    "kind": "rule",
+    "title": "Chip Race, Scheduled Color Ups",
+    "body": "A: At scheduled color-ups, chips will be raced off starting in seat 1, with a maximum of one chip awarded \nto a player. Players can’t be raced out of play: a player losing their last chip(s) in a race will get 1 chip of \nthe lowest denomination still in play.  \n\nB: Players must have their chips fully visible and are encouraged to witness the chip race.  \n\nC: If after the race, a player still has chips of a removed denomination, they will be exchanged for current \ndenominations only at equal value. Chips of removed denominations that do not fully total at least the \nsmallest denomination still in play will be removed without compensation."
+  },
+  {
+    "id": "Rule-25",
+    "number": 25,
+    "kind": "rule",
+    "title": "Cards and Chips Kept Visible, Countable, and Manageable. Discretionary Color-Ups",
+    "body": "A: Players, dealers, and the floor are entitled to a reasonable estimation of chip counts; thus, chips should \nbe kept in countable stacks. The TDA recommends clean vertical stacks of 20 same denomination chips \neach as a standard. Higher denomination chips must be visible and identifiable at all times. If a floor \nperson can’t look at a chip stack and quickly estimate its value, players likely can’t either. \n\nB: TDs control the number and denominations of chips in play and may color up one or more players at \ntheir discretion at any time. Discretionary color ups are to be announced.  \n\nC: Players must keep live hands in plain view at all times."
+  },
+  {
+    "id": "Rule-26",
+    "number": 26,
+    "kind": "rule",
+    "title": "Deck Changes",
+    "body": "Deck changes will be on the dealer push or level changes or as prescribed by the house. Players may not \nask for deck changes."
+  },
+  {
+    "id": "Rule-27",
+    "number": 27,
+    "kind": "rule",
+    "title": "Re-buys",
+    "body": "Players may not miss a hand. Players declaring intent to rebuy before a hand are playing chips behind \nand must make the re-buy."
+  },
+  {
+    "id": "Rule-28",
+    "number": 28,
+    "kind": "rule",
+    "title": "Rabbit Hunting",
+    "body": "Rabbit hunting (revealing cards that would have come if the hand had not ended) is not allowed."
+  },
+  {
+    "id": "Rule-29",
+    "number": 29,
+    "kind": "rule",
+    "title": "Calling for a Clock",
+    "body": "Players should act in a timely manner to maintain a reasonable pace of the game. If in TD’s judgement \nreasonable time has passed, they may call the clock or approve a clock request by any player in the \nevent. Players must be at their seats to call for a clock (Rule 30). A player on the clock has up to 25 \nseconds plus a 5 second countdown to act. If the player faces a bet and time expires, the hand is dead; if \nnot facing a bet, the hand is checked. A tie goes to the player. TDs may adjust the time allowed and take \nother steps to fit the game and stop persistent delays. See also Rules 2 and 70. \n\nPlayer Present / Eligible for Hand"
+  },
+  {
+    "id": "Rule-30",
+    "number": 30,
+    "kind": "rule",
+    "title": "At Your Seat and Live Hands",
+    "body": "To have a live hand, players must be at their seats when the last card is dealt to all players on the initial \ndeal. Players not then at their seats may not look at their cards which are killed immediately. Their posted \nblinds and antes forfeit to the pot and an absent player dealt the stud bring-in card posts the bring-in. “At \nyour seat” means in reach of your chair. This rule is not intended to encourage players to be out of their \nseats while in a hand."
+  },
+  {
+    "id": "Rule-31",
+    "number": 31,
+    "kind": "rule",
+    "title": "At the Table with Action Pending",
+    "body": "Players with live hands (including players all-in or otherwise finished betting) must remain at the table for \nall betting rounds and showdown. Leaving the table is incompatible with protecting your hand and \nfollowing the action and is subject to penalty. \n\nButton / Blinds"
+  },
+  {
+    "id": "Rule-32",
+    "number": 32,
+    "kind": "rule",
+    "title": "Dead Button",
+    "body": "Tournament play will use a dead button."
+  },
+  {
+    "id": "Rule-33",
+    "number": 33,
+    "kind": "rule",
+    "title": "Dodging Blinds",
+    "body": "Players who intentionally dodge any blind will incur a penalty. See Rule 71-B."
+  },
+  {
+    "id": "Rule-34",
+    "number": 34,
+    "kind": "rule",
+    "title": "Button Placement and Movement",
+    "body": "A: If incorrect button movement is discovered before SA occurs, the error will be corrected. However, if \nSA has occurred, play will continue. Ex: If the button is moved twice and SA occurs the error will stand, \nthe button will not be backed-up on the next hand. All players have a responsibility to monitor button \nplacement and speak up if they see a mistake (Rule 2) \n\nB: Heads-up, the small blind is the button, is dealt the last card, and acts first pre-flop and last on all other \nbetting rounds. Starting heads-up play, the button may need to be adjusted to ensure no player has the \nbig blind twice in a row. \n\nDealing Rules"
+  },
+  {
+    "id": "Rule-35",
+    "number": 35,
+    "kind": "rule",
+    "title": "Misdeals and Fouled Decks",
+    "body": "A: Misdeals include but are not necessarily limited to: 1) 2 or more boxed cards on the initial deal; 2) first \ncard dealt to the wrong seat; 3) cards dealt to a seat not entitled to a hand; 4) a seat entitled to a hand is \ndealt out; 5) the wrong number of cards is dealt to any player (except Rule 37); 6) Before SA, a non-\nstandard card for the game type is found (example: jokers, 2-3-4-5 in short deck); 7) In flop games, if 1 of \nthe first 2 cards dealt off the deck or any other 2 downcards are exposed by dealer error. House rules \napply for draw games (ex: lowball). \n\nB: Players may be dealt 2 consecutive cards on the button (see also Rule 37).   \n\nC: In misdeals, the re-deal is an exact re-play: the button doesn’t move, no new players are seated, limits \nstay the same. Cards are dealt to players who were dealt-in but not at their seats for the original deal and \nthey can play the re-deal (Rule 30). Players on penalty who were originally dealt-in will receive cards then \ntheir hands are killed. The original deal and re-deal count as 1 hand for a player on penalty, not 2.  \n\nD: Once substantial action occurs (see Rule 36) a misdeal cannot be declared; the hand must proceed \nunless the deck is fouled. Non-standard cards found after SA are treated as scraps of paper (exception: \nfouled decks). \n\nE: Fouled decks.If 2 or more cards of the same suit and rank are found, the deck is fouled. Other fouled \ndeck conditions may be defined by local gaming regulations and house policy. If a fouled deck is \ndiscovered, regardless of SA, play will stop and all bets will be returned. Once a hand concludes, the right \nto dispute based on a fouled deck ends according to Rule 22."
+  },
+  {
+    "id": "Rule-36",
+    "number": 36,
+    "kind": "rule",
+    "title": "Substantial Action (SA)",
+    "body": "Substantial Action is either A) any 2 actions in turn, at least one of which puts chips in the pot (i.e. any 2 \nactions except 2 checks or 2 folds) or B) any combination of 3 actions in turn (check, bet, raise, call, fold). \nPosted blinds do not count towards SA. See Rules 35-D and 53-B."
+  },
+  {
+    "id": "Rule-37",
+    "number": 37,
+    "kind": "rule",
+    "title": "Button with Too Few Cards",
+    "body": "A player on the button dealt too few cards should announce it immediately. Missing button cards may be \nreplaced even after substantial action if permitted for the game type. However, if the button acts on a \nhand with too few cards (by check or bet), the button’s hand is dead."
+  },
+  {
+    "id": "Rule-38",
+    "number": 38,
+    "kind": "rule",
+    "title": "Burns After Substantial Action",
+    "body": "The burn card is to protect the stub, not “preserve card order”. If SA occurs and a hand is killed due to the \nwrong number of cards, all cards of the killed hand are mucked and randomness applies to further \ndealing (See also RP-14 Randomness). The stub is treated as a normal stub and one and only one card \nis burned off the stub for each subsequent street. The burn is always one card per street, never more. \nSee Illustration Addendum."
+  },
+  {
+    "id": "Rule-39",
+    "number": 39,
+    "kind": "rule",
+    "title": "Irregular Flops and Premature-Dealt Cards",
+    "body": "A: 4-Card Flops. If the flop has 4 rather than 3 cards, exposed or not, and regardless of whether the door \ncard is presumed known, the floor will be called. The dealer then scrambles the 4 cards face down, the \nfloor randomly selects 1 as the next burn card and the other 3 are the flop (See also RP-14 \nRandomness).  \n\nB: If there was no burn on a 3-card flop, exposed or not and regardless of whether the door card is \npresumed known, if no action has occurred, the 3 cards are scrambled face down, one chosen as the \nburn. The flop will be the other 2 cards plus the next card off the stub. If any action (even one check) has \noccurred, play proceeds with the initial 3 cards. Only one card is burned for the turn.  \n\nC: For prematurely dealt cards, see Recommended Procedure 5. \n\nD: Reshuffling During a Hand. To protect game integrity, anytime the stub must be re-shuffled during the \nplay of a hand, the cards must be shuffled face-down and unexposed. Examples include premature cards \n(Rule 39 and RP-5), disordered stub (RP-4), extra draw or stud cards (RP-10-H), etc. \n\nPlay: Bets and Raises"
+  },
+  {
+    "id": "Rule-40",
+    "number": 40,
+    "kind": "rule",
+    "title": "Methods of Betting: Verbal and Chips",
+    "body": "A: Bets are by verbal declaration and/or pushing out chips. If a player does both, whichever is first defines \nthe bet. If simultaneous, a clear and reasonable verbal declaration takes precedence, otherwise the chips \nplay. In unclear situations or where verbal and chips are contradictory, the TD will determine the bet \nbased on the circumstances and Rule 1. See Illustration Addendum. See also Rule 57. \n\nB: Verbal declarations may be general (“call”, “raise”), a specific amount only (“one thousand”) or both \n(“raise, one thousand”). \n\nC: For all betting rules, declaring a specific amount only is the same as silently pushing out an equal \namount. Ex: Declaring “two hundred” is the same as silently pushing out 200 in chips."
+  },
+  {
+    "id": "Rule-41",
+    "number": 41,
+    "kind": "rule",
+    "title": "Methods of Calling",
+    "body": "Standard and acceptable forms of calling include: A) saying “call”; B) pushing out chips equal to a call; C) \nsilently pushing out an overchip; or D) silently pushing out multiple chips equal to a call under the multi-\nchip rule (Rule 45). Silently betting chip(s) relatively tiny to the bet (ex: blinds 2k-4k. A bets 50k, B then \nsilently puts out one 1k chip) is non-standard, strongly discouraged, subject to penalty, and will be \ninterpreted at TDs discretion, including being ruled a full call."
+  },
+  {
+    "id": "Rule-42",
+    "number": 42,
+    "kind": "rule",
+    "title": "Methods of Raising",
+    "body": "In no-limit or pot-limit, a raise must be made by A) pushing out the full amount in one motion or B) verbally \ndeclaring the full amount prior to pushing out chips. It is the responsibility of players to make their \nintentions clear. Note: 2-motion raises eliminated in 2019."
+  },
+  {
+    "id": "Rule-43",
+    "number": 43,
+    "kind": "rule",
+    "title": "Raise Amounts",
+    "body": "A: A raise must be at least equal to the largest prior full bet or raise of the current betting round. A player \nwho raises 50% or more of the largest prior bet but less than a minimum raise must make a full minimum \nraise. If less than 50% it is a call unless “raise” is first declared or the player is all-in (Rule 45-B). \nDeclaring an amount or pushing out the same amount of chips is treated the same (Rule 40-C). Ex: \nNLHE, opening bet is 1000, verbally declaring “Fourteen hundred” or silently pushing out 1400 in chips \nare both calls unless raise is first declared. See Illustration Addendum. \n\nB: Without other clarifying information, declaring raise and an amount is the total bet. Ex: A opens for \n2000, B declares “Raise, eight thousand.” The total bet is 8000."
+  },
+  {
+    "id": "Rule-44",
+    "number": 44,
+    "kind": "rule",
+    "title": "Oversized Chip Betting (Overchips)",
+    "body": "If facing a bet or blind, pushing out a single oversized chip (including your last chip) is a call if raise isn’t \nfirst declared. To raise with an overchip you must declare raise before the chip hits the table surface. If \nraise is declared but no amount is stated, the raise is the maximum allowable for the chip. If not facing a \nbet, pushing out an overchip silently (no declaration) is a bet of the maximum for the chip."
+  },
+  {
+    "id": "Rule-45",
+    "number": 45,
+    "kind": "rule",
+    "title": "Multiple Chip Betting",
+    "body": "A: If facing a bet, unless raise or all-in is declared first, a multiple-chip bet (including a bet of your last \nchips) is a call if every chip is needed to make the call; i.e. removal of just one of the smallest chips \nleaves less than the call amount. Ex-1: Player A opens for 400: B raises to 1100 total (a 700 raise), C \nputs out one 500 and one 1000 chip silently. This is a call because removing the 500 chip leaves less \nthan the 1100 call amount. Ex-2: NLHE 25-50. Post-flop A opens for 1050 and B puts out his last chips \n(two 1000’s). B calls unless raise or all-in was first declared. \n\nB: If every chip is not needed to make the call; i.e. removing just one of the smallest chips leaves the call \namount or more: 1) if the player has chips remaining, the 50% standard in Rule 43 governs the bet. 2) A \nbet of a player’s last chip(s) is an all-in bet whether reaching the 50% threshold or not. See Addendum."
+  },
+  {
+    "id": "Rule-46",
+    "number": 46,
+    "kind": "rule",
+    "title": "Prior Bet Chips Not Pulled In",
+    "body": "A: To avoid confusion, players with prior-bet chips not yet pulled in who face a raise should verbalize their \naction before adding chips to the prior bet.  \n\nB: If facing a raise, clearly pulling back a prior bet chip binds a player to call or raise; they may not put the \nchip(s) back out and fold. \n\nC: If new chip(s) are added silently and the bet is unclear to the house, the call and raise rules 41-45 \napply as follows: 1) If prior chips don’t cover the call AND are either left alone OR fully pulled back, an \noverchip is a call and multiple new chips are subject to the 50% raise standard (Rule 43). 2) If prior chips \nare partly pulled back OR if prior chip(s) cover the call, the combined final chip bet is a raise if reaching \nthe 50% standard (Rules 43 and 45), if less it is a call. See Illustration Addendum."
+  },
+  {
+    "id": "Rule-47",
+    "number": 47,
+    "kind": "rule",
+    "title": "Re-Opening the Bet.",
+    "body": "A: In no-limit and pot limit, an all-in wager (or cumulative multiple short all-ins) totaling less than a full bet \nor raise will not reopen betting for players who have already acted and are not facing at least a full bet or \nraise when the action returns to them. If multiple short all-ins re-open the betting, the minimum raise is \nalways the last full valid bet or raise of the round (See also Rule 43). \n\nB: In limit, at least 50% of a full bet or raise is required to re-open betting for players who have already \nacted. See Illustration Addendum."
+  },
+  {
+    "id": "Rule-48",
+    "number": 48,
+    "kind": "rule",
+    "title": "Number of Allowable Raises",
+    "body": "There is no cap on the number of raises in no-limit and pot-limit. In limit play, there is a limit to raises even \nwhen heads-up until the event is down to 2 players; the house limit applies."
+  },
+  {
+    "id": "Rule-49",
+    "number": 49,
+    "kind": "rule",
+    "title": "Accepted Action",
+    "body": "Poker is a game of alert, continuous observation. It is the caller’s responsibility to determine the correct \namount of an opponent’s bet before calling, regardless of what is stated by others. If a caller requests a \ncount but receives incorrect information from a dealer or player, then pushes out that amount or declares \ncall, the caller has accepted the full correct action and is subject to the correct wager or all-in amount. As \nwith all situations, Rule 1 may apply at TD’s discretion. See also RP-12."
+  },
+  {
+    "id": "Rule-50",
+    "number": 50,
+    "kind": "rule",
+    "title": "Acting in Turn",
+    "body": "A: Players must act in turn verbally and/or by pushing out chips. Action in turn is binding and commits \nchips to the pot that stay in the pot. \n\nB: Players must wait for clear bet amounts before acting. Ex: NLHE, A says “raise” (but no amount), and \nB quickly folds. B should wait to act until A’s raise amount is clear."
+  },
+  {
+    "id": "Rule-51",
+    "number": 51,
+    "kind": "rule",
+    "title": "Binding Declarations / Undercalls in Turn",
+    "body": "A: General verbal declarations in turn (such as “call” or “raise”) commit a player to the full current action. \nSee Illustration Addendum \n\nB: A player undercalls by declaring or pushing out less than the call amount without first declaring “call”. \nAn undercall is a mandatory full call if made in turn facing 1) any bet heads-up or 2) the opening bet on \nany round multi-way. In other situations, TD’s discretion applies. The opening bet is the first chip bet of \neach betting round (not a check). In blind games the posted BB is the pre-flop opener. All-in buttons \nreduce undercall frequency (See Recommended Procedure 1). This rule governs when players must \nmake a full call and when, at TDs discretion they may forfeit the amount of the intended undercall and fold \n(see Illustration Addendum). For underbets and underraises, see Rule 52. \n\nC: If two or more undercalls occur in sequence, play backs up to the first undercaller who must correct his \nor her bet per Rule 51-B. The TD will determine how to treat hands of the remaining bettors based on the \ncircumstances."
+  },
+  {
+    "id": "Rule-52",
+    "number": 52,
+    "kind": "rule",
+    "title": "Incorrect Bets, Underbets and Underraises",
+    "body": "A: In limit and no-limit, opening or raising less than the minimum legal amount is corrected anywhere on \nthe current street (if on the river any time before showdown starts). Ex: NLHE 100-200, post-flop A opens \nfor 600 and B raises to 1000 (a 200 underraise). C and D call, E folds then the error is noticed. Increase \nthe bet to 1200 total for all bettors any time before the turn is dealt. After the turn the error stands. For \nundercalls, see Rule 51. \n\nB: In pot limit, if a player underbets the pot based on an inaccurate count, if the pot count is too high (an \nillegal bet), it will be corrected for all players anywhere on the current street; if too low, corrected until \nsubstantial action occurs after the bet. See Illustration Addendum."
+  },
+  {
+    "id": "Rule-53",
+    "number": 53,
+    "kind": "rule",
+    "title": "Action Out of Turn (OOT)",
+    "body": "A: Any action out of turn (check, call, or raise) will be backed up to the correct player in order. The OOT \naction is subject to penalty and is binding if action to the OOT player does not change. A check, call or \nfold by the correct player does not change action. If action changes, the OOT action is not binding; any \nbet or raise is returned to the OOT player who has all options: call, raise, or fold. An OOT fold is binding. \nSee Illustration Addendum. \n\nB: Players skipped by OOT action must defend their right to act. If a skipped player had reasonable time \nand does not speak up before substantial action (Rule 36) OOT occurs after the player, the OOT action is \nbinding. Action backs up and the floor will rule on how to treat the skipped hand given the circumstances, \nincluding ruling the hand dead or limiting the player to non-aggressive action. See Addendum."
+  },
+  {
+    "id": "Rule-54",
+    "number": 54,
+    "kind": "rule",
+    "title": "Pot Size and Pot-Limit Bets",
+    "body": "A: Players are entitled to a pot count in pot-limit only. Dealers will not count the pot in limit and no-limit. \nSee also RP-22 Spreading the Pot \n\nB: Pre-flop a dead or short all-in blind will not affect pot calculation. All pre-flop pot and re-pot bets will \nassume full blinds were posted. Ex 1: PLO, 100-200 blinds, dead SB, BB posts 200. Ex 2: SB posts 100, \nBB short posts 100. In both examples the pot-limit bet for first player to act is 700. \n\nC: Post-flop, bets are based on actual pot size.  \n\nD: Declaring “I bet the pot” is not a valid bet in no-limit but it does bind the player to making a valid bet (at \nleast a minimum bet) and may be subject to penalty. Players facing a bet must make a valid raise."
+  },
+  {
+    "id": "Rule-55",
+    "number": 55,
+    "kind": "rule",
+    "title": "Invalid Bet Declarations",
+    "body": "If a player faces no bet and: A) declares “call”, it is a check; B) declares “raise”, the player must make at \nleast a minimum bet. A player declaring “check” when facing a bet may call or fold, but cannot raise."
+  },
+  {
+    "id": "Rule-56",
+    "number": 56,
+    "kind": "rule",
+    "title": "String Bets and Raises",
+    "body": "String bets and raises are not allowed. Such wagers involve multiple movements whereby a player puts \nout a bet then returns to their stack for more chips to add to the bet."
+  },
+  {
+    "id": "Rule-57",
+    "number": 57,
+    "kind": "rule",
+    "title": "Non-Standard and Unclear Betting",
+    "body": "Players use unofficial betting terms and gestures at their own risk. These may be interpreted to mean \nother than what the player intended. Also, if a declared bet can legally have multiple meanings, it will be \nruled the highest reasonable amount that is less than or equal to the pot size* before the bet. Ex: NLHE \n200-400, the pot totals less than 5000, player declares “I bet five.” With no other clarifying information, the \nbet is 500; if the pot totals 5000 or more, the bet is 5000. *The pot is the total of all prior bets including \nany bets in front of a player not yet pulled in. See Rules 2, 3, 40 and 42."
+  },
+  {
+    "id": "Rule-58",
+    "number": 58,
+    "kind": "rule",
+    "title": "Non-Standard Folds",
+    "body": "Any time before the end of the final betting round, folding in turn if there’s no bet to you (ex: facing a \ncheck or first to act post-flop) or folding out of turn are binding folds subject to penalty. See also 15-B."
+  },
+  {
+    "id": "Rule-59",
+    "number": 59,
+    "kind": "rule",
+    "title": "Conditional and Premature Declarations",
+    "body": "A: Conditional statements of future action are non-standard and strongly discouraged. At TDs discretion \nthey may be binding and/or penalized. Example: “if – then” statements such as \"If you bet, I will raise.” \n\nB: If Player A declares “bet” or “raise” and B calls before A’s exact bet amount is known, the TD will rule \nthe bet as best fits the situation including possibly obliging B to call any amount."
+  },
+  {
+    "id": "Rule-60",
+    "number": 60,
+    "kind": "rule",
+    "title": "Count of Opponent’s Chip Stack",
+    "body": "Players, dealers, and the floor are entitled to a reasonable estimation of opponents’ chip stacks (Rule 25). \nA player may request a more precise count only if facing an all-in bet and it is his or her turn to act. The \nall-in player is not required to count; on request the dealer or floor will count it. Accepted action applies \n(Rule 49). Visible and countable chip stacks (Rule 25) greatly improve counting accuracy."
+  },
+  {
+    "id": "Rule-61",
+    "number": 61,
+    "kind": "rule",
+    "title": "Over-Betting Expecting Change",
+    "body": "Betting should not be used to obtain change. Pushing out more than the intended bet can confuse \neveryone at the table. All chips pushed out silently are at risk of being counted in the bet. Ex: the opening \nbet is 325 to player A who silently puts out 525 (one 500 and one 25), expecting 200 change. This is a \nraise to 650 under the multiple chip rule (Rule 45)."
+  },
+  {
+    "id": "Rule-62",
+    "number": 62,
+    "kind": "rule",
+    "title": "All-In with Chips Found Behind Later",
+    "body": "If A bets all-in and a hidden chip is found behind after a player calls, the TD will determine if the chip \nbehind is part of accepted action (Rule 49). If not part of the action, A is not paid off for the chip(s) if he or \nshe wins. If A loses, he or she is not saved by the chip(s) and the TD may award the chip(s) to the \nwinning caller. \n\nPlay: Other"
+  },
+  {
+    "id": "Rule-63",
+    "number": 63,
+    "kind": "rule",
+    "title": "Chips Out of View and in Transit",
+    "body": "Players may not hold or transport chips in a way that takes them out of view. A player who does so will \nforfeit the chips and may be disqualified. The forfeited chips will be taken out of play. The TDA \nrecommends the house provide racks or bags to transport chips when needed."
+  },
+  {
+    "id": "Rule-64",
+    "number": 64,
+    "kind": "rule",
+    "title": "Lost and Found Chips",
+    "body": "Lost and found chips for which ownership cannot be determined will be taken out of play and returned to \ntournament inventory."
+  },
+  {
+    "id": "Rule-65",
+    "number": 65,
+    "kind": "rule",
+    "title": "Accidentally Killed / Fouled / Exposed Hands",
+    "body": "A: Players must protect their hands at all times, including at showdown while waiting for hands to be read. \nIf the dealer kills a hand by mistake or if in TDs judgement a hand is fouled and cannot be identified to \n100% certainty, the player has no redress and is not entitled to a refund of called bets. If the player \ninitiated a bet or raise and hasn’t been called, the uncalled amount will be returned.  \n\nB: If a hand is fouled but can be identified, it remains in play despite any cards exposed."
+  },
+  {
+    "id": "Rule-66",
+    "number": 66,
+    "kind": "rule",
+    "title": "Dead Hands and Mucking in Stud",
+    "body": "In stud poker, if a player picks up the upcards while facing action, the hand is dead. Proper mucking in \nstud is turning down all up cards and pushing them all forward face down. \n\nEtiquette and Penalties"
+  },
+  {
+    "id": "Rule-67",
+    "number": 67,
+    "kind": "rule",
+    "title": "No Disclosure. One Player to a Hand",
+    "body": "Players must protect other players in the tournament at all times. Therefore players, whether in the hand \nor not, must not: \n     1.  Discuss contents of live or mucked hands, \n     2.  Advise or criticize play at any time, \n     3.  Read a hand that hasn't been tabled. \nOne-player-to-a-hand is in effect. Among other things, this rule prohibits showing a hand to or discussing \nstrategy with another player, advisor, or spectator."
+  },
+  {
+    "id": "Rule-68",
+    "number": 68,
+    "kind": "rule",
+    "title": "Exposing Cards and Proper Folding",
+    "body": "Exposing cards with action pending, including the current player when last to act, may result in a penalty but not \na dead hand. Any penalty begins at the end of the hand. When folding, cards should be pushed forward low to \nthe table, not deliberately exposed or tossed high (“helicoptered”). See Rule 66."
+  },
+  {
+    "id": "Rule-69",
+    "number": 69,
+    "kind": "rule",
+    "title": "Ethical Play",
+    "body": "Poker is an individual game. Soft play will result in penalties, which may include chip forfeiture and/or \ndisqualification. Chip dumping and other forms of collusion will result in disqualification."
+  },
+  {
+    "id": "Rule-70",
+    "number": 70,
+    "kind": "rule",
+    "title": "Etiquette Violations",
+    "body": "Etiquette violations are subject to enforcement actions in Rule 71. Examples include but are not limited to: \npersistent delay of the game, unnecessarily touching another player’s person, cards or chips, repeatedly \nacting out of turn, maintaining poor card or chip visibility and countability, betting out of reach of the \ndealer, abusive conduct, offensive hygiene, and excessive chatter."
+  },
+  {
+    "id": "Rule-71",
+    "number": 71,
+    "kind": "rule",
+    "title": "Warnings, Penalties, and Disqualification",
+    "body": "A: Enforcement options include but are not limited to verbal warnings, one or more “missed hand” or \n“missed round” penalties, and disqualification. For missed rounds, the offender will miss one hand for \nevery player (including him or her) at the table when the penalty is given multiplied by the number of \npenalty rounds. Repeat infractions are subject to escalating penalties. Players away from the table or on \npenalty may be anted or blinded out of a tournament. \n\nB: A penalty may be invoked for etiquette violations (Rule 70), card exposure with action pending, \nthrowing cards, violating one-player-to-a-hand, improper use of devices or strategy tools (Rule 5), or \nsimilar incidents. Penalties will be given for soft play, abuse, disruptive behavior, dodging blinds or \ncheating. Checking the exclusive nuts when last to act on the river is not an automatic soft play violation; \nTD’s discretion applies based on the situation. \n\nC: Players on penalty must be away from the table. Cards are dealt to their seats, their blinds and antes \nposted, their hands are killed after the initial deal, and if dealt the stud bring-in they must post the bring-in. \n\nD: Chips of a disqualified player shall be removed from play. \n\nPOKER TOURNAMENT DIRECTORS ASSN. \n2024 Recommended Procedures, \nVersion 1.0, October, 2024 \n\nTDA Recommended Procedures are policy suggestions to reduce errors and improve event \nmanagement. They also may apply to situations with too many variations to address in one universal \nrule. The fairest ruling in these cases may require use of multiple rules, evaluation of all \ncircumstances, and reliance on Rule 1 as a primary guide."
+  },
+  {
+    "id": "RP-1",
+    "number": 1,
+    "kind": "rp",
+    "title": "All-In Buttons",
+    "body": "All-in buttons clearly indicate a player is “all-in.” The dealer should keep the buttons (not each player). \nWhen a player bets all-in, the dealer places an all-in button in front of the player, in full view of the rest of \nthe table."
+  },
+  {
+    "id": "RP-2",
+    "number": 2,
+    "kind": "rp",
+    "title": "Bringing in Bets is Discouraged",
+    "body": "Routinely bringing in chips as betting and raising proceeds around the table is poor dealing practice. \nReducing bet stacks can influence action, create confusion and increase errors. Only the player currently \nfacing action may ask the dealer to bring-in bets."
+  },
+  {
+    "id": "RP-3",
+    "number": 3,
+    "kind": "rp",
+    "title": "Personal Belongings",
+    "body": "The table surface is vital for chip stack management, dealing, and betting. The table and nearby spaces \n(legroom and walkways) must not be cluttered by non-essential personal items. Each cardroom should \nclearly display its policy on items allowed in the tournament area."
+  },
+  {
+    "id": "RP-4",
+    "number": 4,
+    "kind": "rp",
+    "title": "Disordered Stub",
+    "body": "When cards remain to be dealt on a hand and the stub is accidentally dropped and appears to be \ndisordered: 1) first try to reconstruct the stub in its original order if possible; 2) If not possible, create a \nnew stub using only the stub cards (not the muck and prior burns). These should be scrambled, shuffled, \ncut, and play proceeds with the new stub; 3) If when dropped the stub is mixed in with the muck and/or \nburns, then scramble the mixed cards together, shuffle, and cut. Play proceeds with the new stub."
+  },
+  {
+    "id": "RP-5",
+    "number": 5,
+    "kind": "rp",
+    "title": "Prematurely Dealt Cards",
+    "body": "Board and burn cards are sometimes dealt prematurely, before action on the preceding round is finished. \nThe general procedures for these situations are: \n\nA: Premature flop, leave the flop burn card as the burn. Return the premature board cards to the deck \nstub and reshuffle the entire stub. Re-deal the flop (without another burn) from the newly shuffled stub. \n\nB: A premature turn card: leave the turn burn card as the burn. Return the premature turn card to the \ndeck stub and reshuffle the entire stub. Re-deal the turn (without another burn) from the newly shuffled \nstub \n\nC: A premature river card: leave the river burn card as the burn. Return the premature river card to the \ndeck stub and reshuffle the entire stub. Re-deal the river (without another burn) from the newly shuffled \nstub  \n\nD: Premature card in stud: the premature card is returned to the stub, the stub is re-shuffled (See RP-17, \nreshuffling), and a new street is dealt from the newly shuffled stub without another burn."
+  },
+  {
+    "id": "RP-6",
+    "number": 6,
+    "kind": "rp",
+    "title": "Efficient Movement of Players",
+    "body": "Moving players for breaking and balancing should be expeditious so as not to unduly miss blinds or \notherwise delay the game. If possible, players should have racks for chip transport and sufficient color-\nups should be done so players do not carry unusually large numbers of chips (see Rules 10, 11 and 63)."
+  },
+  {
+    "id": "RP-7",
+    "number": 7,
+    "kind": "rp",
+    "title": "Timing of Dealer Pushes",
+    "body": "The TDA recommends that dealers hold up the push 90 seconds prior to a scheduled break or a level \nchange. This avoids having time expire in crucial stages of the game."
+  },
+  {
+    "id": "RP-8",
+    "number": 8,
+    "kind": "rp",
+    "title": "Hand for Hand Procedures",
+    "body": "A: Payoff eligibility starts at the announcement: “finish the current hand you’re on then hold up, we are \ngoing hand for hand”. If enough players bust on the current hand to break into the money, the busting \nplayers will be eligible for a share of the place(s) paid on the current hand. Example: NLHE tournament \npaying 50 players. 52 players remain when the announcement is made and during the current hand 3 \nplayers bust. All 3 players will share in the 50th place payout. \n\nB: During H4H play, a maximum of 3 minutes per hand will be deducted from the clock. \n\nC: So that players can most clearly know the timing of level changes, whenever possible the clock should \nbe reduced by 2-minutes each hand not after “batches” of multiple hands. \n\nD: Blinds continue to increase as time elapses off the clock at the rate of 2 minutes per hand and new \nlevels are reached. \n\nE: Players are encouraged but not required to remain seated during H4H play. \n\nF: In the event of an all-in and call during H4H, the cards of all players in the hand should remain face \ndown. Dealers should not deal additional cards until instructed."
+  },
+  {
+    "id": "RP-9",
+    "number": 9,
+    "kind": "rp",
+    "title": "Number of Players at Final Table",
+    "body": "9 and 8-handed events will combine from two tables of five players each to a 9-handed final table. 7 and \n6-handed events will combine from two tables of four players each to a 7-handed final table."
+  },
+  {
+    "id": "RP-10",
+    "number": 10,
+    "kind": "rp",
+    "title": "Tournament Stud Dealing Procedures",
+    "body": "A: A downcard exposed on the initial deal will be the player’s upcard and 3rd street will be dealt down to \nthat player. The player can be the bring-in. \n\nB: A card exposed by the dealer on 7th street will be replaced if betting action remains on the hand. 7th \nstreet should be dealt down even if no betting action remains on the hand and in all-in situations the \nplayer(s) not at risk expose first. \n\nC: Cards of a player not at his or her seat (See Rule 30) for the deal will be killed. No cards will be dealt \nto a hand on 4th street that is not live. \n\nD: If there are two or more matching high hands showing in Stud (or Stud-8) or low hands in Razz, betting \nstarts on the hand with the high card by suit in both games. \n\nE: If the player dealt the low card by suit is all-in for the ante, betting starts to his or her left. Players with \nchips must bet at least the bring-in or fold. \n\nF: Bets will not be doubled on 4th street for a pair showing. \nG: For premature cards dealt in stud see RP-5-D. \n\nH: 7th street short stub procedure. If before dealing 7th street the number of cards in the current stub is \nless than the “required number” (# remaining players + burn card + undealt last card) proceed as follows: \nA) if the required number can be reached by adding the 3 prior burn cards (for 4th, 5th, and 6th street) the \ncurrent stub will be scrambled with the prior burns to create a new stub. The new stub will be cut, a card \nburned, and one card dealt to each player. B) if there are at least 3 cards in the current stub but adding \nthe prior burns would not reach the required number, the dealer will burn the top card of the current stub \nand deal the next card as a community card in the center of the table. C) if the current stub has less than \n3 cards, it will be scrambled with the 3 prior burns for a new stub which will then be cut, a card burned, \nand the next card dealt as a community card. D) If a community card is in play, the first player who would \nact on 6th street will be first to act on 7th street."
+  },
+  {
+    "id": "RP-11",
+    "number": 11,
+    "kind": "rp",
+    "title": "Ante Formats and No Ante Reduction",
+    "body": "If a single-payer ante is used, the big blind ante format (BBA) with big-blind-first calculation is \nrecommended. Antes should not be reduced (including at the final table) as play progresses in the event."
+  },
+  {
+    "id": "RP-12",
+    "number": 12,
+    "kind": "rp",
+    "title": "Dealers Should Announce Bets and Raises",
+    "body": "Dealers should routinely announce non-all-in bet values as betting proceeds around the table. All-in bets \nwill be counted only on request of the player currently facing action. Accepted action continues to apply \n(Rule 49). Scheduled and discretionary color-ups improve bet countability."
+  },
+  {
+    "id": "RP-13",
+    "number": 13,
+    "kind": "rp",
+    "title": "Dealers Should Stack Chips in Split-Pot Games",
+    "body": "Where possible, dealers should periodically stack pot chips in split-pot games. Stacking chips should not \nobscure players’ view or otherwise disrupt the game."
+  },
+  {
+    "id": "RP-14",
+    "number": 14,
+    "kind": "rp",
+    "title": "Randomness May be Applied to Special Situations",
+    "body": "For error remedies not otherwise covered in the TDA Rules and Procedures, TDs may use the concept of \nrandomness to design a solution."
+  },
+  {
+    "id": "RP-15",
+    "number": 15,
+    "kind": "rp",
+    "title": "Proper Tournament Staff Communication",
+    "body": "A: Outgoing dealers should inform incoming dealers of pertinent information regarding the table. \nExamples include: blind information, players on warning or penalties, disruptive behavior. \n\nB: The dealer should inform the floor of all existing and potential infractions of Rule 2 (Player \nResponsibilities) and Rule 70 (Etiquette). Special emphasis on any discriminatory or offensive behavior in \ngeneral or towards specific players or staff."
+  },
+  {
+    "id": "RP-16",
+    "number": 16,
+    "kind": "rp",
+    "title": "Player Absent on a Breaking Table",
+    "body": "If a player is not present during breaking of a table, their chips should be moved to the new table by a \nstaff member."
+  },
+  {
+    "id": "RP-17",
+    "number": 17,
+    "kind": "rp",
+    "title": "Tournament Draw Betting Procedures",
+    "body": "Limping is allowed in all single-draw games."
+  },
+  {
+    "id": "RP-18",
+    "number": 18,
+    "kind": "rp",
+    "title": "Order of Mixed Games",
+    "body": "In order to reduce errors, in mixed game events (ex HORSE), stud and stud-8 need not be played \nconsecutively."
+  },
+  {
+    "id": "RP-19",
+    "number": 19,
+    "kind": "rp",
+    "title": "Reducing Stalling",
+    "body": "The house should clearly announce intention to reduce stalling so that players understand timely play is \nexpected. It’s recommended that each house establish creative methods for reducing stalling. Some \nmethods successfully used by TDA member houses include: \nRandom table breaks instead of table draws, using fixed # of hands per level, going orbit for orbit, soft \nhand for hand, and adding a shot clock"
+  },
+  {
+    "id": "RP-20",
+    "number": 20,
+    "kind": "rp",
+    "title": "Cards Ready for Shuffle",
+    "body": "At the start of the tournament of ending of a break, within one minute of starting or resuming play, the \nfloor should announce “dealers prepare your decks”. When at least 2 players are at the table, the dealer \nwill wash and square the deck, to be ready for shuffle when the level starts."
+  },
+  {
+    "id": "RP-21",
+    "number": 21,
+    "kind": "rp",
+    "title": "Spreading the Pot",
+    "body": "The pot will only be counted in pot-limit events. On request the pot may be spread to increase chip \nvisibility. See also Rule 54: Pot Size and Pot-Limit Bets."
+  },
+  {
+    "id": "RP-22",
+    "number": 22,
+    "kind": "rp",
+    "title": "Betting Non-Denominational Items (Bounty chips, clock tokens etc)",
+    "body": "Action items with no nominal value (bounty chips, clock tokens etc) should be of different size than \nstandard betting chips. Betting with these items will be interpreted per house policy or Rule 1 and may be \nruled a call or all-in at TDs discretion. \n\nPOKER TOURNAMENT DIRECTORS ASSN."
+  }
+]
