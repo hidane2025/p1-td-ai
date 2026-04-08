@@ -32,8 +32,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / "src"))
 
 import re
+import textwrap
 
 from judge import judge  # noqa: E402
+
+
+def _render_html(html: str) -> None:
+    """Streamlit Markdown の 4 スペース=コードブロック誤認を回避する安全 HTML レンダー"""
+    # 先頭空白を完全に削除（Markdown のコードブロック誤認対策）
+    dedented = textwrap.dedent(html).strip()
+    # 改行も最小化してインライン HTML に近づける
+    collapsed = re.sub(r"\n\s*", "", dedented)
+    st.markdown(collapsed, unsafe_allow_html=True)
 from db import (  # noqa: E402
     init_db,
     save_feedback,
@@ -406,77 +416,68 @@ if st.session_state.last_judgment:
     # ===== 🎯 結論ファースト表示（3行で完結） =====
     # 1行目: 判断
     if conclusion:
-        st.markdown(
-            f"""
-            <div style="
-                padding: 1.2rem 1.4rem;
-                border-radius: 10px;
-                background: linear-gradient(135deg, #FFF4ED 0%, #FFE8D6 100%);
-                border-left: 6px solid #FF6B35;
-                margin-bottom: 0.6rem;
-            ">
-              <div style="font-size: 0.85rem; color: #8B4513; font-weight: 600; margin-bottom: 0.3rem;">
-                ⚖️ 推奨判断
-              </div>
-              <div style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; line-height: 1.5;">
-                {conclusion}
-              </div>
+        _render_html(f"""
+            <div style="padding:1.2rem 1.4rem;border-radius:10px;background:linear-gradient(135deg,#FFF4ED 0%,#FFE8D6 100%);border-left:6px solid #FF6B35;margin-bottom:0.6rem;">
+              <div style="font-size:0.85rem;color:#8B4513;font-weight:600;margin-bottom:0.3rem;">⚖️ 推奨判断</div>
+              <div style="font-size:1.25rem;font-weight:700;color:#1a1a1a;line-height:1.5;">{conclusion}</div>
             </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        """)
     else:
         # パース失敗時のフォールバック
         st.warning("判断セクションを抽出できませんでした。生の応答を表示します。")
 
     # 2行目: 主要ルール
     if main_rule:
+        _render_html(f"""
+            <div style="padding:0.7rem 1rem;border-radius:6px;background:#F0F8FF;border-left:4px solid #4A90E2;margin-bottom:0.6rem;">
+              <span style="font-size:0.9rem;color:#2E4A66;">📖 <b>適用ルール</b>: {main_rule}</span>
+            </div>
+        """)
+
+    # 3行目: 確信度バッジ（単一行 HTML で確実にレンダリング）
+    conf_bg = (
+        "#E8F5E9" if confidence == "high"
+        else "#FFF8E1" if confidence == "medium"
+        else "#FFEBEE"
+    )
+    conf_fg = (
+        "#2E7D32" if confidence == "high"
+        else "#F57C00" if confidence == "medium"
+        else "#C62828"
+    )
+    # 改行を完全に削除して 1 行 HTML 化（Markdown コードブロック誤認対策）
+    conf_badge = (
+        f'<span style="padding:0.3rem 0.8rem;background:{conf_bg};'
+        f'border-radius:20px;font-size:0.85rem;color:{conf_fg};'
+        f'font-weight:600;margin-right:0.5rem;">🎚️ 確信度: {confidence}</span>'
+    )
+    st.markdown(
+        f'<div style="margin-bottom:1rem;">{conf_badge}</div>',
+        unsafe_allow_html=True,
+    )
+
+    # ペナルティは独立の警告ボックスで表示（複数行対応）
+    if penalty:
+        # 改行を ・ 区切りに変換して 1 行化
+        penalty_oneline = " ・ ".join(
+            line.strip() for line in penalty.split("\n") if line.strip()
+        )
         st.markdown(
             f"""
             <div style="
-                padding: 0.7rem 1rem;
-                border-radius: 6px;
-                background: #F0F8FF;
-                border-left: 4px solid #4A90E2;
-                margin-bottom: 0.6rem;
+                padding:0.7rem 1rem;
+                border-radius:6px;
+                background:#FFEBEE;
+                border-left:4px solid #C62828;
+                margin-bottom:1rem;
+                font-size:0.9rem;
+                color:#8B0000;
             ">
-              <span style="font-size: 0.9rem; color: #2E4A66;">
-                📖 <b>適用ルール</b>: {main_rule}
-              </span>
+              ⚠️ <b>ペナルティ</b>: {penalty_oneline}
             </div>
             """,
             unsafe_allow_html=True,
         )
-
-    # 3行目: 確信度 + ペナルティ (横並び)
-    badge_html = f"""
-    <div style="display: flex; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap;">
-      <span style="
-        padding: 0.3rem 0.8rem;
-        background: {'#E8F5E9' if confidence == 'high' else '#FFF8E1' if confidence == 'medium' else '#FFEBEE'};
-        border-radius: 20px;
-        font-size: 0.85rem;
-        color: {'#2E7D32' if confidence == 'high' else '#F57C00' if confidence == 'medium' else '#C62828'};
-        font-weight: 600;
-      ">
-        🎚️ 確信度: {confidence}
-      </span>
-    """
-    if penalty:
-        badge_html += f"""
-      <span style="
-        padding: 0.3rem 0.8rem;
-        background: #FFEBEE;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        color: #C62828;
-        font-weight: 600;
-      ">
-        ⚠️ ペナルティ: {penalty}
-      </span>
-    """
-    badge_html += "</div>"
-    st.markdown(badge_html, unsafe_allow_html=True)
 
     # ===== 🔽 詳細を見る（折りたたみ） =====
     with st.expander("🔽 詳細（根拠・補足・全文）を見る"):
