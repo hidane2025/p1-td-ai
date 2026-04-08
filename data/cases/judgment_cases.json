@@ -920,5 +920,148 @@
     "expected_reasoning": "Rule 11A『To balance in flop and mixed-games, the player to be big blind next moves to the worst position, including single big blind if available, even if that means the seat is big blind twice. Worst position is never the small blind』。新参者は BB ポジションで参加。dead button の処理が伴う。",
     "confidence": "medium",
     "notes": "テーブルバランスは複雑だが頻発するため、TD 判断 AI で標準化する価値が高い。"
+  },
+  {
+    "id": "case-031-negreanu-raise-muck",
+    "category": "ショーダウン／Raise then Muck",
+    "created_by": "瀬戸ミナ（Hustler Casino Live 実例）",
+    "situation": "Hustler Casino Live の cash game（本件の条文解釈は tournament TD にも適用可能）。Negreanu が UTG から open limp。Martirosian (BTN) が Negreanu のリンプを見逃して raise 8K。SB/BB fold。Martirosian は「自分が勝った」と思い込み、Negreanu のアクション前にカードを muck。実際はまだ Negreanu のアクションが残っていた。TD が呼ばれた。",
+    "tournament_phase": "Cash game（条文参照）",
+    "blinds": "BB equivalent",
+    "game_type": "NLHE",
+    "prior_actions": "Preflop: Negreanu UTG limp → Martirosian BTN raise 8K → SB/BB fold → Martirosian self-mucks before Negreanu acts",
+    "expected_judgment": "Martirosian のハンドは dead。8K raise 分は Martirosian に返金（un-called raise）。Negreanu は base pot（ブラインド + リンプ）を獲得。",
+    "expected_rules": [
+      "Rule-65",
+      "Rule-16"
+    ],
+    "expected_reasoning": "Rule 65A『Accidentally Killed / Fouled Hands』により、raiser が自発的に muck した場合、まだ call されていない raise 分は uncalled bet として返却される。Matt Savage（TDA 元議長）も X で同じ解釈を公表。OOT fold が binding である Rule 58 は本件には適用されない（本件は raiser 本人が自分のハンドを殺した case）。",
+    "alternatives": [],
+    "penalty": {
+      "level": "verbal_warning",
+      "description": "Martirosian にアクション順序確認の口頭警告。繰り返しなら missed hand。"
+    },
+    "confidence": "high",
+    "notes": "2023-09 Hustler Casino Live の実例。v0.2 で誤答（Rule-58 引用）、v0.3 で Rule-65A 的中。",
+    "required_rules": [
+      "Rule-65"
+    ],
+    "recommended_rules": [
+      "Rule-16",
+      "Rule-58"
+    ]
+  },
+  {
+    "id": "case-032-laptopgate-wsop",
+    "category": "電子機器違反（Rule 5）",
+    "created_by": "瀬戸ミナ（WSOP 2022 実例）",
+    "situation": "WSOP Main Event Day 3、Rule-5 違反。プレイヤー A がハンド進行中、テーブル下でノートパソコンを開いて GTO ソルバーを参照していたところ、隣のプレイヤー B が気づいて挙手。A はハンド自体は fold 済みだが、直前のハンドで大きなポットを獲得していた。TD が呼ばれた。",
+    "tournament_phase": "Day 3",
+    "blinds": "5,000-10,000 BBA 10,000",
+    "game_type": "NLHE",
+    "prior_actions": "A's previous hand: won large pot. Current hand: A already folded. Laptop discovered during next hand.",
+    "expected_judgment": "即座に DQ（失格）。チップ没収、ポット返却の再計算は原則なし（直前のハンドには手を加えない）。WSOP 本人権限で前ハンドのポット処理は個別判断。",
+    "expected_rules": [
+      "Rule-5",
+      "Rule-71"
+    ],
+    "expected_reasoning": "Rule 5D（2024 改訂）: 『ポーカー戦略ツール、ベッティングアプリ、チャート、solver output をハンド中に参照することは禁止。違反は DQ。』Rule 71: ソルバー使用は最上位のペナルティ（DQ）対象。前ハンドで A が獲得したポットに遡及効を持たせるかは TD 裁量だが、原則として完了したハンドは遡及しない。",
+    "alternatives": [
+      {
+        "option": "直前ハンドのポット返却も検討",
+        "condition": "A の違反が複数ハンドに渡って続いていた明確な証拠がある場合"
+      }
+    ],
+    "penalty": {
+      "level": "DQ",
+      "description": "Rule 5D + Rule 71 による即失格。"
+    },
+    "confidence": "high",
+    "notes": "WSOP 2022 実例（Laptopgate）。Rule-5D の 2024 改訂で solver output 明示禁止となった起点ケース。"
+  },
+  {
+    "id": "case-033-millionaire-maker-double-elim",
+    "category": "ショーダウン／誤判定",
+    "created_by": "瀬戸ミナ（WSOP MM 2024 実例）",
+    "situation": "WSOP Millionaire Maker Day 3 バブル直前。プレイヤー A (short stack) が all-in、プレイヤー B (big stack) が call。B の call 額が A の stack を超過。showdown 前にディーラーが誤って B の余剰チップをポットに混入させた後、A が勝利。ポット返還額の計算で B が 『call 額が間違っている、私はもっとチップを返すべき』とクレーム。",
+    "tournament_phase": "バブル直前 Day 3",
+    "blinds": "10,000-20,000 BBA 20,000",
+    "game_type": "NLHE",
+    "prior_actions": "A all-in for 95,000 → B call (stack 850,000) → dealer error mixes 5,000 overage into pot",
+    "expected_judgment": "ポットを正確に再計算。A の有効 stack（95,000）分のみが A の main pot として確定。B の余剰 5,000 は B に返却。A 勝利で A が 190,000（A stack × 2）を獲得、B に 5,000 返却。",
+    "expected_rules": [
+      "Rule-56",
+      "Rule-60",
+      "Rule-1"
+    ],
+    "expected_reasoning": "Rule 56（Side pot）: all-in player の最大有効 stack を超えるベットは side pot または返却対象。Rule 60: ポット計算は『accurate count』原則。ディーラー誤操作による混入チップは TD 裁量で正しい額に戻す（Rule 1 の best interest of game 原則）。showdown 前の手続きミスは事実認定に基づき現状復帰が基本。",
+    "penalty": {
+      "level": "none",
+      "description": "ディーラー個人への口頭注意のみ。"
+    },
+    "confidence": "medium",
+    "notes": "WSOP MM 2024 類似ケース。showdown 前の手続きエラーは即座に復元可能というのがポイント。"
+  },
+  {
+    "id": "case-034-angle-shooting-deep-bet",
+    "category": "エチケット／Angle shooting",
+    "created_by": "瀬戸ミナ（典型的 angle 事例）",
+    "situation": "Final Table 4-handed、NLHE。River で opponent が BB を all-in。プレイヤー A は deep stack で call 検討中。A は call のつもりで前方にチップを動かし、opponent のカードをちらっと見ようとして前のめりになった。その動きで chips がラインを越えたが A は『まだ call してない』と主張。ディーラーは『chips crossed the line』と報告。フロアが呼ばれた。",
+    "tournament_phase": "Final Table 4-handed",
+    "blinds": "50,000-100,000 BBA 100,000",
+    "game_type": "NLHE",
+    "prior_actions": "River all-in from opponent → A pushes chips forward while looking across → chips cross betting line",
+    "expected_judgment": "Chips が明確に line を越えた場合、Rule 48 (forward motion) により call 確定。A の『まだ call してない』主張は通らない。ただし意図的 angle の証拠があれば Rule 70/71 でペナルティ追加検討。",
+    "expected_rules": [
+      "Rule-48",
+      "Rule-70",
+      "Rule-71"
+    ],
+    "expected_reasoning": "Rule 48: 『A forward motion with chips that crosses the betting line constitutes a bet』。A の物理的動作が確定的であれば意図は関係ない（『actions speak』原則）。Rule 70/71: angle shooting（意図的にルールの曖昧さを悪用する行為）は口頭警告から DQ まで。本件が意図的かどうかは現場 TD の事実認定。",
+    "alternatives": [
+      {
+        "option": "chips が明確に越えていない場合は action 無効",
+        "condition": "ディーラーと TD の両方が『chips did not clearly cross』と判断した場合のみ"
+      }
+    ],
+    "penalty": {
+      "level": "verbal_warning",
+      "description": "初回なら口頭警告。繰り返しなら missed hand。明確に angle と認定できれば missed round 以上。"
+    },
+    "confidence": "medium",
+    "notes": "『forward motion』の解釈は現場判断。PokerGO Cup 等の配信で複数事例あり。"
+  },
+  {
+    "id": "case-035-chip-dumping-suspicion",
+    "category": "Collusion／Chip dumping",
+    "created_by": "瀬戸ミナ（典型ケース）",
+    "situation": "Day 1 終盤、同じ国籍の友人 A と B が隣席。A が 3-bet、B が 5-bet all-in、A が即 fold。それが数ハンド続き、B のスタックが急増。他プレイヤーから『明らかに chip dumping してる』とクレーム。TD が呼ばれた。",
+    "tournament_phase": "Day 1 終盤",
+    "blinds": "1,000-2,000 BBA 2,000",
+    "game_type": "NLHE",
+    "prior_actions": "Multiple hands: A 3-bet → B 5-bet all-in → A immediately folds. Pattern repeats.",
+    "expected_judgment": "(1) 両者をフロア室に呼んで個別事情聴取。(2) Chip dumping の証拠（パターン、通信履歴、宿泊同室等）を収集。(3) 確定できれば両者 DQ + 獲得チップの没収。確定できなければ『観察対象』として別テーブル分離 + 監視強化。",
+    "expected_rules": [
+      "Rule-67",
+      "Rule-71",
+      "Rule-1"
+    ],
+    "expected_reasoning": "Rule 67: One player to a hand（共謀禁止）。Rule 71: Collusion / chip dumping は最上位ペナルティ（DQ）対象。ただし『疑惑』だけで DQ は過剰 → 事実認定が必要。Rule 1 で最終判断。原則として疑惑段階では『分離 + 監視』、確定したら DQ + 獲得チップ没収（TD 裁量で他プレイヤーへの返却または賞金プール復元）。",
+    "alternatives": [
+      {
+        "option": "即 DQ",
+        "condition": "通信履歴・録画・目撃証言等の物的証拠がある場合"
+      },
+      {
+        "option": "別テーブル分離のみ",
+        "condition": "パターンが偶然の可能性を完全に排除できない場合"
+      }
+    ],
+    "penalty": {
+      "level": "DQ (if confirmed)",
+      "description": "確定すれば両者 DQ + chip forfeit。疑惑段階なら分離監視。"
+    },
+    "confidence": "medium",
+    "notes": "Chip dumping は最も慎重な事実認定が必要なケース。冤罪は訴訟リスクが高い。"
   }
 ]

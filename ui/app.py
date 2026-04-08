@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-TD判断AI — 現場用 Web UI (Streamlit)
+TD判断AI — 現場用 Web UI (Streamlit) v0.3 Phase 7A
 
 現場の TD・フロアスタッフがスマホ or PC から使えるシンプルな Web UI。
 
@@ -20,9 +20,10 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import sys
-import time
-from datetime import datetime
+import textwrap
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import streamlit as st
@@ -31,19 +32,7 @@ import streamlit as st
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / "src"))
 
-import re
-import textwrap
-
 from judge import judge  # noqa: E402
-
-
-def _render_html(html: str) -> None:
-    """Streamlit Markdown の 4 スペース=コードブロック誤認を回避する安全 HTML レンダー"""
-    # 先頭空白を完全に削除（Markdown のコードブロック誤認対策）
-    dedented = textwrap.dedent(html).strip()
-    # 改行も最小化してインライン HTML に近づける
-    collapsed = re.sub(r"\n\s*", "", dedented)
-    st.markdown(collapsed, unsafe_allow_html=True)
 from db import (  # noqa: E402
     init_db,
     save_feedback,
@@ -52,68 +41,57 @@ from db import (  # noqa: E402
     get_feedback_for_judgment,
     list_prompt_versions,
     get_active_prompt_version,
+    search_judgments,
 )
 from evaluator import evaluate  # noqa: E402
 
 
-# ===== v0.3: 判断レスポンスのセクション抽出 =====
+# ===== HTML rendering helper =====
+def _render_html(html: str) -> None:
+    """Streamlit Markdown の 4 スペース=コードブロック誤認を回避する安全 HTML レンダー"""
+    dedented = textwrap.dedent(html).strip()
+    collapsed = re.sub(r"\n\s*", "", dedented)
+    st.markdown(collapsed, unsafe_allow_html=True)
+
+
+# ===== TDA 英語原文ロード =====
+@st.cache_data
+def load_tda_rules() -> dict[str, dict]:
+    """
+    data/tda-rules/tda_2024_rules_structured.json を読み込み、
+    rule_id → { title, body } の辞書を返す。
+    """
+    rules_path = BASE_DIR / "data" / "tda-rules" / "tda_2024_rules_structured.json"
+    if not rules_path.exists():
+        return {}
+    with open(rules_path, "r", encoding="utf-8") as f:
+        rules_list = json.load(f)
+    return {r["id"]: r for r in rules_list}
+
+
+# ===== 判断レスポンスのセクション抽出 =====
 def parse_judgment_sections(response_text: str) -> dict[str, str]:
-    """
-    AI 応答テキストから主要セクションを抽出する。
-    v0.3 形式:
-        【推奨判断】
-        [結論]
-
-        【適用ルール】
-        - Rule-XX: ...
-
-        【根拠】
-        [...]
-
-    Returns:
-        {
-            "conclusion": "推奨判断の本文",
-            "main_rule": "主要ルール名",
-            "reason": "根拠本文",
-            "penalty": "ペナルティレベル (あれば)",
-        }
-    """
+    """AI 応答テキストから主要セクションを抽出する (v0.3 format)"""
     sections: dict[str, str] = {}
 
-    # 【推奨判断】 抽出
-    m = re.search(
-        r"【推奨判断】\s*\n+([\s\S]*?)(?=\n【|\Z)", response_text
-    )
+    m = re.search(r"【推奨判断】\s*\n+([\s\S]*?)(?=\n【|\Z)", response_text)
     if m:
         sections["conclusion"] = m.group(1).strip()
 
-    # 【適用ルール】 抽出 - 主要ルールだけ取る
-    m = re.search(
-        r"【適用ルール】\s*\n+([\s\S]*?)(?=\n【|\Z)", response_text
-    )
+    m = re.search(r"【適用ルール】\s*\n+([\s\S]*?)(?=\n【|\Z)", response_text)
     if m:
         rules_block = m.group(1).strip()
-        # 最初の - 行を主要ルールとして取る
         first_line = rules_block.split("\n")[0].strip()
-        # 先頭の - や • を削除
         cleaned = re.sub(r"^[-・•]\s*", "", first_line).strip()
-        # 全ての ** (markdown bold) を削除
         cleaned = cleaned.replace("**", "").strip()
-        # （主要）などの注釈を削除
-        cleaned = re.sub(r"[（(]主要[）)]", "", cleaned).strip()
+        cleaned = re.sub(r"[(\(（]主要[）)\)]", "", cleaned).strip()
         sections["main_rule"] = cleaned
 
-    # 【根拠】 抽出
-    m = re.search(
-        r"【根拠】\s*\n+([\s\S]*?)(?=\n【|\Z)", response_text
-    )
+    m = re.search(r"【根拠】\s*\n+([\s\S]*?)(?=\n【|\Z)", response_text)
     if m:
         sections["reason"] = m.group(1).strip()
 
-    # 【ペナルティ】 抽出 (あれば)
-    m = re.search(
-        r"【ペナルティ】[^\n]*\n+([\s\S]*?)(?=\n【|\Z)", response_text
-    )
+    m = re.search(r"【ペナルティ】[^\n]*\n+([\s\S]*?)(?=\n【|\Z)", response_text)
     if m:
         pen = m.group(1).strip()
         if pen and pen != "なし":
@@ -122,16 +100,16 @@ def parse_judgment_sections(response_text: str) -> dict[str, str]:
     return sections
 
 
-# ===== 🔐 会員制認証（Phase 5） =====
+# ===== 🔐 会員制認証 + 4時間セッション =====
+AUTH_TIMEOUT_HOURS = 4  # Phase 7A: セッション 4 時間に延長
+
+
 def _get_password_hash() -> str | None:
-    """Streamlit Secrets or env var からパスワードハッシュを取得"""
-    # Streamlit Cloud Secrets
     try:
         if hasattr(st, "secrets") and "AUTH_PASSWORD_HASH" in st.secrets:
             return st.secrets["AUTH_PASSWORD_HASH"]
     except Exception:
         pass
-    # Environment variable (local dev)
     return os.environ.get("AUTH_PASSWORD_HASH")
 
 
@@ -140,18 +118,23 @@ def _hash_password(password: str) -> str:
 
 
 def check_auth() -> bool:
-    """パスワードゲート。成功したら True を返す。
-
-    パスワード未設定時は認証スキップ（ローカル開発用）。
-    """
     password_hash = _get_password_hash()
     if not password_hash:
-        # 認証未設定 = ローカル運用モード
         return True
 
-    # Session state で認証状態を管理
+    # Phase 7A: セッション有効期限チェック
     if st.session_state.get("authenticated", False):
-        return True
+        auth_time_str = st.session_state.get("auth_time")
+        if auth_time_str:
+            try:
+                auth_time = datetime.fromisoformat(auth_time_str)
+                if datetime.now() - auth_time < timedelta(hours=AUTH_TIMEOUT_HOURS):
+                    return True
+                # 期限切れ
+                st.session_state.authenticated = False
+                st.session_state.pop("auth_time", None)
+            except Exception:
+                st.session_state.authenticated = False
 
     st.set_page_config(
         page_title="TD判断AI — ログイン",
@@ -185,10 +168,11 @@ def check_auth() -> bool:
         " パスワードをお持ちでない方は中野までお問い合わせください。"
     )
     st.caption(f"© 2024 Poker TDA. TD判断AI v0.3 — P1 Tournament Director Advisor")
+    st.caption(f"セッション有効期限: {AUTH_TIMEOUT_HOURS} 時間（試合中は切断されません）")
     return False
 
 
-# === 認証チェック（画面描画前） ===
+# === 認証チェック ===
 if not check_auth():
     st.stop()
 
@@ -201,7 +185,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ===== Custom CSS =====
+# ===== Custom CSS (Phase 7A: スマホ縦画面対応) =====
 st.markdown(
     """
     <style>
@@ -246,6 +230,36 @@ st.markdown(
         border-radius: 4px;
         margin-bottom: 1rem;
     }
+    /* Quick template buttons */
+    .stButton > button {
+        min-height: 44px;  /* Touch target */
+        font-size: 0.9rem;
+    }
+    /* Mobile 対応: 縦画面でカラムを積み上げる */
+    @media (max-width: 640px) {
+        .main-title {
+            font-size: 1.6rem;
+        }
+        .subtitle {
+            font-size: 0.85rem;
+        }
+        div[data-testid="column"] {
+            width: 100% !important;
+            flex: 1 1 100% !important;
+            margin-bottom: 0.4rem;
+        }
+        .stButton > button {
+            min-height: 48px !important;
+            font-size: 1rem !important;
+        }
+        textarea {
+            font-size: 16px !important; /* iOS zoom 防止 */
+        }
+        input[type="text"],
+        input[type="password"] {
+            font-size: 16px !important;
+        }
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -257,12 +271,11 @@ init_db()
 # ===== Header =====
 st.markdown('<div class="main-title">⚖️ TD判断AI</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="subtitle">P1事業 — Tournament Director 判断支援システム / TDA 2024準拠</div>',
+    '<div class="subtitle">P1事業 — Tournament Director 判断支援システム / TDA 2024準拠 / v0.3</div>',
     unsafe_allow_html=True,
 )
 
 # ===== Check API Key =====
-# Streamlit Cloud Secrets or env var
 if not os.environ.get("ANTHROPIC_API_KEY"):
     try:
         if hasattr(st, "secrets") and "ANTHROPIC_API_KEY" in st.secrets:
@@ -282,10 +295,11 @@ if "last_judgment" not in st.session_state:
     st.session_state.last_judgment = None
 if "feedback_submitted" not in st.session_state:
     st.session_state.feedback_submitted = {}
+if "situation_input" not in st.session_state:
+    st.session_state.situation_input = ""
 
 # ===== Sidebar: Settings and History =====
 with st.sidebar:
-    # Logout button if authenticated
     if _get_password_hash():
         col_a, col_b = st.columns([3, 1])
         with col_a:
@@ -294,6 +308,19 @@ with st.sidebar:
             if st.button("🚪", key="logout_btn", help="ログアウト"):
                 st.session_state.authenticated = False
                 st.rerun()
+
+        # セッション残時間表示
+        auth_time_str = st.session_state.get("auth_time")
+        if auth_time_str:
+            try:
+                auth_time = datetime.fromisoformat(auth_time_str)
+                remaining = timedelta(hours=AUTH_TIMEOUT_HOURS) - (datetime.now() - auth_time)
+                if remaining.total_seconds() > 0:
+                    hours = int(remaining.total_seconds() // 3600)
+                    minutes = int((remaining.total_seconds() % 3600) // 60)
+                    st.caption(f"⏱️ セッション残: {hours}h {minutes}m")
+            except Exception:
+                pass
         st.markdown("---")
 
     st.markdown("### ⚙️ 設定")
@@ -333,273 +360,438 @@ with st.sidebar:
                             "latency_ms": detail["latency_ms"] or 0,
                             "confidence": detail["confidence"],
                             "token_usage": json.loads(detail["token_usage"]) if detail["token_usage"] else {},
+                            "referenced_rules_context": json.loads(detail["referenced_rules"]) if detail["referenced_rules"] else [],
                         }
                         st.rerun()
     else:
         st.caption("まだ判断履歴はありません")
 
-# ===== Main form =====
-st.markdown("### 📝 状況の入力")
 
-with st.form("judgment_form", clear_on_submit=False):
-    situation = st.text_area(
-        "状況の詳細を入力してください",
-        height=180,
-        placeholder="例: Day 1 後半、NLHE、Blinds 2,000-4,000。UTG が 12,000 オープン、CO が無言で 5,000×2+1,000×2 = 12,000 を押し出した。これは call か raise か？",
-        help="実際の状況を自然な日本語で入力してください。プレイヤー位置、ブラインド、アクション履歴を含めると精度が上がります。",
-    )
+# ===== Tabs: 判断 / 履歴検索 =====
+tab_judge, tab_search = st.tabs(["⚖️ 判断を取得", "📚 判断履歴検索"])
 
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        tournament_phase = st.text_input(
-            "トーナメントフェーズ (任意)",
-            placeholder="例: Day 1 後半 / Final Table",
-        )
-    with col2:
-        blinds = st.text_input(
-            "ブラインド (任意)",
-            placeholder="例: 2,000-4,000 BBA 4,000",
-        )
-    with col3:
-        game_type = st.selectbox(
-            "ゲーム種目",
-            options=["", "NLHE", "PLO", "HORSE", "Stud", "Razz"],
-            index=1,
-        )
+# =========================================================================
+# TAB 1: 判断を取得（クイックテンプレ + フォーム）
+# =========================================================================
+with tab_judge:
+    # ===== ⚡ ワンタップテンプレ 20 種 =====
+    st.markdown("#### ⚡ クイック選択（タップで入力欄にテンプレが入ります）")
 
-    submitted = st.form_submit_button(
-        "⚖️ 判断を取得",
-        use_container_width=True,
-        type="primary",
-    )
+    QUICK_TEMPLATES = [
+        # ベッティング関連
+        ("💰 OOT fold", "NLHE、Blinds ○,○○○-○,○○○。\nPreflop、UTG が ○,○○○ オープン。MP が順番前に fold 宣言。\nその後 HJ からアクションが回ってきた時、MP の OOT fold は binding か？"),
+        ("💰 アンダーコール", "NLHE、Blinds ○-○。\nUTG が ○,○○○ オープン。CO が無言で ○,○○○（コール額より少ない）を押し出した。\nこれは call か fold か raise か？"),
+        ("💰 Multi-chip bet", "NLHE、Blinds ○-○。\nUTG が ○,○○○ をオープン。CO が無言で ○,○○○ チップ × 2 + ○,○○○ チップ × 2 = 合計 ○,○○○ を出した。\nこれは call か raise か？"),
+        ("💰 String bet", "NLHE、Blinds ○-○。\nプレイヤーが『raise』と宣言せず、チップを 2 回に分けて前に出した。\n1 回目が call 額、2 回目が追加。これは string bet か？"),
+        ("💰 Oversized chip", "NLHE、Blinds ○-○。\nコール額 ○,○○○ に対して、プレイヤーが無言で ○○,○○○ チップ 1 枚だけを出した。\n発言なし。これは call か raise か？"),
+        # 誤配
+        ("🃏 Misdeal exposed", "NLHE、Preflop dealing 中、ディーラーが○人目のプレイヤーに配る際、2 枚目のカードが表向きに露出した。\nプレイヤーはまだハンドを見ていない。Misdeal か続行か？"),
+        ("🃏 Wrong player dealt", "NLHE、Preflop。ディーラーが UTG をスキップして MP にカードを配り始めた。\nUTG がアクション前に気づいた。Misdeal か？"),
+        # ショーダウン
+        ("🎴 Muck 前 showdown", "NLHE、River action 完了。最初に見せるべき last aggressor が muck を宣言せずカードを伏せた。\n相手プレイヤーはまだ手を公開していない。どう処理する？"),
+        ("🎴 Raise then muck", "NLHE、プレイヤー A が raise 後、call を待たずに自ら muck した。\nbet は返却か、ポットに残留か？（Rule 65A 該当）"),
+        ("🎴 All-in face up", "NLHE、プレイヤーが all-in で call された後、showdown で muck を主張。\nこれは認められるか？"),
+        # 電子機器
+        ("📱 Phone at table", "Day ○、プレイヤーがライブハンド中に携帯電話を手に取って画面を操作した。\n通話ではない。どのペナルティ？"),
+        ("📱 Solver 疑惑", "プレイヤーがハンド中にテーブル下でノートパソコンを開いていた。\n画面は GTO ソルバー。どう処理する？"),
+        # プレイヤー行為
+        ("⚠️ Collusion 疑惑", "Day ○、同じ国籍の 2 人が隣席で、A が 3-bet → B が 5-bet all-in → A 即 fold というパターンが繰り返された。\n他プレイヤーから chip dumping の疑惑申告。どう対応する？"),
+        ("⚠️ Soft play", "Final table、親しい 2 人のプレイヤー同士が対戦時、明らかに互いを避けている（check it down 等）。\nどう処理する？"),
+        ("⚠️ Dodging blinds", "プレイヤーが BB 直前で毎回トイレに席を立ち、BB ポジションを回避している。\n3 回連続で同じパターン。どう対処？"),
+        # チップ管理
+        ("🔢 Pocket chips", "プレイヤーがチップをポケットに入れて席を立とうとした。\nテーブルから見えない所にチップを移動させた疑い。どう処理する？"),
+        ("🔢 Chip race", "Chip race で最小デノミが廃止される際、あるプレイヤーが raced out（ゼロチップ）になった。\nこのプレイヤーは次ハンドから脱落？最後の1チップ権は？"),
+        # トーナメント構造
+        ("⏰ Clock call", "Day ○、プレイヤーが長考中、他プレイヤーがクロックを要求。\n25 秒 + 10 秒のカウントダウン中、プレイヤーが時間切れ直前に fold。許容される？"),
+        ("⏰ Dead button", "プレイヤーが bust out した次のハンド、ボタン位置をどう進めるか？\nDead button 発動条件は？"),
+        ("⏰ Late reg cap", "Late reg 最終レベルで 3 人が同時に registration。\nそのうち 1 人の seat card を打つ前にレベルアップした。受付は？"),
+    ]
 
-if submitted:
-    if not situation.strip():
-        st.warning("状況を入力してください")
-        st.stop()
-
-    with st.spinner("AI が判断を生成中...（約 10-30 秒）"):
-        extra = {}
-        if tournament_phase:
-            extra["tournament_phase"] = tournament_phase
-        if blinds:
-            extra["blinds"] = blinds
-        if game_type:
-            extra["game_type"] = game_type
-
-        try:
-            result = judge(
-                situation=situation.strip(),
-                extra_context=extra or None,
-                prompt_version=selected_version,
-            )
-            st.session_state.last_judgment = result
-            st.session_state.feedback_submitted[result["judgment_id"]] = False
-        except Exception as e:
-            st.error(f"判断生成中にエラー: {e}")
-            st.stop()
-
-# ===== Display result =====
-if st.session_state.last_judgment:
-    result = st.session_state.last_judgment
+    # 5 列 × 4 行で配置
+    template_cols_per_row = 5
+    for i in range(0, len(QUICK_TEMPLATES), template_cols_per_row):
+        cols = st.columns(template_cols_per_row)
+        for j, (label, template_text) in enumerate(QUICK_TEMPLATES[i:i + template_cols_per_row]):
+            with cols[j]:
+                if st.button(label, key=f"qt_{i+j}", use_container_width=True):
+                    st.session_state.situation_input = template_text
+                    st.rerun()
 
     st.markdown("---")
+    st.markdown("### 📝 状況の入力")
 
-    # v0.3: Parse response into sections for short display
-    sections = parse_judgment_sections(result["response"])
-    conclusion = sections.get("conclusion", "").strip()
-    main_rule = sections.get("main_rule", "").strip()
-    reason = sections.get("reason", "").strip()
-    penalty = sections.get("penalty", "").strip()
-    confidence = result.get("confidence") or "—"
+    with st.form("judgment_form", clear_on_submit=False):
+        situation = st.text_area(
+            "状況の詳細を入力してください",
+            value=st.session_state.situation_input,
+            height=180,
+            placeholder="例: Day 1 後半、NLHE、Blinds 2,000-4,000。UTG が 12,000 オープン、CO が無言で 5,000×2+1,000×2 = 12,000 を押し出した。これは call か raise か？",
+            help="実際の状況を自然な日本語で入力してください。プレイヤー位置、ブラインド、アクション履歴を含めると精度が上がります。",
+            key="situation_textarea",
+        )
 
-    # ===== 🎯 結論ファースト表示（3行で完結） =====
-    # 1行目: 判断
-    if conclusion:
-        _render_html(f"""
-            <div style="padding:1.2rem 1.4rem;border-radius:10px;background:linear-gradient(135deg,#FFF4ED 0%,#FFE8D6 100%);border-left:6px solid #FF6B35;margin-bottom:0.6rem;">
-              <div style="font-size:0.85rem;color:#8B4513;font-weight:600;margin-bottom:0.3rem;">⚖️ 推奨判断</div>
-              <div style="font-size:1.25rem;font-weight:700;color:#1a1a1a;line-height:1.5;">{conclusion}</div>
-            </div>
-        """)
-    else:
-        # パース失敗時のフォールバック
-        st.warning("判断セクションを抽出できませんでした。生の応答を表示します。")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            tournament_phase = st.text_input(
+                "トーナメントフェーズ (任意)",
+                placeholder="例: Day 1 後半 / Final Table",
+            )
+        with col2:
+            blinds = st.text_input(
+                "ブラインド (任意)",
+                placeholder="例: 2,000-4,000 BBA 4,000",
+            )
+        with col3:
+            game_type = st.selectbox(
+                "ゲーム種目",
+                options=["", "NLHE", "PLO", "HORSE", "Stud", "Razz"],
+                index=1,
+            )
 
-    # 2行目: 主要ルール
-    if main_rule:
-        _render_html(f"""
-            <div style="padding:0.7rem 1rem;border-radius:6px;background:#F0F8FF;border-left:4px solid #4A90E2;margin-bottom:0.6rem;">
-              <span style="font-size:0.9rem;color:#2E4A66;">📖 <b>適用ルール</b>: {main_rule}</span>
-            </div>
-        """)
+        submitted = st.form_submit_button(
+            "⚖️ 判断を取得",
+            use_container_width=True,
+            type="primary",
+        )
 
-    # 3行目: 確信度バッジ（単一行 HTML で確実にレンダリング）
-    conf_bg = (
-        "#E8F5E9" if confidence == "high"
-        else "#FFF8E1" if confidence == "medium"
-        else "#FFEBEE"
-    )
-    conf_fg = (
-        "#2E7D32" if confidence == "high"
-        else "#F57C00" if confidence == "medium"
-        else "#C62828"
-    )
-    # 改行を完全に削除して 1 行 HTML 化（Markdown コードブロック誤認対策）
-    conf_badge = (
-        f'<span style="padding:0.3rem 0.8rem;background:{conf_bg};'
-        f'border-radius:20px;font-size:0.85rem;color:{conf_fg};'
-        f'font-weight:600;margin-right:0.5rem;">🎚️ 確信度: {confidence}</span>'
-    )
-    st.markdown(
-        f'<div style="margin-bottom:1rem;">{conf_badge}</div>',
-        unsafe_allow_html=True,
-    )
+    if submitted:
+        if not situation.strip():
+            st.warning("状況を入力してください")
+            st.stop()
 
-    # ペナルティは独立の警告ボックスで表示（複数行対応）
-    if penalty:
-        # 改行を ・ 区切りに変換して 1 行化
-        penalty_oneline = " ・ ".join(
-            line.strip() for line in penalty.split("\n") if line.strip()
+        with st.spinner("AI が判断を生成中...（約 10-30 秒）"):
+            extra = {}
+            if tournament_phase:
+                extra["tournament_phase"] = tournament_phase
+            if blinds:
+                extra["blinds"] = blinds
+            if game_type:
+                extra["game_type"] = game_type
+
+            try:
+                result = judge(
+                    situation=situation.strip(),
+                    extra_context=extra or None,
+                    prompt_version=selected_version,
+                )
+                st.session_state.last_judgment = result
+                st.session_state.feedback_submitted[result["judgment_id"]] = False
+                # テンプレ再表示防止
+                st.session_state.situation_input = ""
+            except Exception as e:
+                st.error(f"判断生成中にエラー: {e}")
+                st.stop()
+
+    # ===== Display result =====
+    if st.session_state.last_judgment:
+        result = st.session_state.last_judgment
+
+        st.markdown("---")
+
+        # Parse
+        sections = parse_judgment_sections(result["response"])
+        conclusion = sections.get("conclusion", "").strip()
+        main_rule = sections.get("main_rule", "").strip()
+        reason = sections.get("reason", "").strip()
+        penalty = sections.get("penalty", "").strip()
+        confidence = result.get("confidence") or "—"
+
+        # 1行目: 判断
+        if conclusion:
+            _render_html(f"""
+                <div style="padding:1.2rem 1.4rem;border-radius:10px;background:linear-gradient(135deg,#FFF4ED 0%,#FFE8D6 100%);border-left:6px solid #FF6B35;margin-bottom:0.6rem;">
+                  <div style="font-size:0.85rem;color:#8B4513;font-weight:600;margin-bottom:0.3rem;">⚖️ 推奨判断</div>
+                  <div style="font-size:1.25rem;font-weight:700;color:#1a1a1a;line-height:1.5;">{conclusion}</div>
+                </div>
+            """)
+        else:
+            st.warning("判断セクションを抽出できませんでした。生の応答を表示します。")
+
+        # 2行目: 主要ルール
+        if main_rule:
+            _render_html(f"""
+                <div style="padding:0.7rem 1rem;border-radius:6px;background:#F0F8FF;border-left:4px solid #4A90E2;margin-bottom:0.6rem;">
+                  <span style="font-size:0.9rem;color:#2E4A66;">📖 <b>適用ルール</b>: {main_rule}</span>
+                </div>
+            """)
+
+        # 確信度バッジ
+        conf_bg = (
+            "#E8F5E9" if confidence == "high"
+            else "#FFF8E1" if confidence == "medium"
+            else "#FFEBEE"
+        )
+        conf_fg = (
+            "#2E7D32" if confidence == "high"
+            else "#F57C00" if confidence == "medium"
+            else "#C62828"
+        )
+        conf_badge = (
+            f'<span style="padding:0.3rem 0.8rem;background:{conf_bg};'
+            f'border-radius:20px;font-size:0.85rem;color:{conf_fg};'
+            f'font-weight:600;margin-right:0.5rem;">🎚️ 確信度: {confidence}</span>'
         )
         st.markdown(
-            f"""
-            <div style="
-                padding:0.7rem 1rem;
-                border-radius:6px;
-                background:#FFEBEE;
-                border-left:4px solid #C62828;
-                margin-bottom:1rem;
-                font-size:0.9rem;
-                color:#8B0000;
-            ">
-              ⚠️ <b>ペナルティ</b>: {penalty_oneline}
-            </div>
-            """,
+            f'<div style="margin-bottom:1rem;">{conf_badge}</div>',
             unsafe_allow_html=True,
         )
 
-    # ===== 🔽 詳細を見る（折りたたみ） =====
-    with st.expander("🔽 詳細（根拠・補足・全文）を見る"):
-        if reason:
-            st.markdown("**📌 根拠**")
-            st.markdown(reason)
-            st.markdown("---")
-        st.markdown("**📄 全文**")
-        st.markdown(result["response"])
+        # ペナルティ
+        if penalty:
+            penalty_oneline = " ・ ".join(
+                line.strip() for line in penalty.split("\n") if line.strip()
+            )
+            _render_html(f"""
+                <div style="padding:0.7rem 1rem;border-radius:6px;background:#FFEBEE;border-left:4px solid #C62828;margin-bottom:1rem;font-size:0.9rem;color:#8B0000;">
+                  ⚠️ <b>ペナルティ</b>: {penalty_oneline}
+                </div>
+            """)
 
-    # ===== 免責事項 =====
-    st.caption(
-        "⚠️ 最終判断は現場の人間 TD に委ねられます。AI は「推奨」を提示するのみです。"
-    )
+        # 詳細折りたたみ
+        with st.expander("🔽 詳細（根拠・補足・全文）を見る"):
+            if reason:
+                st.markdown("**📌 根拠**")
+                st.markdown(reason)
+                st.markdown("---")
+            st.markdown("**📄 全文**")
+            st.markdown(result["response"])
 
-    # ===== 📊 メトリクス (小さく表示) =====
-    with st.expander("📊 判断メタデータ（確認用）"):
-        mcol1, mcol2, mcol3, mcol4 = st.columns(4)
-        with mcol1:
-            st.metric("確信度", result.get("confidence") or "—")
-        with mcol2:
-            latency = result.get("latency_ms") or result.get("total_latency_ms") or 0
-            st.metric("応答時間", f"{latency/1000:.1f}s")
-        with mcol3:
-            tok = result.get("token_usage", {})
-            st.metric("tokens", f"in={tok.get('input',0)} out={tok.get('output',0)}")
-        with mcol4:
-            cost_in = tok.get("input", 0) / 1e6 * 3.0
-            cost_out = tok.get("output", 0) / 1e6 * 15.0
-            cost_cache = tok.get("cache_read", 0) / 1e6 * 0.30
-            cost_cache_w = tok.get("cache_creation", 0) / 1e6 * 3.75
-            cost_total = cost_in + cost_out + cost_cache + cost_cache_w
-            cost_jpy = cost_total * 150  # USD to JPY
-            st.metric("コスト", f"約 {cost_jpy:.1f}円")
+        # ===== 📜 TDA 英語原文（Phase 7A Task 2） =====
+        with st.expander("📜 TDA 英語原文（引用ルール）", expanded=False):
+            rules_map = load_tda_rules()
+            ref_rules = result.get("referenced_rules_context", [])
 
-        st.json(
-            {
-                "judgment_id": result["judgment_id"],
-                "prompt_version": result.get("prompt_version"),
-                "model": result.get("model"),
-                "cache_hit": result.get("cache_hit", False),
-                "referenced_rules": result.get("referenced_rules_context", []),
-                "response_rules": result.get("referenced_rules_response", []),
-            }
+            # レスポンス中に登場したルールも追加
+            response_rules = result.get("referenced_rules_response", [])
+            all_refs = list(dict.fromkeys(ref_rules + response_rules))[:5]
+
+            if not all_refs:
+                st.caption("引用されたルール情報がありません。")
+            else:
+                for rid in all_refs:
+                    rule = rules_map.get(rid)
+                    if rule:
+                        st.markdown(f"### {rule['id']}: {rule.get('title', '')}")
+                        body = rule.get("body", "")
+                        # 長すぎる場合は折りたたみ
+                        if len(body) > 800:
+                            st.markdown(body[:800] + "...")
+                            with st.expander(f"{rid} 全文"):
+                                st.markdown(body)
+                        else:
+                            st.markdown(body)
+                        st.markdown("---")
+
+            st.caption(
+                "💡 プレイヤーへの説明時はこの英語原文をコピーして見せると効果的です。"
+            )
+
+        # 免責事項
+        st.caption(
+            "⚠️ 最終判断は現場の人間 TD に委ねられます。AI は「推奨」を提示するのみです。"
         )
 
-    # Feedback section
-    st.markdown("---")
-    st.markdown("### 📮 この判断はどうでしたか？")
+        # メトリクス
+        with st.expander("📊 判断メタデータ（確認用）"):
+            mcol1, mcol2, mcol3, mcol4 = st.columns(4)
+            with mcol1:
+                st.metric("確信度", result.get("confidence") or "—")
+            with mcol2:
+                latency = result.get("latency_ms") or result.get("total_latency_ms") or 0
+                st.metric("応答時間", f"{latency/1000:.1f}s")
+            with mcol3:
+                tok = result.get("token_usage", {})
+                st.metric("tokens", f"in={tok.get('input',0)} out={tok.get('output',0)}")
+            with mcol4:
+                cost_in = tok.get("input", 0) / 1e6 * 3.0
+                cost_out = tok.get("output", 0) / 1e6 * 15.0
+                cost_cache = tok.get("cache_read", 0) / 1e6 * 0.30
+                cost_cache_w = tok.get("cache_creation", 0) / 1e6 * 3.75
+                cost_total = cost_in + cost_out + cost_cache + cost_cache_w
+                cost_jpy = cost_total * 150
+                st.metric("コスト", f"約 {cost_jpy:.1f}円")
 
-    already_submitted = st.session_state.feedback_submitted.get(
-        result["judgment_id"], False
-    )
+            st.json(
+                {
+                    "judgment_id": result["judgment_id"],
+                    "prompt_version": result.get("prompt_version"),
+                    "model": result.get("model"),
+                    "cache_hit": result.get("cache_hit", False),
+                    "referenced_rules": result.get("referenced_rules_context", []),
+                    "response_rules": result.get("referenced_rules_response", []),
+                }
+            )
 
-    if already_submitted:
-        st.success("✅ フィードバックを記録しました。ありがとうございます！")
-    else:
-        fcol1, fcol2, fcol3, fcol4 = st.columns([1, 1, 1, 2])
-        with fcol1:
-            if st.button("✅ 正しい", key=f"fb_correct_{result['judgment_id']}", use_container_width=True):
-                save_feedback(
-                    judgment_id=result["judgment_id"],
-                    rating="correct",
-                    comment="UIから",
-                    reviewer="field_ui",
-                )
-                st.session_state.feedback_submitted[result["judgment_id"]] = True
-                st.rerun()
-        with fcol2:
-            if st.button("🟡 部分的", key=f"fb_partial_{result['judgment_id']}", use_container_width=True):
-                save_feedback(
-                    judgment_id=result["judgment_id"],
-                    rating="partial",
-                    comment="UIから",
-                    reviewer="field_ui",
-                )
-                st.session_state.feedback_submitted[result["judgment_id"]] = True
-                st.rerun()
-        with fcol3:
-            if st.button("❌ 間違い", key=f"fb_wrong_{result['judgment_id']}", use_container_width=True):
-                save_feedback(
-                    judgment_id=result["judgment_id"],
-                    rating="wrong",
-                    comment="UIから",
-                    reviewer="field_ui",
-                )
-                st.session_state.feedback_submitted[result["judgment_id"]] = True
-                st.rerun()
+        # フィードバック
+        st.markdown("---")
+        st.markdown("### 📮 この判断はどうでしたか？")
 
-        with st.expander("💬 詳細コメントを追加（任意）"):
-            comment = st.text_input(
-                "コメント",
-                key=f"comment_{result['judgment_id']}",
-                placeholder="現場の実際の判断との差異、改善点など",
-            )
-            correct_judgment = st.text_input(
-                "正しい判断（間違い/部分的の場合）",
-                key=f"correct_{result['judgment_id']}",
-                placeholder="実際の TD はどう判断したか",
-            )
-            reviewer = st.text_input(
-                "入力者名",
-                key=f"reviewer_{result['judgment_id']}",
-                placeholder="中野 / TD名など",
-            )
-            if st.button("💾 コメント付きで保存", key=f"save_comment_{result['judgment_id']}"):
-                save_feedback(
-                    judgment_id=result["judgment_id"],
-                    rating="partial",  # コメントのみの場合は partial 扱い
-                    correct_judgment=correct_judgment or None,
-                    comment=comment or None,
-                    reviewer=reviewer or "field_ui",
+        already_submitted = st.session_state.feedback_submitted.get(
+            result["judgment_id"], False
+        )
+
+        if already_submitted:
+            st.success("✅ フィードバックを記録しました。ありがとうございます！")
+        else:
+            fcol1, fcol2, fcol3, _ = st.columns([1, 1, 1, 2])
+            with fcol1:
+                if st.button("✅ 正しい", key=f"fb_correct_{result['judgment_id']}", use_container_width=True):
+                    save_feedback(
+                        judgment_id=result["judgment_id"],
+                        rating="correct",
+                        comment="UIから",
+                        reviewer="field_ui",
+                    )
+                    st.session_state.feedback_submitted[result["judgment_id"]] = True
+                    st.rerun()
+            with fcol2:
+                if st.button("🟡 部分的", key=f"fb_partial_{result['judgment_id']}", use_container_width=True):
+                    save_feedback(
+                        judgment_id=result["judgment_id"],
+                        rating="partial",
+                        comment="UIから",
+                        reviewer="field_ui",
+                    )
+                    st.session_state.feedback_submitted[result["judgment_id"]] = True
+                    st.rerun()
+            with fcol3:
+                if st.button("❌ 間違い", key=f"fb_wrong_{result['judgment_id']}", use_container_width=True):
+                    save_feedback(
+                        judgment_id=result["judgment_id"],
+                        rating="wrong",
+                        comment="UIから",
+                        reviewer="field_ui",
+                    )
+                    st.session_state.feedback_submitted[result["judgment_id"]] = True
+                    st.rerun()
+
+            with st.expander("💬 詳細コメントを追加（任意）"):
+                comment = st.text_input(
+                    "コメント",
+                    key=f"comment_{result['judgment_id']}",
+                    placeholder="現場の実際の判断との差異、改善点など",
                 )
-                st.session_state.feedback_submitted[result["judgment_id"]] = True
-                st.rerun()
+                correct_judgment = st.text_input(
+                    "正しい判断（間違い/部分的の場合）",
+                    key=f"correct_{result['judgment_id']}",
+                    placeholder="実際の TD はどう判断したか",
+                )
+                reviewer = st.text_input(
+                    "入力者名",
+                    key=f"reviewer_{result['judgment_id']}",
+                    placeholder="中野 / TD名など",
+                )
+                if st.button("💾 コメント付きで保存", key=f"save_comment_{result['judgment_id']}"):
+                    save_feedback(
+                        judgment_id=result["judgment_id"],
+                        rating="partial",
+                        correct_judgment=correct_judgment or None,
+                        comment=comment or None,
+                        reviewer=reviewer or "field_ui",
+                    )
+                    st.session_state.feedback_submitted[result["judgment_id"]] = True
+                    st.rerun()
+
+
+# =========================================================================
+# TAB 2: 判断履歴検索（Phase 7A Task 5）
+# =========================================================================
+with tab_search:
+    st.markdown("### 📚 判断履歴検索")
+    st.caption("過去の判断を全件検索。「先週の misdeal 判断もう一度見たい」に対応。")
+
+    search_col1, search_col2, search_col3 = st.columns([3, 1, 1])
+    with search_col1:
+        search_keyword = st.text_input(
+            "🔍 キーワード",
+            placeholder="例: misdeal / muck / Negreanu / 75,000",
+            key="search_kw",
+        )
+    with search_col2:
+        search_confidence = st.selectbox(
+            "確信度",
+            options=["(すべて)", "high", "medium", "low"],
+            key="search_conf",
+        )
+    with search_col3:
+        search_rule = st.text_input(
+            "ルール ID",
+            placeholder="Rule-45",
+            key="search_rule",
+        )
+
+    if st.button("🔍 検索", type="primary", use_container_width=True):
+        st.session_state.search_triggered = True
+
+    if st.session_state.get("search_triggered"):
+        kw = search_keyword.strip() or None
+        conf = None if search_confidence == "(すべて)" else search_confidence
+        rid = search_rule.strip() or None
+
+        try:
+            results = search_judgments(
+                keyword=kw,
+                confidence=conf,
+                rule_id=rid,
+                limit=200,
+            )
+        except Exception as e:
+            st.error(f"検索エラー: {e}")
+            results = []
+
+        st.markdown(f"**ヒット数: {len(results)} 件**")
+
+        if not results:
+            st.info("該当する判断が見つかりませんでした。")
+        else:
+            for r in results:
+                with st.expander(
+                    f"🕐 {r['created_at'][:16]} — "
+                    f"[{r.get('confidence') or '?'}] {r['situation'][:50]}..."
+                ):
+                    st.markdown(f"**ID**: `{r['id']}`")
+                    st.markdown(f"**Prompt**: {r.get('prompt_version', '?')}")
+                    st.markdown(f"**確信度**: {r.get('confidence') or '—'}")
+
+                    ref_rules = r.get("referenced_rules")
+                    if ref_rules:
+                        try:
+                            rules_list = json.loads(ref_rules)
+                            st.markdown(f"**参照ルール**: {', '.join(rules_list[:5])}")
+                        except Exception:
+                            pass
+
+                    st.markdown("**状況**:")
+                    st.text(r["situation"])
+
+                    st.markdown("**判断レスポンス**:")
+                    st.markdown(r.get("response_text", "(なし)"))
+
+                    if st.button(
+                        "📋 この判断をメイン画面で開く",
+                        key=f"open_{r['id']}",
+                    ):
+                        detail = get_judgment(r["id"])
+                        if detail:
+                            st.session_state.last_judgment = {
+                                "judgment_id": detail["id"],
+                                "response": detail["response_text"],
+                                "prompt_version": detail["prompt_version"],
+                                "model": detail["model"],
+                                "latency_ms": detail["latency_ms"] or 0,
+                                "confidence": detail["confidence"],
+                                "token_usage": json.loads(detail["token_usage"]) if detail["token_usage"] else {},
+                                "referenced_rules_context": json.loads(detail["referenced_rules"]) if detail["referenced_rules"] else [],
+                            }
+                            st.rerun()
+
 
 # ===== Footer =====
 st.markdown(
     """
     <div class="footer">
     © 2024 Poker TDA (<a href="https://www.pokertda.com">pokertda.com</a>) — TDA rules used by permission.
-    | P1 TD判断AI v0.3 — 瀬戸ミナ (AI-013) 開発
+    | P1 TD判断AI v0.3 Phase 7A — 瀬戸ミナ (AI-013) 開発
     </div>
     """,
     unsafe_allow_html=True,

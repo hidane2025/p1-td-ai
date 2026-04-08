@@ -180,6 +180,44 @@ def list_recent_judgments(limit: int = 20) -> list[dict]:
         return [dict(r) for r in rows]
 
 
+def search_judgments(
+    keyword: str | None = None,
+    confidence: str | None = None,
+    rule_id: str | None = None,
+    limit: int = 200,
+) -> list[dict]:
+    """
+    判断の全文検索 + フィルタリング。
+
+    Args:
+        keyword: situation / response_text に含まれる部分文字列
+        confidence: high / medium / low でフィルタ
+        rule_id: referenced_rules JSON 内に含まれるルール ID
+        limit: 取得上限
+    """
+    query = (
+        "SELECT id, created_at, situation, confidence, prompt_version, "
+        "referenced_rules, response_text FROM judgments WHERE 1=1"
+    )
+    params: list = []
+    if keyword:
+        query += " AND (situation LIKE ? OR response_text LIKE ?)"
+        like = f"%{keyword}%"
+        params.extend([like, like])
+    if confidence:
+        query += " AND confidence = ?"
+        params.append(confidence)
+    if rule_id:
+        query += " AND referenced_rules LIKE ?"
+        params.append(f"%{rule_id}%")
+    query += " ORDER BY created_at DESC LIMIT ?"
+    params.append(limit)
+
+    with connect() as conn:
+        rows = conn.execute(query, params).fetchall()
+        return [dict(r) for r in rows]
+
+
 # ===== Feedback operations =====
 
 def save_feedback(
