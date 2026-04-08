@@ -62,7 +62,7 @@ def cmd_init(args: argparse.Namespace) -> int:
     seeded = seed_cases_from_json(cases_json)
     print(f"✅ Seeded {seeded} cases from judgment_cases.json")
 
-    # Register prompt v0.1
+    # Register prompt v0.1 (historical)
     v01_path = BASE_DIR / "prompts" / "versions" / "system_v0.1.md"
     if v01_path.exists():
         register_prompt_version(
@@ -70,11 +70,39 @@ def cmd_init(args: argparse.Namespace) -> int:
             path="prompts/versions/system_v0.1.md",
             parent_version=None,
             change_notes="Initial prompt. 4-element response format. 2024 amendments highlighted.",
+            activate=False,
+        )
+        print("✅ Registered prompt v0.1")
+
+    # Register prompt v0.2 (historical)
+    v02_path = BASE_DIR / "prompts" / "versions" / "system_v0.2.md"
+    if v02_path.exists():
+        register_prompt_version(
+            version="v0.2",
+            path="prompts/versions/system_v0.2.md",
+            parent_version="v0.1",
+            change_notes="Added Illustration Addendum awareness + confidence calibration.",
+            activate=False,
+        )
+        print("✅ Registered prompt v0.2")
+
+    # Register prompt v0.3 (ACTIVE - Phase 6 short format + official rule priority)
+    v03_path = BASE_DIR / "prompts" / "versions" / "system_v0.3.md"
+    if v03_path.exists():
+        register_prompt_version(
+            version="v0.3",
+            path="prompts/versions/system_v0.3.md",
+            parent_version="v0.2",
+            change_notes="公式ルール絶対優先・短文化・結論ファースト・補足情報最小化 (Phase 6)",
             activate=True,
         )
-        print("✅ Registered prompt v0.1 (active)")
+        print("✅ Registered prompt v0.3 (ACTIVE)")
     else:
-        print("⚠️  system_v0.1.md not found, prompt registration skipped")
+        print("⚠️  system_v0.3.md not found, fallback to v0.1")
+        # Fallback: activate v0.1 if v0.3 is missing
+        if v01_path.exists():
+            from db import activate_prompt_version
+            activate_prompt_version("v0.1")
 
     print("\n🎉 Phase 0 setup complete. Next: export ANTHROPIC_API_KEY and try 'judge'")
     return 0

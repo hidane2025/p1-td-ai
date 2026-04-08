@@ -31,6 +31,8 @@ import streamlit as st
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / "src"))
 
+import re
+
 from judge import judge  # noqa: E402
 from db import (  # noqa: E402
     init_db,
@@ -42,6 +44,72 @@ from db import (  # noqa: E402
     get_active_prompt_version,
 )
 from evaluator import evaluate  # noqa: E402
+
+
+# ===== v0.3: 判断レスポンスのセクション抽出 =====
+def parse_judgment_sections(response_text: str) -> dict[str, str]:
+    """
+    AI 応答テキストから主要セクションを抽出する。
+    v0.3 形式:
+        【推奨判断】
+        [結論]
+
+        【適用ルール】
+        - Rule-XX: ...
+
+        【根拠】
+        [...]
+
+    Returns:
+        {
+            "conclusion": "推奨判断の本文",
+            "main_rule": "主要ルール名",
+            "reason": "根拠本文",
+            "penalty": "ペナルティレベル (あれば)",
+        }
+    """
+    sections: dict[str, str] = {}
+
+    # 【推奨判断】 抽出
+    m = re.search(
+        r"【推奨判断】\s*\n+([\s\S]*?)(?=\n【|\Z)", response_text
+    )
+    if m:
+        sections["conclusion"] = m.group(1).strip()
+
+    # 【適用ルール】 抽出 - 主要ルールだけ取る
+    m = re.search(
+        r"【適用ルール】\s*\n+([\s\S]*?)(?=\n【|\Z)", response_text
+    )
+    if m:
+        rules_block = m.group(1).strip()
+        # 最初の - 行を主要ルールとして取る
+        first_line = rules_block.split("\n")[0].strip()
+        # 先頭の - や • を削除
+        cleaned = re.sub(r"^[-・•]\s*", "", first_line).strip()
+        # 全ての ** (markdown bold) を削除
+        cleaned = cleaned.replace("**", "").strip()
+        # （主要）などの注釈を削除
+        cleaned = re.sub(r"[（(]主要[）)]", "", cleaned).strip()
+        sections["main_rule"] = cleaned
+
+    # 【根拠】 抽出
+    m = re.search(
+        r"【根拠】\s*\n+([\s\S]*?)(?=\n【|\Z)", response_text
+    )
+    if m:
+        sections["reason"] = m.group(1).strip()
+
+    # 【ペナルティ】 抽出 (あれば)
+    m = re.search(
+        r"【ペナルティ】[^\n]*\n+([\s\S]*?)(?=\n【|\Z)", response_text
+    )
+    if m:
+        pen = m.group(1).strip()
+        if pen and pen != "なし":
+            sections["penalty"] = pen
+
+    return sections
 
 
 # ===== 🔐 会員制認証（Phase 5） =====
@@ -106,7 +174,7 @@ def check_auth() -> bool:
         "このシステムは P1 事業と契約した店舗・TD のみアクセス可能です。"
         " パスワードをお持ちでない方は中野までお問い合わせください。"
     )
-    st.caption(f"© 2024 Poker TDA. TD判断AI v0.2 — P1 Tournament Director Advisor")
+    st.caption(f"© 2024 Poker TDA. TD判断AI v0.3 — P1 Tournament Director Advisor")
     return False
 
 
@@ -221,10 +289,10 @@ with st.sidebar:
     st.markdown("### ⚙️ 設定")
 
     active_version = get_active_prompt_version()
-    current_version = active_version["version"] if active_version else "v0.2"
+    current_version = active_version["version"] if active_version else "v0.3"
 
     versions = list_prompt_versions()
-    version_options = [v["version"] for v in versions] if versions else ["v0.2"]
+    version_options = [v["version"] for v in versions] if versions else ["v0.3"]
 
     selected_version = st.selectbox(
         "プロンプトバージョン",
@@ -326,37 +394,124 @@ if st.session_state.last_judgment:
     result = st.session_state.last_judgment
 
     st.markdown("---")
-    st.markdown("### ⚖️ 判断結果")
 
-    # Top metrics
-    mcol1, mcol2, mcol3, mcol4 = st.columns(4)
-    with mcol1:
-        st.metric("確信度", result.get("confidence") or "—")
-    with mcol2:
-        latency = result.get("latency_ms") or result.get("total_latency_ms") or 0
-        st.metric("応答時間", f"{latency/1000:.1f}s")
-    with mcol3:
-        tok = result.get("token_usage", {})
-        st.metric("tokens", f"in={tok.get('input',0)} out={tok.get('output',0)}")
-    with mcol4:
-        cost_in = tok.get("input", 0) / 1e6 * 3.0
-        cost_out = tok.get("output", 0) / 1e6 * 15.0
-        cost_cache = tok.get("cache_read", 0) / 1e6 * 0.30
-        cost_cache_w = tok.get("cache_creation", 0) / 1e6 * 3.75
-        cost_total = cost_in + cost_out + cost_cache + cost_cache_w
-        cost_jpy = cost_total * 150  # USD to JPY
-        st.metric("コスト", f"約 {cost_jpy:.1f}円")
+    # v0.3: Parse response into sections for short display
+    sections = parse_judgment_sections(result["response"])
+    conclusion = sections.get("conclusion", "").strip()
+    main_rule = sections.get("main_rule", "").strip()
+    reason = sections.get("reason", "").strip()
+    penalty = sections.get("penalty", "").strip()
+    confidence = result.get("confidence") or "—"
 
-    st.markdown(
-        '<div class="warning-banner">⚠️ <b>最終判断は現場の人間TDに委ねられます。</b> AIは「推奨」を提示するのみです。</div>',
-        unsafe_allow_html=True,
+    # ===== 🎯 結論ファースト表示（3行で完結） =====
+    # 1行目: 判断
+    if conclusion:
+        st.markdown(
+            f"""
+            <div style="
+                padding: 1.2rem 1.4rem;
+                border-radius: 10px;
+                background: linear-gradient(135deg, #FFF4ED 0%, #FFE8D6 100%);
+                border-left: 6px solid #FF6B35;
+                margin-bottom: 0.6rem;
+            ">
+              <div style="font-size: 0.85rem; color: #8B4513; font-weight: 600; margin-bottom: 0.3rem;">
+                ⚖️ 推奨判断
+              </div>
+              <div style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; line-height: 1.5;">
+                {conclusion}
+              </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    else:
+        # パース失敗時のフォールバック
+        st.warning("判断セクションを抽出できませんでした。生の応答を表示します。")
+
+    # 2行目: 主要ルール
+    if main_rule:
+        st.markdown(
+            f"""
+            <div style="
+                padding: 0.7rem 1rem;
+                border-radius: 6px;
+                background: #F0F8FF;
+                border-left: 4px solid #4A90E2;
+                margin-bottom: 0.6rem;
+            ">
+              <span style="font-size: 0.9rem; color: #2E4A66;">
+                📖 <b>適用ルール</b>: {main_rule}
+              </span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    # 3行目: 確信度 + ペナルティ (横並び)
+    badge_html = f"""
+    <div style="display: flex; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap;">
+      <span style="
+        padding: 0.3rem 0.8rem;
+        background: {'#E8F5E9' if confidence == 'high' else '#FFF8E1' if confidence == 'medium' else '#FFEBEE'};
+        border-radius: 20px;
+        font-size: 0.85rem;
+        color: {'#2E7D32' if confidence == 'high' else '#F57C00' if confidence == 'medium' else '#C62828'};
+        font-weight: 600;
+      ">
+        🎚️ 確信度: {confidence}
+      </span>
+    """
+    if penalty:
+        badge_html += f"""
+      <span style="
+        padding: 0.3rem 0.8rem;
+        background: #FFEBEE;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        color: #C62828;
+        font-weight: 600;
+      ">
+        ⚠️ ペナルティ: {penalty}
+      </span>
+    """
+    badge_html += "</div>"
+    st.markdown(badge_html, unsafe_allow_html=True)
+
+    # ===== 🔽 詳細を見る（折りたたみ） =====
+    with st.expander("🔽 詳細（根拠・補足・全文）を見る"):
+        if reason:
+            st.markdown("**📌 根拠**")
+            st.markdown(reason)
+            st.markdown("---")
+        st.markdown("**📄 全文**")
+        st.markdown(result["response"])
+
+    # ===== 免責事項 =====
+    st.caption(
+        "⚠️ 最終判断は現場の人間 TD に委ねられます。AI は「推奨」を提示するのみです。"
     )
 
-    # Response body
-    st.markdown(result["response"])
+    # ===== 📊 メトリクス (小さく表示) =====
+    with st.expander("📊 判断メタデータ（確認用）"):
+        mcol1, mcol2, mcol3, mcol4 = st.columns(4)
+        with mcol1:
+            st.metric("確信度", result.get("confidence") or "—")
+        with mcol2:
+            latency = result.get("latency_ms") or result.get("total_latency_ms") or 0
+            st.metric("応答時間", f"{latency/1000:.1f}s")
+        with mcol3:
+            tok = result.get("token_usage", {})
+            st.metric("tokens", f"in={tok.get('input',0)} out={tok.get('output',0)}")
+        with mcol4:
+            cost_in = tok.get("input", 0) / 1e6 * 3.0
+            cost_out = tok.get("output", 0) / 1e6 * 15.0
+            cost_cache = tok.get("cache_read", 0) / 1e6 * 0.30
+            cost_cache_w = tok.get("cache_creation", 0) / 1e6 * 3.75
+            cost_total = cost_in + cost_out + cost_cache + cost_cache_w
+            cost_jpy = cost_total * 150  # USD to JPY
+            st.metric("コスト", f"約 {cost_jpy:.1f}円")
 
-    # Metadata
-    with st.expander("🔍 判断メタデータ"):
         st.json(
             {
                 "judgment_id": result["judgment_id"],
@@ -443,7 +598,7 @@ st.markdown(
     """
     <div class="footer">
     © 2024 Poker TDA (<a href="https://www.pokertda.com">pokertda.com</a>) — TDA rules used by permission.
-    | P1 TD判断AI v0.2 — 瀬戸ミナ (AI-013) 開発
+    | P1 TD判断AI v0.3 — 瀬戸ミナ (AI-013) 開発
     </div>
     """,
     unsafe_allow_html=True,

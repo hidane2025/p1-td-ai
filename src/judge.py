@@ -35,7 +35,7 @@ PROMPTS_DIR = BASE_DIR / "prompts"
 
 DEFAULT_MODEL = "claude-sonnet-4-5"
 FAST_MODEL = "claude-haiku-4-5-20251001"  # Haiku for initial triage
-MAX_TOKENS = 2500
+MAX_TOKENS = 1200  # v0.3: 短文化のため削減 (was 2500)
 
 
 # ===== Rule retrieval (Phase 0: keyword-based) =====
@@ -381,6 +381,64 @@ KEYWORD_MAP: dict[str, list[str]] = {
     "アンティ": ["RP-11"],
     "バランス": ["Rule-11"],
     "テーブルバランス": ["Rule-11"],
+
+    # Rule-65A: Unprotected hand / Raiser mucks own hand (最重要: Negreanuケース)
+    # レイザーが自分で muck → raise 返却、ベースポットのみ他プレイヤーに
+    "unprotected hand": ["Rule-65"],
+    "unprotected": ["Rule-65"],
+    "protect": ["Rule-65"],
+    "protection": ["Rule-65"],
+    "uncalled": ["Rule-65"],
+    "uncalled bet": ["Rule-65"],
+    "uncalled raise": ["Rule-65"],
+    "no redress": ["Rule-65"],
+    "redress": ["Rule-65"],
+    "自分から muck": ["Rule-65"],
+    "自分で muck": ["Rule-65"],
+    "自分からマック": ["Rule-65"],
+    "自分でマック": ["Rule-65"],
+    "raiser muck": ["Rule-65"],
+    "raiser mucks": ["Rule-65"],
+    "レイザー muck": ["Rule-65"],
+    "レイザーがマック": ["Rule-65"],
+    "raise 後 muck": ["Rule-65"],
+    "レイズ後 muck": ["Rule-65"],
+    "レイズ後マック": ["Rule-65"],
+    "誤って muck": ["Rule-65"],
+    "誤ってマック": ["Rule-65"],
+    "間違って muck": ["Rule-65"],
+    "間違ってマック": ["Rule-65"],
+    "勘違いで muck": ["Rule-65"],
+    "勘違いでマック": ["Rule-65"],
+    "勘違い": ["Rule-65"],
+    "思い込み": ["Rule-65"],
+    "勝ったと思": ["Rule-65"],
+    "勝ったと勘違い": ["Rule-65"],
+    "fold してしまった": ["Rule-65"],
+    "フォールドしてしまった": ["Rule-65"],
+    "誤fold": ["Rule-65"],
+    "誤フォールド": ["Rule-65"],
+    "誤ってフォールド": ["Rule-65"],
+    "返却": ["Rule-65"],
+    "返金": ["Rule-65"],
+    "raise 返却": ["Rule-65"],
+    "レイズ返却": ["Rule-65"],
+    "レイズ分返却": ["Rule-65"],
+    "レイズ分返金": ["Rule-65"],
+    "kill hand": ["Rule-65"],
+    "killed by dealer": ["Rule-65"],
+    "ディーラーがkill": ["Rule-65"],
+    "ディーラーが kill": ["Rule-65"],
+    "前提ハンド": ["Rule-65"],
+    "誤認": ["Rule-65"],
+    "誤解": ["Rule-65"],
+    "showdown なしで muck": ["Rule-65"],
+    "ショーダウン前 muck": ["Rule-65"],
+    "ショーダウン前にマック": ["Rule-65"],
+    "all-in call 後": ["Rule-65"],
+    "call 後 muck": ["Rule-65"],
+    "コール後 muck": ["Rule-65"],
+    "コール後マック": ["Rule-65"],
 }
 
 
