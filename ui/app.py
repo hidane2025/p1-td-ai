@@ -33,16 +33,57 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / "src"))
 
 from judge import judge  # noqa: E402
-from db import (  # noqa: E402
-    init_db,
-    save_feedback,
-    list_recent_judgments,
-    get_judgment,
-    get_feedback_for_judgment,
-    list_prompt_versions,
-    get_active_prompt_version,
-    search_judgments,
-)
+
+# Phase 7A: db モジュールを importlib で明示リロード
+# Streamlit Cloud のモジュールキャッシュ対策
+import importlib
+import db as _db_module  # noqa: E402
+importlib.reload(_db_module)
+
+init_db = _db_module.init_db
+save_feedback = _db_module.save_feedback
+list_recent_judgments = _db_module.list_recent_judgments
+get_judgment = _db_module.get_judgment
+get_feedback_for_judgment = _db_module.get_feedback_for_judgment
+list_prompt_versions = _db_module.list_prompt_versions
+get_active_prompt_version = _db_module.get_active_prompt_version
+
+# search_judgments は Phase 7A で追加。古い DB モジュールでも動くようフォールバック
+if hasattr(_db_module, "search_judgments"):
+    search_judgments = _db_module.search_judgments
+else:
+    def search_judgments(keyword=None, confidence=None, rule_id=None, limit=200):
+        """フォールバック: DB モジュールが古い場合の代替実装"""
+        import sqlite3
+        import json as _json
+        db_path = BASE_DIR / "data" / "td_ai.db"
+        if not db_path.exists():
+            return []
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        try:
+            query = (
+                "SELECT id, created_at, situation, confidence, prompt_version, "
+                "referenced_rules, response_text FROM judgments WHERE 1=1"
+            )
+            params = []
+            if keyword:
+                query += " AND (situation LIKE ? OR response_text LIKE ?)"
+                like = f"%{keyword}%"
+                params.extend([like, like])
+            if confidence:
+                query += " AND confidence = ?"
+                params.append(confidence)
+            if rule_id:
+                query += " AND referenced_rules LIKE ?"
+                params.append(f"%{rule_id}%")
+            query += " ORDER BY created_at DESC LIMIT ?"
+            params.append(limit)
+            rows = conn.execute(query, params).fetchall()
+            return [dict(r) for r in rows]
+        finally:
+            conn.close()
+
 from evaluator import evaluate  # noqa: E402
 
 
