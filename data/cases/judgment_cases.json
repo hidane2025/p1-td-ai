@@ -1232,5 +1232,638 @@
       "Rule-42",
       "Rule-43"
     ]
+  },
+  {
+    "id": "case-041-train-T01-verbal-vs-chips-conflict",
+    "category": "ベッティング",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "NLHE、Blinds 2,000-4,000。UTG が「15,000 レイズ」と口頭宣言したが、チップを 20,000 分だけ押し出した。どちらが有効か？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-40"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-40"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-40']"
+  },
+  {
+    "id": "case-043-train-T02-min-raise-violation",
+    "category": "ベッティング",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "NLHE、Blinds 1,000-2,000。UTG 6,000 オープン、CO が「9,000 レイズ」と宣言（min raise 10,000 未満）。TD としてどう処理する？",
+    "expected_rules": [
+      "Rule-40",
+      "Rule-43",
+      "Rule-52"
+    ],
+    "required_rules": [
+      "Rule-40"
+    ],
+    "recommended_rules": [
+      "Rule-43",
+      "Rule-52"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-40', 'Rule-43', 'Rule-52', 'Rule-57']"
+  },
+  {
+    "id": "case-045-train-T03-allin-reopen-betting",
+    "category": "ベッティング",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "NLHE、Blinds 3,000-6,000。UTG 18,000 オープン、BTN all-in 25,000（min-raise 未満の 7,000 追加）、SB がアクション中。SB は re-raise できるか？",
+    "expected_rules": [
+      "Rule-40",
+      "Rule-43",
+      "Rule-47"
+    ],
+    "required_rules": [
+      "Rule-40"
+    ],
+    "recommended_rules": [
+      "Rule-43",
+      "Rule-47"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-40', 'Rule-43', 'Rule-47']"
+  },
+  {
+    "id": "case-047-train-T04-check-raise-silent",
+    "category": "ベッティング",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Flop、Player A check、Player B 10,000 bet、Player A がチップを前方に置いて動き（金額不明瞭・宣言なし）、どう処理？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-2",
+      "Rule-40"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-2",
+      "Rule-40"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: False, Cited: ['Rule-1', 'Rule-2', 'Rule-40']"
+  },
+  {
+    "id": "case-049-train-T05-first-card-exposed",
+    "category": "誤配",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Preflop dealing 中、UTG への 1 枚目のカードが表向きに露出した。2 枚目はまだ配られていない。Misdeal か続行か？",
+    "expected_rules": [
+      "Rule-35"
+    ],
+    "required_rules": [
+      "Rule-35"
+    ],
+    "recommended_rules": [],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-35']"
+  },
+  {
+    "id": "case-051-train-T06-boxed-card-flop",
+    "category": "誤配",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Flop を burn してから 3 枚表にする際、2 枚目のカードが逆向き（boxed card）だった。どう処理する？",
+    "expected_rules": [
+      "Rule-35",
+      "Rule-39"
+    ],
+    "required_rules": [
+      "Rule-35"
+    ],
+    "recommended_rules": [
+      "Rule-39"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: False, Cited: ['Rule-35', 'Rule-39']"
+  },
+  {
+    "id": "case-053-train-T07-dealer-deals-too-many",
+    "category": "誤配",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Hold'em で、ディーラーが誤って 6 人テーブル全員に 3 枚ずつ配ってしまった。アクション前に気づいた。Misdeal か？",
+    "expected_rules": [
+      "Rule-35",
+      "Rule-37"
+    ],
+    "required_rules": [
+      "Rule-35"
+    ],
+    "recommended_rules": [
+      "Rule-37"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-35', 'Rule-37']"
+  },
+  {
+    "id": "case-055-train-T08-mucked-winner",
+    "category": "ショーダウン",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "River showdown で Player A が Player B のカードを見ずにハンドを開示、ディーラーが Player B のハンドを勝ちと誤認して A のハンドを muck に混ぜてしまった。後で A の方が強いとわかった。どう処理？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-12",
+      "Rule-65"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-12",
+      "Rule-65"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-12', 'Rule-65']"
+  },
+  {
+    "id": "case-057-train-T09-cards-speak",
+    "category": "ショーダウン",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Showdown で Player A が「ツーペア」と口頭で宣言したが、実際のカードはストレートだった。ポットはどう分配？",
+    "expected_rules": [
+      "Rule-12",
+      "Rule-13",
+      "Rule-18"
+    ],
+    "required_rules": [
+      "Rule-12"
+    ],
+    "recommended_rules": [
+      "Rule-13",
+      "Rule-18"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: False, Cited: ['Rule-12', 'Rule-13', 'Rule-18', 'Rule-71']"
+  },
+  {
+    "id": "case-059-train-T10-one-card-tabled",
+    "category": "ショーダウン",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Player が river call 後、ホールカード 1 枚だけ表にして「負け」と言って muck しようとした。対戦相手は見たがっている。どう処理？",
+    "expected_rules": [
+      "Rule-13",
+      "Rule-15",
+      "Rule-18"
+    ],
+    "required_rules": [
+      "Rule-13"
+    ],
+    "recommended_rules": [
+      "Rule-15",
+      "Rule-18"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-13', 'Rule-15', 'Rule-18', 'Rule-71']"
+  },
+  {
+    "id": "case-061-train-T11-oot-check",
+    "category": "OOT",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Flop で BB がまだアクションしていないのに、UTG が check を宣言した。どう処理？",
+    "expected_rules": [
+      "Rule-53",
+      "Rule-58"
+    ],
+    "required_rules": [
+      "Rule-53"
+    ],
+    "recommended_rules": [
+      "Rule-58"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-53', 'Rule-58']"
+  },
+  {
+    "id": "case-063-train-T12-oot-raise-binding",
+    "category": "OOT",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Preflop、UTG オープンせず、MP が先に「raise 8,000」と宣言。UTG はまだアクションしていなかった。MP の raise は binding か？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-53",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-53",
+      "Rule-71"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-53', 'Rule-71']"
+  },
+  {
+    "id": "case-065-train-T13-skipped-player-defend",
+    "category": "OOT",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "UTG スキップされ、MP→CO→BTN がアクション済み。UTG が気づいた時点で既に SA（Substantial Action）成立後。UTG の option は？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-36",
+      "Rule-53"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-36",
+      "Rule-53"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-36', 'Rule-53']"
+  },
+  {
+    "id": "case-067-train-T14-whisper-advice",
+    "category": "エチケット",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Final Table、プレイヤー A のハンド進行中、観戦席にいる A の友人が A に近づき、何かを耳打ちした。ディーラーが気づいた。どう処理？",
+    "expected_rules": [
+      "Rule-5",
+      "Rule-67",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-5"
+    ],
+    "recommended_rules": [
+      "Rule-67",
+      "Rule-71"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-5', 'Rule-67', 'Rule-71']"
+  },
+  {
+    "id": "case-069-train-T15-showing-cards-third",
+    "category": "エチケット",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "River action 前、Player A が自分のカードを隣の eliminated プレイヤーに見せた。他プレイヤーからクレーム。どう処理？",
+    "expected_rules": [
+      "Rule-2",
+      "Rule-67",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-2"
+    ],
+    "recommended_rules": [
+      "Rule-67",
+      "Rule-71"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-2', 'Rule-67', 'Rule-71']"
+  },
+  {
+    "id": "case-071-train-T16-verbal-abuse",
+    "category": "エチケット",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "プレイヤーが不正解な TD 判定に納得せず、大声で罵声を浴びせ始めた。既に口頭警告 1 回あり。次の処分は？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-70",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-70",
+      "Rule-71"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-70', 'Rule-71']"
+  },
+  {
+    "id": "case-073-train-T17-airpods",
+    "category": "電子機器",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "プレイヤーが AirPods を装着したままハンド進行中。音楽を聴いているだけと本人は主張。他プレイヤーは「会話している可能性」とクレーム。",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-5",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-5",
+      "Rule-71"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-5', 'Rule-71']"
+  },
+  {
+    "id": "case-075-train-T18-apple-watch",
+    "category": "電子機器",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "プレイヤーの Apple Watch に通知が入り、ハンド中に画面を確認した。他プレイヤーからクレーム。",
+    "expected_rules": [
+      "Rule-5",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-5"
+    ],
+    "recommended_rules": [
+      "Rule-71"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-5', 'Rule-71']"
+  },
+  {
+    "id": "case-077-train-T19-mask-refuse",
+    "category": "ID",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "ディーラーが顔確認のためプレイヤーにマスクを外すよう依頼したが拒否。他プレイヤーも「顔が見えない」と不満。",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-4",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-4",
+      "Rule-71"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-4', 'Rule-71']"
+  },
+  {
+    "id": "case-079-train-T20-hidden-stack",
+    "category": "チップ管理",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "プレイヤーが大きなデノミのチップを他のチップの後ろに隠すように配置。対戦相手が all-in 時にスタック総額を見誤った。クレーム。",
+    "expected_rules": [
+      "Rule-25",
+      "Rule-60",
+      "Rule-62"
+    ],
+    "required_rules": [
+      "Rule-25"
+    ],
+    "recommended_rules": [
+      "Rule-60",
+      "Rule-62"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-25', 'Rule-60', 'Rule-62', 'Rule-71']"
+  },
+  {
+    "id": "case-081-train-T21-short-stack-allin",
+    "category": "ポット計算",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "NLHE、4 人 involved、A (40BB)、B (30BB)、C (20BB)、D (5BB) 全員 all-in。サイドポットは何個作る？",
+    "expected_rules": [
+      "RP-1",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-1"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: False, Cited: ['RP-1', 'Rule-1']"
+  },
+  {
+    "id": "case-083-train-T22-chip-race-tie",
+    "category": "チップ管理",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Chip race で最後の 1 チップを引く権利が 2 人のプレイヤーで同数。どう決める？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-24"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-24"
+    ],
+    "confidence": "medium",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-24']"
+  },
+  {
+    "id": "case-085-train-T23-late-reg-last-level",
+    "category": "構造",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Late reg 最終レベル残り 30 秒、受付待ちのプレイヤーが 10 人並んでいる。どこまで受付する？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-8"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-8"
+    ],
+    "confidence": "medium",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-8']"
+  },
+  {
+    "id": "case-087-train-T24-absent-player-blinds",
+    "category": "構造",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "プレイヤーが席を外したままで SB/BB/ANTE が支払われ続けている。何ハンドまで許容？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-30",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-30",
+      "Rule-71"
+    ],
+    "confidence": "medium",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-30', 'Rule-71']"
+  },
+  {
+    "id": "case-089-train-T25-missed-blind-return",
+    "category": "構造",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Day 1 中盤、プレイヤーが 2 時間離席してから戻ってきた。BB ポジションをスキップしていた。復帰時の処理は？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-30",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-30",
+      "Rule-71"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-30', 'Rule-71']"
+  },
+  {
+    "id": "case-091-train-T26-house-vs-tda",
+    "category": "ハウスルール",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "店舗のハウスルールは「OOT fold は常に無効」だが、TDA Rule 53A は「binding」。TDA 準拠を謳う大会でどちらを優先？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-53",
+      "Rule-58"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-53",
+      "Rule-58"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-53', 'Rule-58']"
+  },
+  {
+    "id": "case-093-train-T27-straddle-allowed",
+    "category": "ハウスルール",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "トーナメントで UTG プレイヤーが straddle を宣言。トーナメントでは straddle は通常認められないが、TD はどう対応？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-40"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-40"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-40']"
+  },
+  {
+    "id": "case-095-train-T28-dealer-error-all-in",
+    "category": "複雑",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Turn で Player A が 50,000 all-in を宣言。ディーラーが誤って 500,000 とアナウンスし、Player B が call を宣言してチップを出した。錯誤発覚後、B は call を取り消せるか？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-40",
+      "Rule-65"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-40",
+      "Rule-65"
+    ],
+    "confidence": "medium",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-40', 'Rule-65']"
+  },
+  {
+    "id": "case-097-train-T29-tournament-clock-mistake",
+    "category": "複雑",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "ディーラーが tournament clock を一時停止し忘れ、実際のブラインドより 5 分遅れて level up した。それまでの 5 分間のアクションは全てやり直すべきか？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-2",
+      "Rule-23"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-2",
+      "Rule-23"
+    ],
+    "confidence": "medium",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-2', 'Rule-23']"
+  },
+  {
+    "id": "case-099-train-T30-binding-but-wrong",
+    "category": "複雑",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "Player A が call を宣言したが、実際は pot が空だと勘違いしていた（相手の all-in 8,000 を見落とし）。宣言は binding か、錯誤による取り消し可能か？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-2",
+      "Rule-40"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-2",
+      "Rule-40"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-2', 'Rule-40', 'Rule-51', 'Rule-63']"
+  },
+  {
+    "id": "case-101-train-T31-japanese-verbal",
+    "category": "日本特有",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "プレイヤーが「うん...」と言いながらカードを前に押し出した。call か fold か曖昧。ディーラーどう判断？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-40"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-40"
+    ],
+    "confidence": "medium",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-40']"
+  },
+  {
+    "id": "case-103-train-T32-p1-house-prize-fund",
+    "category": "P1 運営",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "P1 トーナメント final table、1 位賞金 1,000 万円。プレイヤー A が DQ 相当の違反を犯したが、既にチップ 70% 保有。処分と賞金分配は？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-71"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-71']"
+  },
+  {
+    "id": "case-105-train-T33-p1-rfid-collusion",
+    "category": "P1 運営",
+    "created_by": "瀬戸ミナ（Phase 7D Training batch）",
+    "situation": "P1 配信中、RFID データから特定の 2 人が soft play している可能性が監視スタッフから報告。現場 TD にエスカレーション。どう対応？",
+    "expected_rules": [
+      "Rule-1",
+      "Rule-69",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "Rule-69",
+      "Rule-71"
+    ],
+    "confidence": "high",
+    "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-69', 'Rule-71']"
   }
 ]
