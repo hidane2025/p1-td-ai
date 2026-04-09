@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-TD判断AI — 現場用 Web UI (Streamlit) v0.4 Phase 7C
+TD判断AI — 現場用 Web UI (Streamlit) v0.5 Phase 7E
 
 現場の TD・フロアスタッフがスマホ or PC から使えるシンプルな Web UI。
 
@@ -220,7 +220,7 @@ def check_auth() -> bool:
         "このシステムは P1 事業と契約した店舗・TD のみアクセス可能です。"
         " パスワードをお持ちでない方は中野までお問い合わせください。"
     )
-    st.caption(f"© 2024 Poker TDA. TD判断AI v0.4 — P1 Tournament Director Advisor")
+    st.caption(f"© 2024 Poker TDA. TD判断AI v0.5 — P1 Tournament Director Advisor")
     st.caption(f"セッション有効期限: {AUTH_TIMEOUT_HOURS} 時間（試合中は切断されません）")
     return False
 
@@ -321,10 +321,23 @@ st.markdown(
 # ===== Initialize DB =====
 init_db()
 
+# Ensure v0.5 prompt is registered (survives Streamlit Cloud DB resets)
+try:
+    from db import register_prompt_version, get_active_prompt_version as _gap
+    if not _gap():
+        register_prompt_version(
+            "v0.5", "prompts/versions/system_v0.5.md",
+            parent_version=None,
+            change_notes="Phase 7E: 107判例, 87/93ルールカバー, Supabase dual-write",
+            activate=True,
+        )
+except Exception:
+    pass
+
 # ===== Header =====
 st.markdown('<div class="main-title">⚖️ TD判断AI</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="subtitle">P1事業 — Tournament Director 判断支援システム / TDA 2024準拠 / v0.4</div>',
+    '<div class="subtitle">P1事業 — Tournament Director 判断支援システム / TDA 2024準拠 / v0.5</div>',
     unsafe_allow_html=True,
 )
 
@@ -379,10 +392,10 @@ with st.sidebar:
     st.markdown("### ⚙️ 設定")
 
     active_version = get_active_prompt_version()
-    current_version = active_version["version"] if active_version else "v0.3"
+    current_version = active_version["version"] if active_version else "v0.5"
 
     versions = list_prompt_versions()
-    version_options = [v["version"] for v in versions] if versions else ["v0.3"]
+    version_options = [v["version"] for v in versions] if versions else ["v0.5"]
 
     selected_version = st.selectbox(
         "プロンプトバージョン",
@@ -755,7 +768,7 @@ with tab_judge:
                 copy_text += f"\n【適用ルール】{main_rule}"
             if penalty:
                 copy_text += f"\n【ペナルティ】{penalty.splitlines()[0] if penalty else ''}"
-            copy_text += f"\n\n(TD判断AI v0.3 より / TDA 2024準拠)"
+            copy_text += f"\n\n(TD判断AI v0.5 より / TDA 2024準拠)"
             if st.button("📋 コピー用", key=f"copy_btn_{jid}", use_container_width=True, help="判断テキストを表示してコピー可"):
                 st.session_state[f"show_copy_{jid}"] = True
 
@@ -1045,7 +1058,7 @@ st.markdown(
     """
     <div class="footer">
     © 2024 Poker TDA (<a href="https://www.pokertda.com">pokertda.com</a>) — TDA rules used by permission.
-    | P1 TD判断AI v0.3 Phase 7A — 瀬戸ミナ (AI-013) 開発
+    | P1 TD判断AI v0.5 Phase 7E — 瀬戸ミナ (AI-013) 開発
     </div>
     """,
     unsafe_allow_html=True,
