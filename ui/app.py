@@ -48,6 +48,18 @@ get_feedback_for_judgment = _db_module.get_feedback_for_judgment
 list_prompt_versions = _db_module.list_prompt_versions
 get_active_prompt_version = _db_module.get_active_prompt_version
 
+# Phase 7B: DB 永続化対策関数（なければダミー）
+count_judgments = getattr(_db_module, "count_judgments", lambda: 0)
+count_feedback = getattr(_db_module, "count_feedback", lambda: 0)
+export_all_judgments = getattr(
+    _db_module, "export_all_judgments",
+    lambda: {"judgments": [], "feedback": [], "prompt_versions": []}
+)
+import_judgments_dump = getattr(
+    _db_module, "import_judgments_dump",
+    lambda dump: (0, 0)
+)
+
 # search_judgments は Phase 7A で追加。古い DB モジュールでも動くようフォールバック
 if hasattr(_db_module, "search_judgments"):
     search_judgments = _db_module.search_judgments
@@ -223,7 +235,7 @@ st.set_page_config(
     page_title="TD判断AI — P1事業",
     page_icon="⚖️",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="auto",  # Phase 7B: PCは開、スマホは閉
 )
 
 # ===== Custom CSS (Phase 7A: スマホ縦画面対応) =====
@@ -379,6 +391,46 @@ with st.sidebar:
     )
 
     st.markdown("---")
+    st.markdown("### 💾 DB バックアップ")
+    st.caption("⚠️ Streamlit Cloud は再起動時に DB が消える可能性があります。定期的にエクスポートしてください。")
+
+    try:
+        _jc = count_judgments()
+        _fc = count_feedback()
+        st.caption(f"📊 現在: 判断 {_jc} 件 / フィードバック {_fc} 件")
+    except Exception:
+        _jc = 0
+        _fc = 0
+
+    try:
+        _dump = export_all_judgments()
+        _dump_bytes = json.dumps(_dump, ensure_ascii=False, indent=2).encode("utf-8")
+        st.download_button(
+            "📥 全データを JSON でダウンロード",
+            data=_dump_bytes,
+            file_name=f"td_ai_backup_{datetime.now().strftime('%Y%m%d_%H%M')}.json",
+            mime="application/json",
+            use_container_width=True,
+            help="全判断・フィードバック・プロンプトをバックアップ",
+        )
+    except Exception as e:
+        st.caption(f"エクスポート準備エラー: {e}")
+
+    _restore_file = st.file_uploader(
+        "📤 バックアップを復元",
+        type=["json"],
+        key="restore_upload",
+        help="DBが消えた時に、ダウンロードしたJSONをアップロードして復元",
+    )
+    if _restore_file is not None:
+        try:
+            _restore_dump = json.loads(_restore_file.read().decode("utf-8"))
+            j_added, f_added = import_judgments_dump(_restore_dump)
+            st.success(f"✅ 復元完了: 判断 {j_added} 件 / FB {f_added} 件を追加")
+        except Exception as e:
+            st.error(f"復元エラー: {e}")
+
+    st.markdown("---")
     st.markdown("### 📊 直近の判断")
 
     recent = list_recent_judgments(limit=10)
@@ -418,34 +470,129 @@ with tab_judge:
     # ===== ⚡ ワンタップテンプレ 20 種 =====
     st.markdown("#### ⚡ クイック選択（タップで入力欄にテンプレが入ります）")
 
+    # Phase 7B: 軽量フレーム化 — ○ プレースホルダー撤廃
+    # 各テンプレは「状況の枠組み + 確認すべきポイント」だけ。
+    # 具体数値は TD が自由記述で追加する方式（入力が早い & 間違えにくい）
     QUICK_TEMPLATES = [
         # ベッティング関連
-        ("💰 OOT fold", "NLHE、Blinds ○,○○○-○,○○○。\nPreflop、UTG が ○,○○○ オープン。MP が順番前に fold 宣言。\nその後 HJ からアクションが回ってきた時、MP の OOT fold は binding か？"),
-        ("💰 アンダーコール", "NLHE、Blinds ○-○。\nUTG が ○,○○○ オープン。CO が無言で ○,○○○（コール額より少ない）を押し出した。\nこれは call か fold か raise か？"),
-        ("💰 Multi-chip bet", "NLHE、Blinds ○-○。\nUTG が ○,○○○ をオープン。CO が無言で ○,○○○ チップ × 2 + ○,○○○ チップ × 2 = 合計 ○,○○○ を出した。\nこれは call か raise か？"),
-        ("💰 String bet", "NLHE、Blinds ○-○。\nプレイヤーが『raise』と宣言せず、チップを 2 回に分けて前に出した。\n1 回目が call 額、2 回目が追加。これは string bet か？"),
-        ("💰 Oversized chip", "NLHE、Blinds ○-○。\nコール額 ○,○○○ に対して、プレイヤーが無言で ○○,○○○ チップ 1 枚だけを出した。\n発言なし。これは call か raise か？"),
+        ("💰 OOT fold",
+         "状況: プレイヤーが順番前に fold を宣言した（OOT fold）。その後、前のアクションが変更された可能性あり。\n\n"
+         "確認すべき点:\n"
+         "- スキップされたプレイヤーは誰か\n"
+         "- OOT 後にアクションが変わったか\n"
+         "- この OOT fold は binding するか（Rule 53A）"),
+        ("💰 アンダーコール",
+         "状況: プレイヤーが無言で、コール額より少ない額のチップを押し出した（アンダーコール）。\n\n"
+         "確認すべき点:\n"
+         "- コール額はいくらか\n"
+         "- 実際に出されたチップ額はいくらか\n"
+         "- 発言はあったか（Rule 52 該当）"),
+        ("💰 Multi-chip bet",
+         "状況: プレイヤーが無言で複数枚のチップを押し出した（合計額が不明瞭）。\n\n"
+         "確認すべき点:\n"
+         "- コール額はいくらか\n"
+         "- 出されたチップの内訳（デノミ×枚数）\n"
+         "- 最小チップ 1 枚を引いた額が call 額未満か（Rule 45A）"),
+        ("💰 String bet",
+         "状況: プレイヤーが「raise」と宣言せず、チップを 2 回以上に分けて前に出した。\n\n"
+         "確認すべき点:\n"
+         "- call 額はいくらか\n"
+         "- 1 回目と 2 回目の間隔\n"
+         "- 宣言の有無（Rule 42/44）"),
+        ("💰 Oversized chip",
+         "状況: コール額に対して、プレイヤーが無言で大きな単一デノミのチップ 1 枚だけを出した（オーバーチップ）。\n\n"
+         "確認すべき点:\n"
+         "- コール額とチップ額の比率\n"
+         "- 発言の有無（Rule 44）"),
         # 誤配
-        ("🃏 Misdeal exposed", "NLHE、Preflop dealing 中、ディーラーが○人目のプレイヤーに配る際、2 枚目のカードが表向きに露出した。\nプレイヤーはまだハンドを見ていない。Misdeal か続行か？"),
-        ("🃏 Wrong player dealt", "NLHE、Preflop。ディーラーが UTG をスキップして MP にカードを配り始めた。\nUTG がアクション前に気づいた。Misdeal か？"),
+        ("🃏 Misdeal カード露出",
+         "状況: Preflop dealing 中、ディーラーがカードを表向きに露出してしまった。\n\n"
+         "確認すべき点:\n"
+         "- 何枚目（何人目）のカードか\n"
+         "- プレイヤーがそのカードを見たか\n"
+         "- まだアクション前か（Rule 35/37）"),
+        ("🃏 スキップ配",
+         "状況: ディーラーがプレイヤーを飛ばしてカードを配り始めた。\n\n"
+         "確認すべき点:\n"
+         "- 何人飛ばされたか\n"
+         "- いつ気づいたか\n"
+         "- SA（Substantial Action）成立前か（Rule 35/36）"),
         # ショーダウン
-        ("🎴 Muck 前 showdown", "NLHE、River action 完了。最初に見せるべき last aggressor が muck を宣言せずカードを伏せた。\n相手プレイヤーはまだ手を公開していない。どう処理する？"),
-        ("🎴 Raise then muck", "NLHE、プレイヤー A が raise 後、call を待たずに自ら muck した。\nbet は返却か、ポットに残留か？（Rule 65A 該当）"),
-        ("🎴 All-in face up", "NLHE、プレイヤーが all-in で call された後、showdown で muck を主張。\nこれは認められるか？"),
+        ("🎴 Muck 前 showdown",
+         "状況: River action 完了後、last aggressor が muck しようとしている（相手のカードはまだ非公開）。\n\n"
+         "確認すべき点:\n"
+         "- 誰が last aggressor か\n"
+         "- All-in か否か（Rule 16）"),
+        ("🎴 Raise then muck",
+         "状況: プレイヤーが raise した後、call を待たずに自ら muck してしまった。\n\n"
+         "確認すべき点:\n"
+         "- raise 額\n"
+         "- その時点で call したプレイヤーはいるか\n"
+         "- Rule 65A（Raise then muck return）該当"),
+        ("🎴 All-in face up",
+         "状況: プレイヤーが all-in で call された後、showdown でカードを見せずに muck しようとしている。\n\n"
+         "確認すべき点:\n"
+         "- 全員 all-in か\n"
+         "- Rule 16 により muck 不可"),
         # 電子機器
-        ("📱 Phone at table", "Day ○、プレイヤーがライブハンド中に携帯電話を手に取って画面を操作した。\n通話ではない。どのペナルティ？"),
-        ("📱 Solver 疑惑", "プレイヤーがハンド中にテーブル下でノートパソコンを開いていた。\n画面は GTO ソルバー。どう処理する？"),
+        ("📱 Phone at table",
+         "状況: プレイヤーがライブハンド中に携帯電話を操作した。\n\n"
+         "確認すべき点:\n"
+         "- 通話か画面操作か\n"
+         "- 何を操作したか\n"
+         "- 累積ペナルティ数（Rule 5C）"),
+        ("📱 Solver 疑惑",
+         "状況: プレイヤーがハンド中に戦略ツール（ソルバー / アプリ / チャート）を参照した疑い。\n\n"
+         "確認すべき点:\n"
+         "- 何のツールか\n"
+         "- 証拠の有無\n"
+         "- ハンド進行中か（Rule 5D — 2024 改訂で DQ レベル）"),
         # プレイヤー行為
-        ("⚠️ Collusion 疑惑", "Day ○、同じ国籍の 2 人が隣席で、A が 3-bet → B が 5-bet all-in → A 即 fold というパターンが繰り返された。\n他プレイヤーから chip dumping の疑惑申告。どう対応する？"),
-        ("⚠️ Soft play", "Final table、親しい 2 人のプレイヤー同士が対戦時、明らかに互いを避けている（check it down 等）。\nどう処理する？"),
-        ("⚠️ Dodging blinds", "プレイヤーが BB 直前で毎回トイレに席を立ち、BB ポジションを回避している。\n3 回連続で同じパターン。どう対処？"),
+        ("⚠️ Collusion 疑惑",
+         "状況: 特定のプレイヤー同士で、chip dumping / soft play の疑われる行動パターンが繰り返された。\n\n"
+         "確認すべき点:\n"
+         "- 具体的なパターンと回数\n"
+         "- 証拠の強さ\n"
+         "- 関係性（同国籍 / 同宿泊 等）"),
+        ("⚠️ Soft play",
+         "状況: 親しい 2 人のプレイヤーが対戦時、明らかに互いを避けている（check it down 等）。\n\n"
+         "確認すべき点:\n"
+         "- 関係性\n"
+         "- パターン頻度\n"
+         "- 他プレイヤーへの影響（Rule 71）"),
+        ("⚠️ Dodging blinds",
+         "状況: プレイヤーが BB 直前で繰り返し席を立ち、BB ポジションを回避している疑い。\n\n"
+         "確認すべき点:\n"
+         "- 連続回数\n"
+         "- 体調不良か意図的か（Rule 33/71）"),
         # チップ管理
-        ("🔢 Pocket chips", "プレイヤーがチップをポケットに入れて席を立とうとした。\nテーブルから見えない所にチップを移動させた疑い。どう処理する？"),
-        ("🔢 Chip race", "Chip race で最小デノミが廃止される際、あるプレイヤーが raced out（ゼロチップ）になった。\nこのプレイヤーは次ハンドから脱落？最後の1チップ権は？"),
+        ("🔢 Pocket chips",
+         "状況: プレイヤーがチップをポケットやカバン等、テーブルから見えない場所に移動させた。\n\n"
+         "確認すべき点:\n"
+         "- 意図的か\n"
+         "- チップの額（Rule 63 — 没収対象）"),
+        ("🔢 Chip race",
+         "状況: Chip race で最小デノミが廃止される際、プレイヤーが raced out になりそう。\n\n"
+         "確認すべき点:\n"
+         "- 残チップ数\n"
+         "- Rule 24A の「最後 1 チップは raced out 禁止」該当"),
         # トーナメント構造
-        ("⏰ Clock call", "Day ○、プレイヤーが長考中、他プレイヤーがクロックを要求。\n25 秒 + 10 秒のカウントダウン中、プレイヤーが時間切れ直前に fold。許容される？"),
-        ("⏰ Dead button", "プレイヤーが bust out した次のハンド、ボタン位置をどう進めるか？\nDead button 発動条件は？"),
-        ("⏰ Late reg cap", "Late reg 最終レベルで 3 人が同時に registration。\nそのうち 1 人の seat card を打つ前にレベルアップした。受付は？"),
+        ("⏰ Clock call",
+         "状況: プレイヤーが長考中、他プレイヤーがクロックを要求（25 秒 + 10 秒カウントダウン）。\n\n"
+         "確認すべき点:\n"
+         "- すでに何秒経過しているか\n"
+         "- 時間切れ寸前の action 判定（Rule 29/30）"),
+        ("⏰ Dead button",
+         "状況: プレイヤーが bust out した次のハンドで、ボタン位置の進行が不明。\n\n"
+         "確認すべき点:\n"
+         "- bust したポジション\n"
+         "- 現在のブラインド順（Rule 32 dead button）"),
+        ("⏰ Late reg cap",
+         "状況: Late reg 最終レベルで受付処理中にレベルアップした。\n\n"
+         "確認すべき点:\n"
+         "- seat card を打ったか\n"
+         "- チップを置いたか\n"
+         "- 受付完了の定義（Rule 8）"),
     ]
 
     # 5 列 × 4 行で配置
@@ -500,7 +647,7 @@ with tab_judge:
             st.warning("状況を入力してください")
             st.stop()
 
-        with st.spinner("AI が判断を生成中...（約 10-30 秒）"):
+        with st.spinner("AI が判断を生成中...（約 30-60 秒、初回は少し長め）"):
             extra = {}
             if tournament_phase:
                 extra["tournament_phase"] = tournament_phase
@@ -587,6 +734,72 @@ with tab_judge:
                   ⚠️ <b>ペナルティ</b>: {penalty_oneline}
                 </div>
             """)
+
+        # ===== Phase 7B: 即時アクション行（上位配置） =====
+        # B-3: 新しい判断 + コピー、Hidden #11: FB ボタン即横
+        already_submitted_top = st.session_state.feedback_submitted.get(
+            result["judgment_id"], False
+        )
+        jid = result["judgment_id"]
+
+        action_cols = st.columns([1, 1, 1, 1, 1, 1])
+        with action_cols[0]:
+            if st.button("🔄 新しい判断", key=f"new_judgment_top_{jid}", use_container_width=True, help="状況をクリアして次の判断へ"):
+                st.session_state.last_judgment = None
+                st.session_state.situation_input = ""
+                st.rerun()
+        with action_cols[1]:
+            # コピー用: プレイヤー説明のショート版を生成
+            copy_text = f"【TD判断】{conclusion}"
+            if main_rule:
+                copy_text += f"\n【適用ルール】{main_rule}"
+            if penalty:
+                copy_text += f"\n【ペナルティ】{penalty.splitlines()[0] if penalty else ''}"
+            copy_text += f"\n\n(TD判断AI v0.3 より / TDA 2024準拠)"
+            if st.button("📋 コピー用", key=f"copy_btn_{jid}", use_container_width=True, help="判断テキストを表示してコピー可"):
+                st.session_state[f"show_copy_{jid}"] = True
+
+        # フィードバックボタンを即横に
+        with action_cols[2]:
+            if already_submitted_top:
+                st.caption("✅ 保存済")
+            else:
+                if st.button("✅ 正しい", key=f"fb_top_correct_{jid}", use_container_width=True):
+                    save_feedback(
+                        judgment_id=jid,
+                        rating="correct",
+                        comment="UIから（上位FB）",
+                        reviewer="field_ui",
+                    )
+                    st.session_state.feedback_submitted[jid] = True
+                    st.rerun()
+        with action_cols[3]:
+            if not already_submitted_top:
+                if st.button("🟡 部分的", key=f"fb_top_partial_{jid}", use_container_width=True):
+                    save_feedback(
+                        judgment_id=jid,
+                        rating="partial",
+                        comment="UIから（上位FB）",
+                        reviewer="field_ui",
+                    )
+                    st.session_state.feedback_submitted[jid] = True
+                    st.rerun()
+        with action_cols[4]:
+            if not already_submitted_top:
+                if st.button("❌ 間違い", key=f"fb_top_wrong_{jid}", use_container_width=True):
+                    save_feedback(
+                        judgment_id=jid,
+                        rating="wrong",
+                        comment="UIから（上位FB）",
+                        reviewer="field_ui",
+                    )
+                    st.session_state.feedback_submitted[jid] = True
+                    st.rerun()
+
+        # コピー用テキスト表示（押されたら）
+        if st.session_state.get(f"show_copy_{jid}"):
+            st.code(copy_text, language=None)
+            st.caption("☝️ 右上のコピーアイコンでテキストをクリップボードへコピーできます")
 
         # 詳細折りたたみ
         with st.expander("🔽 詳細（根拠・補足・全文）を見る"):

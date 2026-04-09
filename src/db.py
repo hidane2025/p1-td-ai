@@ -360,6 +360,132 @@ def list_cases(category: str | None = None, source: str | None = None) -> list[d
         return [dict(r) for r in rows]
 
 
+# ===== Export / Import (Phase 7B: DB 永続化対策) =====
+
+def count_judgments() -> int:
+    """全判断件数を返す（バックアップ警告表示用）"""
+    with connect() as conn:
+        row = conn.execute("SELECT COUNT(*) as c FROM judgments").fetchone()
+        return int(row["c"]) if row else 0
+
+
+def count_feedback() -> int:
+    with connect() as conn:
+        row = conn.execute("SELECT COUNT(*) as c FROM feedback").fetchone()
+        return int(row["c"]) if row else 0
+
+
+def export_all_judgments() -> dict:
+    """
+    全 judgments + feedback を 1 つの辞書にエクスポート。
+    Streamlit Cloud DB 消失対策。
+    """
+    import json as json_mod
+    with connect() as conn:
+        j_rows = conn.execute(
+            "SELECT * FROM judgments ORDER BY created_at"
+        ).fetchall()
+        f_rows = conn.execute(
+            "SELECT * FROM feedback ORDER BY created_at"
+        ).fetchall()
+        pv_rows = conn.execute(
+            "SELECT * FROM prompt_versions"
+        ).fetchall()
+
+    return {
+        "exported_at": now_iso(),
+        "schema_version": "1",
+        "judgments": [dict(r) for r in j_rows],
+        "feedback": [dict(r) for r in f_rows],
+        "prompt_versions": [dict(r) for r in pv_rows],
+    }
+
+
+def import_judgments_dump(dump: dict) -> tuple[int, int]:
+    """
+    エクスポートファイルを復元する（重複はスキップ）。
+    戻り値: (追加された judgments 数, 追加された feedback 数)
+    """
+    import json as json_mod
+    j_added = 0
+    f_added = 0
+    with connect() as conn:
+        # Prompt versions (upsert)
+        for pv in dump.get("prompt_versions", []):
+            conn.execute(
+                """
+                INSERT OR IGNORE INTO prompt_versions
+                (version, created_at, path, parent_version, change_notes, active)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    pv["version"],
+                    pv.get("created_at", now_iso()),
+                    pv.get("path", ""),
+                    pv.get("parent_version"),
+                    pv.get("change_notes"),
+                    pv.get("active", 0),
+                ),
+            )
+        # Judgments
+        for j in dump.get("judgments", []):
+            exists = conn.execute(
+                "SELECT id FROM judgments WHERE id = ?", (j["id"],)
+            ).fetchone()
+            if exists:
+                continue
+            conn.execute(
+                """
+                INSERT INTO judgments
+                (id, created_at, situation, extra_context, prompt_version,
+                 model, referenced_rules, response_text, response_json,
+                 confidence, latency_ms, token_usage)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    j["id"],
+                    j.get("created_at", now_iso()),
+                    j.get("situation", ""),
+                    j.get("extra_context"),
+                    j.get("prompt_version", "v0.3"),
+                    j.get("model", ""),
+                    j.get("referenced_rules"),
+                    j.get("response_text", ""),
+                    j.get("response_json"),
+                    j.get("confidence"),
+                    j.get("latency_ms"),
+                    j.get("token_usage"),
+                ),
+            )
+            j_added += 1
+        # Feedback
+        for f in dump.get("feedback", []):
+            exists = conn.execute(
+                "SELECT id FROM feedback WHERE id = ?", (f["id"],)
+            ).fetchone()
+            if exists:
+                continue
+            conn.execute(
+                """
+                INSERT INTO feedback
+                (id, judgment_id, created_at, rating, correct_judgment,
+                 comment, reviewer)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    f["id"],
+                    f["judgment_id"],
+                    f.get("created_at", now_iso()),
+                    f.get("rating", "partial"),
+                    f.get("correct_judgment"),
+                    f.get("comment"),
+                    f.get("reviewer"),
+                ),
+            )
+            f_added += 1
+    return j_added, f_added
+
+
 # ===== Initial seed from JSON =====
 
 def seed_cases_from_json(json_path: Path) -> int:
