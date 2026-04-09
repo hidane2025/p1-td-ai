@@ -493,26 +493,27 @@ with st.sidebar:
     recent = list_recent_judgments(limit=10)
     if recent:
         for r in recent:
-            with st.expander(
-                f"🕐 {r['created_at'][:16]} — {r['situation'][:30]}..."
+            conf_icon = "🟢" if r.get("confidence") == "high" else "🟡" if r.get("confidence") == "medium" else "🔴"
+            # ボタンをexpander外に配置（expander内ボタンはStreamlitのrerunでリセットされるため）
+            if st.button(
+                f"{conf_icon} {r['created_at'][5:16]} — {r['situation'][:25]}...",
+                key=f"detail_{r['id']}",
+                use_container_width=True,
             ):
-                st.text(f"ID: {r['id']}")
-                st.text(f"Version: {r['prompt_version']}")
-                st.text(f"Confidence: {r['confidence'] or '?'}")
-                if st.button("詳細", key=f"detail_{r['id']}"):
-                    detail = get_judgment(r["id"])
-                    if detail:
-                        st.session_state.last_judgment = {
-                            "judgment_id": detail["id"],
-                            "response": detail["response_text"],
-                            "prompt_version": detail["prompt_version"],
-                            "model": detail["model"],
-                            "latency_ms": detail["latency_ms"] or 0,
-                            "confidence": detail["confidence"],
-                            "token_usage": json.loads(detail["token_usage"]) if detail["token_usage"] else {},
-                            "referenced_rules_context": json.loads(detail["referenced_rules"]) if detail["referenced_rules"] else [],
-                        }
-                        st.rerun()
+                detail = get_judgment(r["id"])
+                if detail:
+                    st.session_state.last_judgment = {
+                        "judgment_id": detail["id"],
+                        "situation": detail["situation"],
+                        "response": detail["response_text"],
+                        "prompt_version": detail["prompt_version"],
+                        "model": detail["model"],
+                        "latency_ms": detail["latency_ms"] or 0,
+                        "confidence": detail["confidence"],
+                        "token_usage": json.loads(detail["token_usage"]) if detail["token_usage"] else {},
+                        "referenced_rules_context": json.loads(detail["referenced_rules"]) if detail["referenced_rules"] else [],
+                    }
+                    st.rerun()
     else:
         st.caption("まだ判断履歴はありません")
 
