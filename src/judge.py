@@ -942,6 +942,67 @@ def validate_referenced_rules(rule_ids: list[str]) -> dict:
     }
 
 
+# ===== Quick judgment function (Haiku instant answer) =====
+
+def quick_judge(
+    situation: str,
+    extra_context: dict | None = None,
+) -> dict:
+    """
+    Haiku で1行結論を即座に返す（3秒目標）。
+    DBには保存しない（後続の judge() が保存する）。
+
+    Returns: {
+        'quick_response': str,  # 1行の結論
+        'latency_ms': int,
+        'model': str,
+    }
+    """
+    t0 = time.time()
+    client = Anthropic()
+
+    # 同じキーワード検索でルール取得（精度のため）
+    rules_context = _keyword_search(situation)
+    rules_text = "\n\n".join(
+        f"### {r['id']}: {r['title']}\n{r['body'][:500]}"
+        for r in rules_context[:5]
+    )
+
+    extra_text = ""
+    if extra_context:
+        extra_text = "\n".join(f"- {k}: {v}" for k, v in extra_context.items())
+
+    quick_prompt = f"""あなたはポーカートーナメントのTD判断AIです。
+以下の状況に対して、結論とルール番号を1行で回答してください。
+詳細な説明は不要です。
+
+## 参考ルール
+{rules_text}
+
+## 状況
+{situation}
+{f"## 追加情報{chr(10)}{extra_text}" if extra_text else ""}
+
+## 回答形式
+【結論】〇〇（Rule-XX）
+"""
+
+    response = client.messages.create(
+        model=FAST_MODEL,
+        max_tokens=200,
+        messages=[{"role": "user", "content": quick_prompt}],
+    )
+
+    latency_ms = int((time.time() - t0) * 1000)
+    text = response.content[0].text.strip()
+
+    return {
+        "quick_response": text,
+        "latency_ms": latency_ms,
+        "model": FAST_MODEL,
+    }
+
+
 # ===== Main judgment function =====
 
 def judge(

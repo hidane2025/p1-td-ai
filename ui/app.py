@@ -32,7 +32,7 @@ import streamlit as st
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / "src"))
 
-from judge import judge  # noqa: E402
+from judge import judge, quick_judge  # noqa: E402
 
 # Phase 7A: db モジュールを importlib で明示リロード
 # Streamlit Cloud のモジュールキャッシュ対策
@@ -708,15 +708,36 @@ with tab_judge:
             st.warning("状況を入力してください")
             st.stop()
 
-        with st.spinner("AI が判断を生成中...（約 30-60 秒、初回は少し長め）"):
-            extra = {}
-            if tournament_phase:
-                extra["tournament_phase"] = tournament_phase
-            if blinds:
-                extra["blinds"] = blinds
-            if game_type:
-                extra["game_type"] = game_type
+        extra = {}
+        if tournament_phase:
+            extra["tournament_phase"] = tournament_phase
+        if blinds:
+            extra["blinds"] = blinds
+        if game_type:
+            extra["game_type"] = game_type
 
+        # === Step 1: Haiku 即答（3秒） ===
+        quick_placeholder = st.empty()
+        try:
+            qr = quick_judge(
+                situation=situation.strip(),
+                extra_context=extra or None,
+            )
+            quick_placeholder.markdown(
+                f'<div style="padding:1rem 1.2rem;border-radius:10px;'
+                f'background:linear-gradient(135deg,#E8F4FD 0%,#D1ECFF 100%);'
+                f'border-left:6px solid #2196F3;margin-bottom:1rem;">'
+                f'<div style="font-size:0.8rem;color:#1565C0;font-weight:600;margin-bottom:0.3rem;">'
+                f'💡 即答（Haiku {qr["latency_ms"]/1000:.1f}秒）</div>'
+                f'<div style="font-size:1.15rem;font-weight:700;color:#1a1a1a;line-height:1.5;">'
+                f'{qr["quick_response"]}</div></div>',
+                unsafe_allow_html=True,
+            )
+        except Exception:
+            pass  # 即答失敗しても詳細判断は続行
+
+        # === Step 2: Sonnet 詳細判断 ===
+        with st.spinner("📝 詳細分析を生成中..."):
             try:
                 result = judge(
                     situation=situation.strip(),
@@ -726,7 +747,6 @@ with tab_judge:
                 result["situation"] = situation.strip()
                 st.session_state.last_judgment = result
                 st.session_state.feedback_submitted[result["judgment_id"]] = False
-                # テンプレ再表示防止
                 st.session_state.situation_input = ""
             except Exception as e:
                 st.error(f"判断生成中にエラー: {e}")
