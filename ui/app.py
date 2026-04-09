@@ -288,29 +288,75 @@ st.markdown(
         min-height: 44px;  /* Touch target */
         font-size: 0.9rem;
     }
-    /* Mobile 対応: 縦画面でカラムを積み上げる */
-    @media (max-width: 640px) {
+    /* 裁定を詰めるセクション */
+    .refine-box {
+        padding: 1rem 1.2rem;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #F0F4FF 0%, #E8EEFF 100%);
+        border-left: 5px solid #4A7AFF;
+        margin: 1rem 0;
+    }
+    /* Mobile 対応: Phase 7E 強化版 */
+    @media (max-width: 768px) {
         .main-title {
             font-size: 1.6rem;
         }
         .subtitle {
             font-size: 0.85rem;
         }
-        div[data-testid="column"] {
+        /* フォームフィールド: 縦積み */
+        div[data-testid="stHorizontalBlock"] > div[data-testid="column"] {
             width: 100% !important;
             flex: 1 1 100% !important;
-            margin-bottom: 0.4rem;
+            min-width: 100% !important;
+            margin-bottom: 0.3rem;
+        }
+        /* テンプレボタン: 2列に制限 */
+        div[data-testid="stHorizontalBlock"]:has(> div > div > button[kind="secondary"]) > div[data-testid="column"] {
+            width: 48% !important;
+            flex: 0 0 48% !important;
+            min-width: 48% !important;
         }
         .stButton > button {
-            min-height: 48px !important;
+            min-height: 52px !important;
             font-size: 1rem !important;
+            padding: 0.6rem 0.4rem !important;
+            line-height: 1.3 !important;
+        }
+        /* 判断取得ボタンを大きく */
+        button[kind="primary"] {
+            min-height: 56px !important;
+            font-size: 1.15rem !important;
+            font-weight: 700 !important;
         }
         textarea {
             font-size: 16px !important; /* iOS zoom 防止 */
+            min-height: 120px !important;
         }
         input[type="text"],
         input[type="password"] {
             font-size: 16px !important;
+            min-height: 44px !important;
+        }
+        /* サイドバーをスリムに */
+        section[data-testid="stSidebar"] {
+            width: 260px !important;
+        }
+        /* expanderのタッチ領域拡大 */
+        details summary {
+            min-height: 48px !important;
+            display: flex;
+            align-items: center;
+        }
+    }
+    /* 小さいスマホ (iPhone SE等) */
+    @media (max-width: 400px) {
+        .main-title {
+            font-size: 1.3rem;
+        }
+        .stButton > button {
+            font-size: 0.85rem !important;
+            padding: 0.5rem 0.3rem !important;
         }
     }
     </style>
@@ -673,6 +719,7 @@ with tab_judge:
                     extra_context=extra or None,
                     prompt_version=selected_version,
                 )
+                result["situation"] = situation.strip()
                 st.session_state.last_judgment = result
                 st.session_state.feedback_submitted[result["judgment_id"]] = False
                 # テンプレ再表示防止
@@ -811,6 +858,57 @@ with tab_judge:
         if st.session_state.get(f"show_copy_{jid}"):
             st.code(copy_text, language=None)
             st.caption("☝️ 右上のコピーアイコンでテキストをクリップボードへコピーできます")
+
+        # ===== 🔄 裁定を詰める（Phase 7E: 追加情報で再判断） =====
+        refine_key = f"refine_mode_{jid}"
+        if st.button("🔄 追加情報で裁定を詰める", key=f"refine_btn_{jid}", use_container_width=True,
+                      help="状況の補足を追加して、より正確な判断を取得"):
+            st.session_state[refine_key] = True
+
+        if st.session_state.get(refine_key):
+            st.markdown(
+                '<div class="refine-box">'
+                '<b>🔄 追加情報を入力</b> — 前回の判断を踏まえて再判断します'
+                '</div>',
+                unsafe_allow_html=True,
+            )
+            additional_info = st.text_area(
+                "追加の状況・補足",
+                height=100,
+                placeholder="例: 実はプレイヤーは raise と宣言してからチップを出した / このプレイヤーは2回目の違反 / ディーラーが確認したところ...",
+                key=f"refine_input_{jid}",
+            )
+            rcol1, rcol2 = st.columns(2)
+            with rcol1:
+                if st.button("⚖️ 再判断を取得", key=f"refine_submit_{jid}", type="primary", use_container_width=True):
+                    if additional_info and additional_info.strip():
+                        # 前回の状況 + 前回の判断 + 追加情報を結合して再判断
+                        original_situation = result.get("situation", st.session_state.get("situation_input", ""))
+                        refined_situation = (
+                            f"【前回の状況】\n{original_situation}\n\n"
+                            f"【前回のAI判断】\n{conclusion}\n\n"
+                            f"【追加情報（TD からの補足）】\n{additional_info.strip()}\n\n"
+                            f"上記の追加情報を踏まえて、裁定を再検討してください。"
+                        )
+                        with st.spinner("追加情報を踏まえて再判断中..."):
+                            try:
+                                refined_result = judge(
+                                    situation=refined_situation,
+                                    extra_context=None,
+                                    prompt_version=selected_version,
+                                )
+                                st.session_state.last_judgment = refined_result
+                                st.session_state.feedback_submitted[refined_result["judgment_id"]] = False
+                                st.session_state[refine_key] = False
+                                st.rerun()
+                            except Exception as e:
+                                st.error(f"再判断エラー: {e}")
+                    else:
+                        st.warning("追加情報を入力してください")
+            with rcol2:
+                if st.button("キャンセル", key=f"refine_cancel_{jid}", use_container_width=True):
+                    st.session_state[refine_key] = False
+                    st.rerun()
 
         # 詳細折りたたみ
         with st.expander("🔽 詳細（根拠・補足・全文）を見る"):
