@@ -86,7 +86,7 @@ def cmd_init(args: argparse.Namespace) -> int:
         )
         print("✅ Registered prompt v0.2")
 
-    # Register prompt v0.3 (ACTIVE - Phase 6 short format + official rule priority)
+    # Register prompt v0.3 (historical)
     v03_path = BASE_DIR / "prompts" / "versions" / "system_v0.3.md"
     if v03_path.exists():
         register_prompt_version(
@@ -94,15 +94,26 @@ def cmd_init(args: argparse.Namespace) -> int:
             path="prompts/versions/system_v0.3.md",
             parent_version="v0.2",
             change_notes="公式ルール絶対優先・短文化・結論ファースト・補足情報最小化 (Phase 6)",
+            activate=False,
+        )
+        print("✅ Registered prompt v0.3")
+
+    # Register prompt v0.4 (ACTIVE - Phase 7C 裁量余地明示 + ルール ID 捏造禁止)
+    v04_path = BASE_DIR / "prompts" / "versions" / "system_v0.4.md"
+    if v04_path.exists():
+        register_prompt_version(
+            version="v0.4",
+            path="prompts/versions/system_v0.4.md",
+            parent_version="v0.3",
+            change_notes="裁量余地明示・ルール ID 捏造禁止・疑惑温度感調整・補助ルール併記強制 (Phase 7C)",
             activate=True,
         )
-        print("✅ Registered prompt v0.3 (ACTIVE)")
+        print("✅ Registered prompt v0.4 (ACTIVE)")
     else:
-        print("⚠️  system_v0.3.md not found, fallback to v0.1")
-        # Fallback: activate v0.1 if v0.3 is missing
-        if v01_path.exists():
+        print("⚠️  system_v0.4.md not found, fallback to v0.3")
+        if v03_path.exists():
             from db import activate_prompt_version
-            activate_prompt_version("v0.1")
+            activate_prompt_version("v0.3")
 
     print("\n🎉 Phase 0 setup complete. Next: export ANTHROPIC_API_KEY and try 'judge'")
     return 0

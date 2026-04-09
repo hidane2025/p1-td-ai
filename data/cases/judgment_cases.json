@@ -1063,5 +1063,174 @@
     },
     "confidence": "medium",
     "notes": "Chip dumping は最も慎重な事実認定が必要なケース。冤罪は訴訟リスクが高い。"
+  },
+  {
+    "id": "case-036-jp-masaking-call-fold",
+    "category": "ベッティング／コール宣言",
+    "created_by": "瀬戸ミナ（X 実例 2025-02 SHIBUYA POKER FES）",
+    "situation": "SHIBUYA POKER FES の River でプレイヤー① が KT で all-in。プレイヤー② が「コルコルコル」と発声しながら AT を見せた。ディーラーが「コールと言わずにショーしたのでコール扱いにならない」と判定。フロアが呼ばれ、両プレイヤーがハンドを開いたままプレイヤー② のアクション継続を指示。プレイヤー② はその後 fold を宣言し、チップを払わずハンド終了。生配信で「コルコルコル」発声の音声証拠が残っている。",
+    "tournament_phase": "Live event",
+    "blinds": "—",
+    "game_type": "NLHE",
+    "prior_actions": "River: Player① all-in (KT) → Player② says 'コルコルコル' while showing AT → dealer rules no call → floor allows hands open → Player② folds",
+    "expected_judgment": "「コルコルコル」発声は call 宣言として有効（Rule-40A whichever is first defines the bet + Rule-41 verbal call）。両者ハンド公開済み（Rule-16 face up for all-ins）の状態で showdown 成立 → call binding 確定、後付け fold 不可。プレイヤー② は all-in 額全額を支払う義務。フロアの初期判定は誤り。",
+    "expected_rules": [
+      "Rule-40",
+      "Rule-41",
+      "Rule-16"
+    ],
+    "expected_reasoning": "Rule 40A は『whichever is first (verbal or chips) defines the bet』と規定し、verbal は明確な call 宣言と認められる。発声が記録に残っていれば fact-finding は確定。Rule 16 で all-in showdown はカード公開必須。本件は両者公開済みで showdown 成立 → fold 不可。",
+    "alternatives": [],
+    "penalty": {
+      "level": "none",
+      "description": "プレイヤー② への注意喚起のみ（次回からは『コール』と明確に発声するよう）"
+    },
+    "confidence": "high",
+    "notes": "X で大炎上した実例。マサキングは後日謝罪。配信に音声証拠が残っているケースは事実認定が確定するため Rule 41 が機械適用される。",
+    "required_rules": [
+      "Rule-40",
+      "Rule-41"
+    ],
+    "recommended_rules": [
+      "Rule-16"
+    ]
+  },
+  {
+    "id": "case-037-jp-tpc-collusion",
+    "category": "Collusion／組打ち疑惑",
+    "created_by": "瀬戸ミナ（X 実例 TPC 大阪）",
+    "situation": "TPC（Top of Poker Championship）大阪のファイナルテーブルで、特定の 3 人のプレイヤーが事前打ち合わせの疑い。お互いを避け、特定 1 人にチップを集中させる動きが繰り返された。結果として 1 位・2 位・3 位を独占。RFID 配信映像で組打ちが疑われ、SNS で大炎上。他プレイヤーから複数の苦情申告。TD として疑惑段階でどう対応するか、確定後はどう処分するか。",
+    "tournament_phase": "Final Table",
+    "blinds": "Final Table blinds",
+    "game_type": "NLHE",
+    "prior_actions": "FT: 3 players (A, B, C) appear to dump chips to specific player → repeated pattern → 1st/2nd/3rd by these 3 → RFID footage suggests collusion",
+    "expected_judgment": "疑惑段階での即 DQ は訴訟リスクが高いため避ける。手順: (1) 即座に TD 会議招集 + 該当 3 名を別卓分離 + 監視強化 (2) RFID 映像レビュー + 個別聴取 + 他プレイヤーからの証言収集 (3) 証拠が揃い次第、Rule 67 + Rule 69 + Rule 71 を機械適用して DQ + chip forfeit (4) 賞金プール返還 or 残プレイヤーへの再分配を TD 裁量で。確定なしの段階では分離・監視のみ。",
+    "expected_rules": [
+      "Rule-67",
+      "Rule-69",
+      "Rule-71",
+      "Rule-1"
+    ],
+    "expected_reasoning": "Rule 67 (One Player to a Hand) + Rule 69 (Ethical Play) で chip dumping は最上位ペナルティ対象。ただし疑惑段階では Rule 1 の裁量で慎重対応が必要。TD は『疑い』と『確定』を厳格に区別する義務がある。",
+    "alternatives": [
+      {
+        "option": "即 DQ",
+        "condition": "RFID 映像 + 通信記録 + 目撃証言が揃って確証がある場合のみ"
+      },
+      {
+        "option": "別テーブル分離 + 監視のみ",
+        "condition": "疑惑段階で確証なし（パターンが偶然の可能性を排除できない）"
+      }
+    ],
+    "penalty": {
+      "level": "DQ (if confirmed)",
+      "description": "確定すれば 3 名全員 DQ + chip forfeit + 賞金没収。疑惑段階では分離監視のみ。"
+    },
+    "confidence": "medium",
+    "notes": "事実認定が最も難しいケース。冤罪リスクと放置リスクのバランス。",
+    "required_rules": [
+      "Rule-67",
+      "Rule-71"
+    ],
+    "recommended_rules": [
+      "Rule-69",
+      "Rule-1"
+    ]
+  },
+  {
+    "id": "case-038-jp-jopt-privacy",
+    "category": "運営オペレーション／TDA 範囲外",
+    "created_by": "瀬戸ミナ（X 実例 JOPT 2022-07）",
+    "situation": "JOPT（Japan Open Poker Tour）の公式 X アカウントが Day 2 のシートドローを画像で公開した際、画像に参加者の住所・電話番号などの個人情報が含まれていた。数時間後にツイ消し → 後日訂正版を再投稿したが、運営からの説明・謝罪はなし。個人情報保護法違反の疑いで X 上で炎上。TD としてこの状況をどう判断するか。",
+    "tournament_phase": "Day 2",
+    "blinds": "—",
+    "game_type": "NLHE",
+    "expected_judgment": "本件は TDA Rule の管轄外（運営の個人情報管理 + 広報対応の問題）。TDA は『テーブル上のゲーム進行ルール』を扱うものであり、SNS 投稿や個人情報保護法対応は法務・コンプライアンス部門の管轄。TD としての対応: (1) 即時に運営責任者・法務担当へ報告 (2) プレイヤー問い合わせには『運営から正式な説明があるまでお待ちください』と案内 (3) Day 2 のゲーム進行には影響させない。",
+    "expected_rules": [
+      "Rule-1"
+    ],
+    "expected_reasoning": "TDA Rule 1-71 + RP 1-22 のいずれも本件のような運営オペレーション論点を扱っていない。Rule 1 (best interest of game) の精神に照らせば運営は参加者保護義務を負うが、個別の処分や対応は TD ではなく経営層・法務の判断。",
+    "alternatives": [],
+    "penalty": {
+      "level": "none",
+      "description": "TD 判断対象外。経営・法務マターとして報告のみ。"
+    },
+    "confidence": "low",
+    "notes": "TDA 管轄外と明示できる AI は珍しい。Case ③ で v0.3 が完璧な判断を出した。",
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": []
+  },
+  {
+    "id": "case-039-jp-dealer-collected-active",
+    "category": "ショーダウン／ハンド保護",
+    "created_by": "瀬戸ミナ（典型ケース）",
+    "situation": "NLHE、Day 1 後半、Blinds 2,000-4,000。プレイヤー A が River でハンドを伏せて考えていた（カードプロテクターなし）。ディーラーが誤って A のカードを回収し、マック山に混ぜてしまった。A は『俺のハンドだ、まだ降りてない』と主張。ディーラーは『もう特定できない』と返答。ポットは 80,000、A のスタックは 120,000、まだリバーアクション前。",
+    "tournament_phase": "Day 1 後半",
+    "blinds": "2,000-4,000",
+    "game_type": "NLHE",
+    "prior_actions": "River: Player A facing bet, no card protector → dealer accidentally collected A's cards into muck → cards unrecoverable",
+    "expected_judgment": "Rule 65A により原則として A のハンドは dead（ハンド保護義務違反）。ただし、TD は Rule 1 の裁量で『当時の状況・常連性・ディーラー過失レベル』から、ベット返却（pot は失う）等の折衷案も検討可能。本件はカードプロテクターなし → 救済難しい。",
+    "expected_rules": [
+      "Rule-65",
+      "Rule-14",
+      "Rule-1"
+    ],
+    "expected_reasoning": "Rule 65A『Players must protect their hands at all times. If the dealer kills a hand by mistake, generally no redress』が機械適用される。Rule 14 (Live Hand at Showdown) でハンド特定が必須。Rule 1 で TD 裁量の余地があるが、原則ハンド dead。",
+    "alternatives": [
+      {
+        "option": "ハンド完全に dead",
+        "condition": "ディーラーの過失が軽微 + プレイヤーが完全にハンド保護を怠った場合"
+      },
+      {
+        "option": "ベット返却 (pot は失う)",
+        "condition": "ディーラーの過失が重大 + プレイヤーの常連性も考慮"
+      }
+    ],
+    "penalty": {
+      "level": "none",
+      "description": "意図的違反ではない。ディーラーへの個人的注意のみ。"
+    },
+    "confidence": "high",
+    "notes": "現場で最も感情的に揉めるケース。TD は『プレイヤーは保護義務を負う』TDA 原則を丁寧に説明する必要あり。",
+    "required_rules": [
+      "Rule-65"
+    ],
+    "recommended_rules": [
+      "Rule-14",
+      "Rule-1"
+    ]
+  },
+  {
+    "id": "case-040-jp-stringbet-2024-revision",
+    "category": "ベッティング／2024 ルール改訂",
+    "created_by": "瀬戸ミナ（典型ケース・2024 改訂）",
+    "situation": "NLHE、Day 2、Blinds 3,000-6,000。Preflop、UTG オープン 15,000。CO がチップスタック 1 本（5,000 × 6 枚 = 30,000）を前に押し出したが、上から数枚をバラバラと落とすような動作をした。宣言なし。総額は 30,000。ディーラーが『string bet です、コール額（15,000）のみ受け付け』と判定。プレイヤーは『2024 ルール改訂で上から落とすのは string じゃないはず』と異議。",
+    "tournament_phase": "Day 2",
+    "blinds": "3,000-6,000 BBA 6,000",
+    "game_type": "NLHE",
+    "prior_actions": "Preflop: UTG open 15,000 → CO pushes single stack of 30,000, with top chips falling slightly → dealer rules string bet → player objects citing 2024 revision",
+    "expected_judgment": "本件は string bet ではなく valid bet（30,000 の raise として有効）。2024 改訂 Rule 56 (String Bets and Raises) は『1 度ベットしたあと再びスタックに手を伸ばし追加チップをベットする複数の動作』のみを string bet と定義。本件は単一動作で押し出し中に上から落ちただけ → string ではない。ディーラーの判定は 2023 以前の旧解釈で、現在は誤り。",
+    "expected_rules": [
+      "Rule-56",
+      "Rule-42",
+      "Rule-43"
+    ],
+    "expected_reasoning": "Rule 56 (2024 改訂版): String bet は『multiple motion = the player puts out a bet, then returns to their stack for more chips』に限定された。本件は押し出し動作の一部で上から落ちただけ → 単一動作 → 30,000 全額が valid bet。Rule 43 (Raise Amounts) で min raise 15,000 を満たす。",
+    "alternatives": [],
+    "penalty": {
+      "level": "none",
+      "description": "ディーラーへの再教育が必要。プレイヤー側に違反なし。"
+    },
+    "confidence": "high",
+    "notes": "2024 ルール改訂の周知不足で頻発する事例。TD は 2023 以前の旧解釈と区別して説明する義務あり。",
+    "required_rules": [
+      "Rule-56"
+    ],
+    "recommended_rules": [
+      "Rule-42",
+      "Rule-43"
+    ]
   }
 ]

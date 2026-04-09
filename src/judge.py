@@ -55,6 +55,18 @@ KEYWORD_MAP: dict[str, list[str]] = {
     "misdeal": ["Rule-35", "Rule-36", "Rule-37"],
     "exposed": ["Rule-35", "Rule-37", "Rule-38"],
     "showdown": ["Rule-16", "Rule-17", "Rule-18"],
+    "face up": ["Rule-16"],
+    "face-up": ["Rule-16"],
+    "all-in face": ["Rule-16"],
+    "all in face": ["Rule-16"],
+    "ハンドを開": ["Rule-16"],
+    "ハンドを公開": ["Rule-16"],
+    "公開した": ["Rule-16"],
+    "オープンした": ["Rule-16"],
+    "ハンドを見せ": ["Rule-16"],
+    "両プレイヤーがハンド": ["Rule-16"],
+    "両者ハンド": ["Rule-16"],
+    "両プレイヤー": ["Rule-16"],
     "phone": ["Rule-5"],
     "smartphone": ["Rule-5"],
     "device": ["Rule-5"],
@@ -68,14 +80,57 @@ KEYWORD_MAP: dict[str, list[str]] = {
     "etiquette": ["Rule-70", "Rule-71"],
     "penalty": ["Rule-71"],
     "disqualif": ["Rule-71"],
-    "collusion": ["Rule-67", "Rule-71"],
+    "collusion": ["Rule-67", "Rule-69", "Rule-71"],
+    "コラージョン": ["Rule-67", "Rule-69", "Rule-71"],
+    "コルージョン": ["Rule-67", "Rule-69", "Rule-71"],
+    "組打ち": ["Rule-67", "Rule-69", "Rule-71"],
+    "くみうち": ["Rule-67", "Rule-69", "Rule-71"],
+    "結託": ["Rule-67", "Rule-69", "Rule-71"],
+    "chip dump": ["Rule-67", "Rule-69", "Rule-71"],
+    "chip dumping": ["Rule-67", "Rule-69", "Rule-71"],
+    "chip-dumping": ["Rule-67", "Rule-69", "Rule-71"],
+    "チップダンピング": ["Rule-67", "Rule-69", "Rule-71"],
+    "チップ受け渡し": ["Rule-67", "Rule-69", "Rule-71"],
+    "事前打ち合わせ": ["Rule-67", "Rule-69", "Rule-71"],
+    "事前相談": ["Rule-67", "Rule-69", "Rule-71"],
+    "soft play": ["Rule-67", "Rule-69", "Rule-71"],
+    "ソフトプレイ": ["Rule-67", "Rule-69", "Rule-71"],
+    "互いを避け": ["Rule-67", "Rule-69", "Rule-71"],
+    "意図的フォールド": ["Rule-67", "Rule-69", "Rule-71"],
+    "意図的fold": ["Rule-67", "Rule-69", "Rule-71"],
+    "ethical play": ["Rule-69", "Rule-71"],
+    "倫理": ["Rule-69", "Rule-71"],
+    "one player to a hand": ["Rule-67"],
+    "one player": ["Rule-67"],
+    "1 player to a hand": ["Rule-67"],
     "advise": ["Rule-67"],
     "one player": ["Rule-67"],
     "seat": ["Rule-7", "Rule-8"],
     "late reg": ["Rule-8"],
     "re-entry": ["Rule-8"],
     "clock": ["Rule-30", "Rule-31"],
-    "string bet": ["Rule-44"],
+    "string bet": ["Rule-56", "Rule-42"],
+    "string": ["Rule-56", "Rule-42"],
+    "ストリングベット": ["Rule-56", "Rule-42"],
+    "ストリング": ["Rule-56", "Rule-42"],
+    "string raise": ["Rule-56", "Rule-42"],
+    "ストリングレイズ": ["Rule-56", "Rule-42"],
+    "multiple motion": ["Rule-56", "Rule-42"],
+    "multi-motion": ["Rule-56", "Rule-42"],
+    "multi motion": ["Rule-56", "Rule-42"],
+    "2-motion": ["Rule-56", "Rule-42"],
+    "2 motion": ["Rule-56", "Rule-42"],
+    "二回に分け": ["Rule-56", "Rule-42"],
+    "2 回に分け": ["Rule-56", "Rule-42"],
+    "2回に分け": ["Rule-56", "Rule-42"],
+    "上から落と": ["Rule-56", "Rule-42"],
+    "ばらばら": ["Rule-56", "Rule-42"],
+    "バラバラ": ["Rule-56", "Rule-42"],
+    "返ってス": ["Rule-56"],
+    "再びスタック": ["Rule-56"],
+    "stack に手": ["Rule-56"],
+    "スタックに手": ["Rule-56"],
+    "戻ってチップ": ["Rule-56"],
     "chip bet": ["Rule-45"],
     "overchip": ["Rule-44"],
     "multi-chip": ["Rule-45"],
@@ -93,6 +148,16 @@ KEYWORD_MAP: dict[str, list[str]] = {
     "レイズ": ["Rule-40", "Rule-41", "Rule-42", "Rule-43", "Rule-44", "Rule-45"],
     "ベット": ["Rule-40", "Rule-45", "Rule-52"],
     "コール": ["Rule-41", "Rule-45", "Rule-52"],
+    "コルコル": ["Rule-41", "Rule-40"],
+    "コル": ["Rule-41", "Rule-40"],
+    "コール宣言": ["Rule-41", "Rule-40"],
+    "verbal": ["Rule-40", "Rule-41"],
+    "verbal declaration": ["Rule-40", "Rule-41"],
+    "verbal call": ["Rule-41", "Rule-40"],
+    "発声": ["Rule-40", "Rule-41"],
+    "音声証拠": ["Rule-40", "Rule-41"],
+    "発声しながら": ["Rule-40", "Rule-41"],
+    "whichever is first": ["Rule-40"],
     "オールイン": ["Rule-47"],
     "アンダーコール": ["Rule-52"],
     "アンダーベット": ["Rule-52"],
@@ -586,6 +651,49 @@ def extract_referenced_rules(response_text: str) -> list[str]:
     return sorted(rule_ids, key=lambda x: (x.split("-")[0], int(x.split("-")[1])))
 
 
+# ===== Phase 7C: Rule ID validation =====
+
+_VALID_RULE_IDS_CACHE: set[str] | None = None
+
+
+def get_valid_rule_ids() -> set[str]:
+    """TDA 2024 rules JSON から有効なルール ID 集合を返す（キャッシュ付き）"""
+    global _VALID_RULE_IDS_CACHE
+    if _VALID_RULE_IDS_CACHE is None:
+        try:
+            rules = load_rules()
+            _VALID_RULE_IDS_CACHE = {r["id"] for r in rules}
+        except Exception:
+            _VALID_RULE_IDS_CACHE = set()
+    return _VALID_RULE_IDS_CACHE
+
+
+def validate_referenced_rules(rule_ids: list[str]) -> dict:
+    """
+    引用されたルール ID を validate して、捏造されたルールを検出する。
+
+    Returns:
+        {
+            "valid": [list of valid rule IDs],
+            "invalid": [list of fake/non-existent rule IDs],
+            "has_fakes": bool,
+        }
+    """
+    valid_set = get_valid_rule_ids()
+    valid_refs = []
+    invalid_refs = []
+    for rid in rule_ids:
+        if rid in valid_set:
+            valid_refs.append(rid)
+        else:
+            invalid_refs.append(rid)
+    return {
+        "valid": valid_refs,
+        "invalid": invalid_refs,
+        "has_fakes": len(invalid_refs) > 0,
+    }
+
+
 # ===== Main judgment function =====
 
 def judge(
@@ -701,6 +809,9 @@ def judge(
     confidence = extract_confidence(response_text)
     referenced_rules_response = extract_referenced_rules(response_text)
 
+    # Phase 7C: ルール ID validation（捏造検出）
+    rule_validation = validate_referenced_rules(referenced_rules_response)
+
     judgment_id = None
     if save_to_db:
         judgment_id = save_judgment(
@@ -722,6 +833,7 @@ def judge(
         "model": model,
         "referenced_rules_context": [r["id"] for r in relevant_rules],
         "referenced_rules_response": referenced_rules_response,
+        "rule_validation": rule_validation,  # Phase 7C
         "confidence": confidence,
         "latency_ms": latency_ms,
         "token_usage": token_usage,
