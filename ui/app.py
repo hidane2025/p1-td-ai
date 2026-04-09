@@ -305,17 +305,15 @@ st.markdown(
             font-size: 0.85rem;
         }
         /* フォームフィールド: 縦積み */
-        div[data-testid="stHorizontalBlock"] > div[data-testid="column"] {
+        .stForm div[data-testid="stHorizontalBlock"] > div[data-testid="column"] {
             width: 100% !important;
             flex: 1 1 100% !important;
             min-width: 100% !important;
             margin-bottom: 0.3rem;
         }
-        /* テンプレボタン: 2列に制限 */
-        div[data-testid="stHorizontalBlock"]:has(> div > div > button[kind="secondary"]) > div[data-testid="column"] {
-            width: 48% !important;
-            flex: 0 0 48% !important;
-            min-width: 48% !important;
+        /* アクションボタン行: 3列→縦積み */
+        div[data-testid="stHorizontalBlock"]:nth-of-type(n) > div[data-testid="column"] {
+            min-width: 30% !important;
         }
         .stButton > button {
             min-height: 52px !important;
@@ -689,10 +687,15 @@ with tab_judge:
 
     # ===== ⚡ ワンタップテンプレ 20 種（入力欄の下に配置） =====
     st.markdown("#### ⚡ クイック選択（タップで入力欄にテンプレが入ります）")
-    template_cols_per_row = 5
+
+    # PC=5列、スマホ=2列（Streamlit Cloud は columns の CSS を制御しにくいため
+    # サーバーサイドで列数を切り替える。User-Agent 判定ではなく、
+    # Streamlit の experimental_get_query_params は使えないので固定3列で折衷）
+    template_cols_per_row = 3
     for i in range(0, len(QUICK_TEMPLATES), template_cols_per_row):
-        cols = st.columns(template_cols_per_row)
-        for j, (label, template_text) in enumerate(QUICK_TEMPLATES[i:i + template_cols_per_row]):
+        batch = QUICK_TEMPLATES[i:i + template_cols_per_row]
+        cols = st.columns(len(batch))
+        for j, (label, template_text) in enumerate(batch):
             with cols[j]:
                 if st.button(label, key=f"qt_{i+j}", use_container_width=True):
                     st.session_state.situation_input = template_text
