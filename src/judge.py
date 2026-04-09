@@ -509,6 +509,215 @@ KEYWORD_MAP: dict[str, list[str]] = {
     "call 後 muck": ["Rule-65"],
     "コール後 muck": ["Rule-65"],
     "コール後マック": ["Rule-65"],
+
+    # ===== Phase 7E: 37未カバールール用キーワード追加 =====
+
+    # Rule-3: Official Terminology and Gestures
+    "tap": ["Rule-3"],
+    "タップ": ["Rule-3"],
+    "テーブルをタップ": ["Rule-3"],
+    "テーブルを叩": ["Rule-3"],
+    "ジェスチャー": ["Rule-3"],
+    "gesture": ["Rule-3"],
+    "non-standard": ["Rule-3"],
+    "terminology": ["Rule-3"],
+
+    # Rule-6: Official Language
+    "language": ["Rule-6"],
+    "言語": ["Rule-6"],
+    "英語": ["Rule-6"],
+    "english only": ["Rule-6"],
+    "日本語で話": ["Rule-6"],
+    "公用語": ["Rule-6"],
+
+    # Rule-9: Special Needs
+    "special needs": ["Rule-9"],
+    "障害": ["Rule-9"],
+    "視覚障害": ["Rule-9"],
+    "配慮": ["Rule-9"],
+    "ハンディキャップ": ["Rule-9"],
+
+    # Rule-10: New Players / Broken Tables
+    "broken table": ["Rule-10"],
+    "ブレイク": ["Rule-10", "Rule-11"],
+    "テーブルブレイク": ["Rule-10"],
+    "新規プレイヤー": ["Rule-10"],
+    "移動先": ["Rule-10"],
+    "between SB and button": ["Rule-10"],
+
+    # Rule-20: Odd Chips
+    "odd chip": ["Rule-20"],
+    "端数チップ": ["Rule-20"],
+    "端数": ["Rule-20"],
+    "割り切れ": ["Rule-20"],
+    "スプリット": ["Rule-20", "Rule-21"],
+
+    # Rule-21: Side Pots
+    "side pot": ["Rule-21"],
+    "サイドポット": ["Rule-21"],
+    "メインポット": ["Rule-21"],
+    "main pot": ["Rule-21"],
+
+    # Rule-22: Disputed Hands
+    "disputed": ["Rule-22"],
+    "紛争": ["Rule-22"],
+    "異議": ["Rule-22"],
+    "読み間違い": ["Rule-22", "Rule-12"],
+    "ポット配分": ["Rule-22"],
+
+    # Rule-38: Burns After SA
+    "burn": ["Rule-38"],
+    "バーン": ["Rule-38"],
+    "バーンカード": ["Rule-38"],
+    "burn card": ["Rule-38"],
+    "バーン忘れ": ["Rule-38"],
+
+    # Rule-46: Prior Bet Chips Not Pulled In
+    "prior bet": ["Rule-46"],
+    "引き込む前": ["Rule-46"],
+    "まだ前に出": ["Rule-46"],
+    "未回収": ["Rule-46"],
+    "pull in": ["Rule-46"],
+
+    # Rule-50: Acting in Turn
+    "act in turn": ["Rule-50"],
+    "in turn": ["Rule-50"],
+    "拘束": ["Rule-50"],
+    "binding": ["Rule-50", "Rule-51"],
+    "やっぱり": ["Rule-50"],
+    "取り消": ["Rule-50"],
+
+    # Rule-51: Binding Declarations / Undercalls
+    "undercall": ["Rule-51", "Rule-52"],
+    "アンダーコール": ["Rule-51", "Rule-52"],
+
+    # Rule-55: Invalid Bet Declarations
+    "invalid": ["Rule-55"],
+    "無効宣言": ["Rule-55"],
+    "ベットなし": ["Rule-55"],
+    "no bet": ["Rule-55"],
+
+    # Rule-58: Non-Standard Folds
+    "non-standard fold": ["Rule-58"],
+    "カードを前方": ["Rule-58"],
+    "強く押し出": ["Rule-58"],
+    "投げ": ["Rule-58", "Rule-65"],
+
+    # Rule-64: Lost and Found Chips
+    "lost": ["Rule-64"],
+    "found": ["Rule-64"],
+    "紛失": ["Rule-64"],
+    "見つかった": ["Rule-64"],
+    "足元": ["Rule-64"],
+    "落ちていた": ["Rule-64"],
+
+    # Rule-69: Ethical Play
+    "ethical": ["Rule-69"],
+    "ショートスタック": ["Rule-69"],
+    "飛ばそう": ["Rule-69"],
+
+    # RP-2: Bringing in Bets
+    "bringing in": ["RP-2"],
+    "ポケットから": ["RP-2"],
+    "持ち込み": ["RP-2"],
+
+    # RP-4: Disordered Stub
+    "stub": ["RP-4"],
+    "スタブ": ["RP-4"],
+    "散らばった": ["RP-4"],
+    "落として": ["RP-4"],
+
+    # RP-5: Prematurely Dealt Cards
+    "premature": ["RP-5"],
+    "先出し": ["RP-5"],
+    "先にめくった": ["RP-5"],
+    "まだアクション中": ["RP-5"],
+
+    # RP-8: Hand for Hand
+    "hand for hand": ["RP-8"],
+    "ハンドフォーハンド": ["RP-8"],
+    "バブル": ["RP-8", "RP-19"],
+    "同時バスト": ["RP-8"],
+
+    # RP-9: Final Table
+    "ファイナルテーブル": ["RP-9"],
+    "最終テーブル": ["RP-9"],
+
+    # RP-12: Dealers Should Announce
+    "アナウンス": ["RP-12"],
+    "announce": ["RP-12"],
+    "ディーラーが言": ["RP-12"],
+
+    # RP-14: Randomness
+    "randomness": ["RP-14"],
+    "ランダム": ["RP-14"],
+    "4枚めくった": ["RP-14"],
+
+    # RP-15: Staff Communication
+    "スタッフ": ["RP-15"],
+    "staff": ["RP-15"],
+    "統一": ["RP-15"],
+    "判断が違": ["RP-15"],
+
+    # RP-16: Absent on Breaking Table
+    "不在": ["RP-16", "Rule-30"],
+    "トイレ": ["RP-16", "Rule-30"],
+    "チップを移動": ["RP-16"],
+
+    # RP-18: Mixed Games Order
+    "mixed game": ["RP-18"],
+    "ミックスゲーム": ["RP-18"],
+    "HORSE": ["RP-18"],
+    "H.O.R.S.E": ["RP-18"],
+    "間違えてRazz": ["RP-18"],
+
+    # RP-19: Reducing Stalling
+    "stalling": ["RP-19"],
+    "ストーリング": ["RP-19"],
+    "遅延行為": ["RP-19"],
+    "時間稼ぎ": ["RP-19"],
+
+    # RP-21: Spreading the Pot
+    "spread": ["RP-21"],
+    "ポットを広げ": ["RP-21"],
+    "pot count": ["RP-21", "Rule-54"],
+
+    # RP-22: Non-Denominational Items
+    "bounty": ["RP-22"],
+    "バウンティ": ["RP-22"],
+    "PKO": ["RP-22"],
+    "額面なし": ["RP-22"],
+    "clock token": ["RP-22"],
+
+    # Rule-28: Rabbit Hunting
+    "rabbit": ["Rule-28"],
+    "rabbit hunting": ["Rule-28"],
+    "ラビットハンティング": ["Rule-28"],
+    "あと1枚": ["Rule-28"],
+    "次のカード": ["Rule-28"],
+    "見せてよ": ["Rule-28"],
+    "仮想カード": ["Rule-28"],
+    "確認したい": ["Rule-28"],
+
+    # Rule-55: additional keywords
+    "ベットが出ていない": ["Rule-55"],
+    "ベット無し": ["Rule-55"],
+
+    # RP-2: additional keywords
+    "ポケット": ["RP-2"],
+    "外からチップ": ["RP-2"],
+    "買った": ["RP-2"],
+
+    # RP-3: Personal Belongings
+    "belongings": ["RP-3"],
+    "私物": ["RP-3"],
+    "荷物": ["RP-3"],
+    "ペットボトル": ["RP-3"],
+
+    # RP-7: Dealer Push Timing
+    "ディーラー交代": ["RP-7"],
+    "push": ["RP-7"],
+    "交代タイミング": ["RP-7"],
 }
 
 
