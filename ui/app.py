@@ -616,6 +616,7 @@ with tab_judge:
             with cols[j]:
                 if st.button(label, key=f"qt_{i+j}", use_container_width=True):
                     st.session_state.situation_input = template_text
+                    st.session_state.situation_textarea = template_text
                     st.rerun()
 
     st.markdown("---")
