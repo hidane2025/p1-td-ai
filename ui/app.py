@@ -480,9 +480,6 @@ tab_judge, tab_search = st.tabs(["⚖️ 判断を取得", "📚 判断履歴検
 # TAB 1: 判断を取得（クイックテンプレ + フォーム）
 # =========================================================================
 with tab_judge:
-    # ===== ⚡ ワンタップテンプレ 20 種 =====
-    st.markdown("#### ⚡ クイック選択（タップで入力欄にテンプレが入ります）")
-
     # Phase 7B: 軽量フレーム化 — ○ プレースホルダー撤廃
     # 各テンプレは「状況の枠組み + 確認すべきポイント」だけ。
     # 具体数値は TD が自由記述で追加する方式（入力が早い & 間違えにくい）
@@ -608,18 +605,6 @@ with tab_judge:
          "- 受付完了の定義（Rule 8）"),
     ]
 
-    # 5 列 × 4 行で配置
-    template_cols_per_row = 5
-    for i in range(0, len(QUICK_TEMPLATES), template_cols_per_row):
-        cols = st.columns(template_cols_per_row)
-        for j, (label, template_text) in enumerate(QUICK_TEMPLATES[i:i + template_cols_per_row]):
-            with cols[j]:
-                if st.button(label, key=f"qt_{i+j}", use_container_width=True):
-                    st.session_state.situation_input = template_text
-                    st.session_state.situation_textarea = template_text
-                    st.rerun()
-
-    st.markdown("---")
     st.markdown("### 📝 状況の入力")
 
     with st.form("judgment_form", clear_on_submit=False):
@@ -655,6 +640,18 @@ with tab_judge:
             use_container_width=True,
             type="primary",
         )
+
+    # ===== ⚡ ワンタップテンプレ 20 種（入力欄の下に配置） =====
+    st.markdown("#### ⚡ クイック選択（タップで入力欄にテンプレが入ります）")
+    template_cols_per_row = 5
+    for i in range(0, len(QUICK_TEMPLATES), template_cols_per_row):
+        cols = st.columns(template_cols_per_row)
+        for j, (label, template_text) in enumerate(QUICK_TEMPLATES[i:i + template_cols_per_row]):
+            with cols[j]:
+                if st.button(label, key=f"qt_{i+j}", use_container_width=True):
+                    st.session_state.situation_input = template_text
+                    st.session_state.situation_textarea = template_text
+                    st.rerun()
 
     if submitted:
         if not situation.strip():
