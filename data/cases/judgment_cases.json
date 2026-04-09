@@ -1865,5 +1865,649 @@
     ],
     "confidence": "high",
     "notes": "Phase 7D training. Hit: True, Cited: ['Rule-1', 'Rule-69', 'Rule-71']"
+  },
+  {
+    "id": "case-107-train-T34-tap-table-check",
+    "category": "用語・ジェスチャー",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "NLHE、Blinds 5,000-10,000。フロップ後、BTN がテーブルを指で軽く2回タップした。直後に「いや、ベット」と言い直して 25,000 を出した。相手プレイヤーが「タップはチェックだろう」と抗議。",
+    "expected_rules": [
+      "Rule-3",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-3"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-3: tapping the table is a check. 口頭宣言前のジェスチャーが優先。チェック確定。"
+  },
+  {
+    "id": "case-108-train-T35-english-only-table",
+    "category": "言語ルール",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "P1 大会。テーブルに日本人3名と外国人3名。日本人プレイヤーAがハンド中に隣の日本人Bに日本語で話しかけた。外国人プレイヤーCが「English only at the table」とクレーム。P1のハウスルールでは英語を公式言語としている。",
+    "expected_rules": [
+      "Rule-6",
+      "Rule-5",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-6"
+    ],
+    "recommended_rules": [
+      "Rule-5",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-6: house will clearly post acceptable language. P1が英語公式ならハンド中は英語。ただしRule-1で公平性考慮。"
+  },
+  {
+    "id": "case-109-train-T36-wrong-seat-start",
+    "category": "シーティング",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "Day 1 開始。Seat 3 に座るべきプレイヤーAが Seat 5 に座り、Seat 5 のプレイヤーBが Seat 3 に座っていた。3ハンド後にディーラーが気づいた。両者のチップスタックは変動している。",
+    "expected_rules": [
+      "Rule-7",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-7"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-7: wrong seat with correct chip stack → move to correct seat with current total chip stack."
+  },
+  {
+    "id": "case-110-train-T37-broken-table-placement",
+    "category": "テーブルブレイク",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "52名参加のP1大会。テーブル7がブレイクされ、6名が他テーブルに移動。プレイヤーAがテーブル3のSBとBTNの間の席（Seat 1）に配置された。Aは「SBの次のハンドからにしてくれ」と要求。",
+    "expected_rules": [
+      "Rule-10",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-10"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-10A: broken table players can get any seat except between SB and button. Seat 1がSBとBTNの間ならNG、再抽選。"
+  },
+  {
+    "id": "case-111-train-T38-absent-breaking-table",
+    "category": "テーブルブレイク／不在",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "テーブルブレイク時、Seat 4のプレイヤーがトイレで不在。チップ 85,000。他の5名は既に新テーブルに移動済み。",
+    "expected_rules": [
+      "RP-16",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-16"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-16: absent player's chips should be moved to new table by staff member."
+  },
+  {
+    "id": "case-112-train-T39-odd-chip-award",
+    "category": "ポット分配",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "NLHE ボードゲーム。ポット 35,000。2名がハイハンドでスプリット。最小デノミは 1,000。17,500 ずつでは割り切れない。端数チップ 1,000 の配分が必要。BTN は Seat 6、2名のスプリッターは Seat 2 と Seat 8。",
+    "expected_rules": [
+      "Rule-20",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-20"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-20A: board games with 2+ high hands → odd chip goes to first seat left of button. BTN=Seat6 → 左回りで Seat 8 が端数チップ獲得。"
+  },
+  {
+    "id": "case-113-train-T40-side-pot-split",
+    "category": "サイドポット",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "3名がオールイン。A=30,000、B=60,000、C=100,000。メインポット 90,000（3人×30,000）、サイドポット 60,000（B,C各30,000追加）。ショーダウンでAが最強ハンド、BとCはBが勝ち。サイドポットの分配で揉めている。",
+    "expected_rules": [
+      "Rule-21",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-21"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-21: Each side pot split separately. メインポット90,000→A。サイドポット60,000→B。Cは何も受け取らない。"
+  },
+  {
+    "id": "case-114-train-T41-disputed-pot",
+    "category": "ポット紛争",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "ショーダウンでディーラーがAのハンドを読み間違え、Bにポットを渡した。実際にはAのフルハウスがBのフラッシュに勝っていた。Aは次のハンドのディール前に気づいて抗議。",
+    "expected_rules": [
+      "Rule-22",
+      "Rule-12",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-22"
+    ],
+    "recommended_rules": [
+      "Rule-12",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-22: reading of tabled hand may be disputed until next hand begins. Rule-12: Cards Speak. ポットをAに戻す。"
+  },
+  {
+    "id": "case-115-train-T42-prior-bet-chips",
+    "category": "ベッティング／未回収チップ",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "NLHE。プレイヤーAがフロップで 15,000 ベット。ディーラーがまだチップを引き込む前に、Bが 40,000 にレイズ。Aの 15,000 はまだ前に出たまま。Aが黙ってさらに 25,000 を追加で出した。これはコールかレイズか？",
+    "expected_rules": [
+      "Rule-46",
+      "Rule-40",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-46"
+    ],
+    "recommended_rules": [
+      "Rule-40",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-46A: prior-bet chips not pulled in, facing raise → should verbalize. Rule-46B: clearly pulling back prior bet binds to call/raise. 無宣言の追加チップはcall扱い。"
+  },
+  {
+    "id": "case-116-train-T43-lost-chip-floor",
+    "category": "チップ紛失",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "ブレイク後、テーブル5の足元から 25,000 チップが1枚見つかった。テーブル5の6名全員が「自分のではない」と主張。誰のチップか特定できない。",
+    "expected_rules": [
+      "Rule-64",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-64"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-64: Lost and found chips with undetermined ownership → taken out of play, returned to tournament inventory."
+  },
+  {
+    "id": "case-117-train-T44-bounty-chip-bet",
+    "category": "バウンティチップ",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "PKO（Progressive Knockout）大会。プレイヤーが通常チップが足りず、赤いバウンティチップ（額面なし）をベットに使った。「これも1万として使えるだろ」と主張。",
+    "expected_rules": [
+      "RP-22",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-22"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-22: Non-denominational items (bounty chips) → interpreted per house policy or Rule-1. TDの裁量でcallまたはall-in判定。"
+  },
+  {
+    "id": "case-118-train-T45-burn-after-sa",
+    "category": "ディーリング／バーン",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "フロップ後、ディーラーがバーンカードを忘れてターンを直接めくった。2名がチェックし（SA成立）、3人目がベットしようとした時にバーン忘れに気づいた。",
+    "expected_rules": [
+      "Rule-38",
+      "RP-14",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-38"
+    ],
+    "recommended_rules": [
+      "RP-14",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-38: SA後のバーン忘れ → カードはそのまま有効。バーンカードの目的はスタブ保護であり、カード順序保持ではない。スタブは通常通り扱い、次のカードのみバーンする。"
+  },
+  {
+    "id": "case-119-train-T46-premature-turn",
+    "category": "ディーリング／先出し",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "フロップのベッティングラウンド中、まだ1名がアクション中なのにディーラーがターンカードをめくってしまった。アクション中のプレイヤーはまだフォールドもコールもしていない。",
+    "expected_rules": [
+      "RP-5",
+      "Rule-35",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-5"
+    ],
+    "recommended_rules": [
+      "Rule-35",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-5: Prematurely dealt cards. 先出しターンはスタブに戻し、シャッフル後に再ディール。アクション完了後に新しいターンをめくる。"
+  },
+  {
+    "id": "case-120-train-T47-disordered-stub",
+    "category": "ディーリング／スタブ乱れ",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "リバーカードをめくる際、ディーラーがスタブを落としてカードが散らばった。フロップとターンは正常に出ている。リバーをどう扱うか。",
+    "expected_rules": [
+      "RP-4",
+      "RP-14",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-4"
+    ],
+    "recommended_rules": [
+      "RP-14",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-4: Disordered stub. カードを集めてシャッフルし、ランダムにリバーをめくる（RP-14 Randomness）。"
+  },
+  {
+    "id": "case-121-train-T48-act-in-turn-binding",
+    "category": "ベッティング／インターン拘束",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "NLHE。プレイヤーAが「コール」と宣言してチップをポットに入れた。直後に「やっぱりフォールドする」と言ってカードを投げようとした。",
+    "expected_rules": [
+      "Rule-50",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-50"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-50A: Action in turn is binding and commits chips to the pot that stay in the pot. コール宣言+チップ投入は拘束力あり。フォールド不可。"
+  },
+  {
+    "id": "case-122-train-T49-undercall-in-turn",
+    "category": "ベッティング／アンダーコール",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "NLHE。UTGが30,000レイズ。次のプレイヤーが「コール」と言わず黙って20,000だけ出した。コール額には10,000足りない。",
+    "expected_rules": [
+      "Rule-51",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-51"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-51B: undercall without declaring 'call' → mandatory full call if made in turn. 30,000の full call が強制される。"
+  },
+  {
+    "id": "case-123-train-T50-pot-limit-calculation",
+    "category": "ポットリミット",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "PLO（Pot Limit Omaha）。ポットに 45,000。SBがポット宣言。ディーラーが「ポットは45,000です」と言ってSBが45,000を出した。しかし他プレイヤーが「コール額を含めないと正しいポット計算にならない」と指摘。",
+    "expected_rules": [
+      "Rule-54",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-54"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-54A: players entitled to pot count in pot-limit only. 正しいPot計算: ポット + コール額 + コール額 = 最大レイズ。RP-21でポットを広げて確認可能。"
+  },
+  {
+    "id": "case-124-train-T51-invalid-declaration",
+    "category": "ベッティング／無効宣言",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "NLHE。ベットが出ていない状態でプレイヤーが「コール」と宣言した。次のプレイヤーが「レイズ」と宣言したが最低ベット額を指定しなかった。",
+    "expected_rules": [
+      "Rule-55",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-55"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-55A: no bet + 'call' = check. Rule-55B: no bet + 'raise' = must make minimum bet. 2つの状況を1ケースで確認。"
+  },
+  {
+    "id": "case-125-train-T52-bringing-in-bets",
+    "category": "ベッティング／チップ持ち出し",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "プレイヤーがポケットからチップを取り出してベットに追加した。「さっきのブレイクで買ったんだ」と説明。",
+    "expected_rules": [
+      "RP-2",
+      "Rule-30",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-2"
+    ],
+    "recommended_rules": [
+      "Rule-30",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-2: Bringing in bets is discouraged. Rule-30: all chips in play. ポケットからのチップ追加はNG。チップはテーブル上で可視状態が原則。"
+  },
+  {
+    "id": "case-126-train-T53-rabbit-hunting",
+    "category": "ラビットハンティング",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "ターンでBBがオールインし、全員フォールド。BBが「あと1枚見せてよ、フラッシュ来てたか確認したい」とディーラーに要求。隣のプレイヤーも「見たい見たい」と同調。",
+    "expected_rules": [
+      "Rule-28",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-28"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-28: Rabbit hunting is not allowed. ハンド終了後の仮想カード公開は禁止。"
+  },
+  {
+    "id": "case-127-train-T54-hand-for-hand",
+    "category": "ハンドフォーハンド",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "52名参加、8位入賞の大会。残り9名でハンドフォーハンド宣言。現在進行中のハンドで2名が同時にバスト。入賞ラインを超えた。2名の順位はどう決まるか。",
+    "expected_rules": [
+      "RP-8",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-8"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-8A: HFH宣言中の現在ハンドで複数バスト → busting players は当該ハンドの places を share。チップカウントで順位決定（少ない方が下位）。"
+  },
+  {
+    "id": "case-128-train-T55-stalling-penalty",
+    "category": "ストーリング",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "バブル付近。ショートスタックのプレイヤーが毎ハンド制限時間ギリギリまで待ってからフォールドを繰り返している。他プレイヤーから「明らかなストーリングだ」とクレーム。",
+    "expected_rules": [
+      "RP-19",
+      "Rule-71",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-19"
+    ],
+    "recommended_rules": [
+      "Rule-71",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-19: Reducing Stalling. TDはストーリング対策として時間制限を設定可能。Rule-71でペナルティ（警告→1ラウンドペナルティ）も適用可能。"
+  },
+  {
+    "id": "case-129-train-T56-staff-communication",
+    "category": "スタッフ連携",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "フロアスタッフAが判断を下したが、別のテーブルでフロアスタッフBが同じ種類のケースで逆の判断を下していたことが発覚。プレイヤーが「判断が統一されていない」と抗議。",
+    "expected_rules": [
+      "RP-15",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-15"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-15: Proper Tournament Staff Communication. 判断の統一はTDの責任。矛盾がある場合、上位TDが最終判断を下し、全テーブルに統一基準を周知。"
+  },
+  {
+    "id": "case-130-train-T57-special-needs",
+    "category": "特別配慮",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "視覚障害のプレイヤーが参加。カードを極端に近づけて見るため、隣のプレイヤーにカードが見えそうになっている。隣のプレイヤーが「カードガードをちゃんとしろ」と要求。",
+    "expected_rules": [
+      "Rule-9",
+      "Rule-2",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-9"
+    ],
+    "recommended_rules": [
+      "Rule-2",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-9: Special Needs. TDは合理的配慮を行う（席移動、カードガード支給、ディーラーによるカード読み上げ等）。Rule-1の公平性と両立。"
+  },
+  {
+    "id": "case-131-train-T58-mixed-game-order",
+    "category": "ミックスゲーム",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "H.O.R.S.E. トーナメント。現在 Omaha Hi-Lo ラウンドだが、ディーラーが間違えて Razz のディーリングを始めた。2枚配った時点で気づいた。",
+    "expected_rules": [
+      "RP-18",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-18"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-18: Order of Mixed Games. 正しいゲーム順序に戻す。SA前であればミスディール、カードを回収して正しいゲームで再ディール。"
+  },
+  {
+    "id": "case-132-train-T59-dealer-announce",
+    "category": "ディーラー手順",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "NLHE。UTGが黙って50,000を出した。ディーラーはベット額をアナウンスしなかった。次のプレイヤーが「いくらなの？」と聞く前にコール額と思い20,000を出した。実際は50,000だった。",
+    "expected_rules": [
+      "RP-12",
+      "Rule-50",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-12"
+    ],
+    "recommended_rules": [
+      "Rule-50",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-12: Dealers should announce bets and raises. ディーラーのアナウンス義務。アンダーコールはRule-51で処理。"
+  },
+  {
+    "id": "case-133-train-T60-spread-pot",
+    "category": "ポット確認",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "PLO。プレイヤーが「ポット」と宣言。ディーラーがポットを数えるが、チップが山積みで正確な額がわからない。プレイヤーが「ポットを広げて見せてくれ」と要求。",
+    "expected_rules": [
+      "RP-21",
+      "Rule-54",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-21"
+    ],
+    "recommended_rules": [
+      "Rule-54",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-21: Spreading the Pot. PLOではポットサイズの確認権利あり。ディーラーはポットを広げて見せる義務がある。"
+  },
+  {
+    "id": "case-134-train-T61-personal-items",
+    "category": "私物管理",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "プレイヤーがテーブル上にスマホ、財布、ペットボトル、お菓子の袋を広げている。隣のプレイヤーが「テーブルが狭い、片付けてくれ」とクレーム。",
+    "expected_rules": [
+      "RP-3",
+      "Rule-5",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-3"
+    ],
+    "recommended_rules": [
+      "Rule-5",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-3: Personal Belongings. テーブル上の私物は最小限に。TDの判断で片付けを指示できる。Rule-5（電子機器）との組み合わせも。"
+  },
+  {
+    "id": "case-135-train-T62-randomness-applied",
+    "category": "ランダム処理",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "ヘッズアップ。ディーラーが誤ってフロップを4枚めくってしまった（3枚+1枚余計）。どの3枚がフロップか確定できない。",
+    "expected_rules": [
+      "RP-14",
+      "Rule-39",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-14"
+    ],
+    "recommended_rules": [
+      "Rule-39",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-14: Randomness may be applied to special situations. 4枚をシャッフルしてランダムに3枚選択、1枚をスタブに戻す。"
+  },
+  {
+    "id": "case-136-train-T63-jp-sumimasen-fold",
+    "category": "日本特有／曖昧表現",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "P1大会。日本人プレイヤーが「すみません」と言いながらカードをテーブルに伏せた。相手が「フォールドだ」と主張。本人は「考え中だった、すみませんは口癖」と反論。カードはまだマック領域に達していない。",
+    "expected_rules": [
+      "Rule-3",
+      "Rule-58",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-3",
+      "Rule-58"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-3: non-standard terms at player's risk. Rule-58: Non-Standard Folds. 日本語の曖昧表現はTD判断。カードがマック領域に未到達なら生存ハンドの可能性。"
+  },
+  {
+    "id": "case-137-train-T64-p1-final-table-seating",
+    "category": "P1運営／ファイナルテーブル",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "P1 西日本選手権ファイナルテーブル。9名残り。シートドロー前にチップリーダーが「Seat 1がいい、カメラ位置的に有利だ」と主張。",
+    "expected_rules": [
+      "RP-9",
+      "Rule-7",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-9"
+    ],
+    "recommended_rules": [
+      "Rule-7",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-9: Number of Players at Final Table. ファイナルテーブルの席はランダム抽選（Rule-7）。プレイヤーの希望は認められない。"
+  },
+  {
+    "id": "case-138-train-T65-p1-dealer-push-timing",
+    "category": "P1運営／ディーラー交代",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "P1大会。ディーラー交代のタイミングで、現ディーラーがハンド途中（ターンまで出ている）。交代ディーラーが到着して待っている。現ディーラーは「このハンドが終わったら交代」と言うが、交代ディーラーは「すぐ代われと言われた」と主張。",
+    "expected_rules": [
+      "RP-7",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-7"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-7: Timing of Dealer Pushes. ハンド途中のディーラー交代は原則しない。現ハンド完了後に交代。TDの指示があれば例外。"
+  },
+  {
+    "id": "case-139-train-T66-ethical-play",
+    "category": "倫理的プレイ",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "3名残りのバブル。チップリーダーAとBが小声で「ショートスタックCを飛ばそう」と相談しているのを別テーブルのプレイヤーが聞いた。AとBは「戦略的に当然だ」と反論。",
+    "expected_rules": [
+      "Rule-69",
+      "Rule-71",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-69"
+    ],
+    "recommended_rules": [
+      "Rule-71",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-69: Ethical Play. ソフトプレイ・共謀の禁止。「戦略的」であっても明示的な協力はRule-69違反。Rule-71でペナルティ対象。"
+  },
+  {
+    "id": "case-140-train-T67-non-standard-fold",
+    "category": "フォールド手順",
+    "created_by": "瀬戸ミナ（Phase 7E Training）",
+    "situation": "プレイヤーが不満げにカードを前方に強く押し出した。カードはディーラーのバーンパイルの近くまで行ったが、バーンパイルには触れていない。フォールドか否か。",
+    "expected_rules": [
+      "Rule-58",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-58"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-58: Non-Standard Folds. カードが forward motion でリリースされ、マック/バーン領域に近づいた場合、TD判断。意図の確認が重要。"
   }
 ]

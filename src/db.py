@@ -1,5 +1,5 @@
 """
-TD判断AI — SQLite データアクセス層 v0.1
+TD判断AI — データアクセス層 v0.2
 
 設計原則:
 - すべての判断は `judgments` に記録
@@ -7,9 +7,10 @@ TD判断AI — SQLite データアクセス層 v0.1
 - プロンプトバージョンは `prompt_versions` で履歴管理
 - ケース追加は `cases` で独立管理（判例DBと同じshape）
 
-将来の移行:
-- Phase 2で Supabase PostgreSQL に置き換え
-- 同じスキーマを維持（テーブル名・カラム名そのまま）
+Phase 7E: Supabase dual-write 対応
+- SQLite を primary として維持（オフライン動作保証）
+- Supabase が設定されている場合は自動的に dual-write
+- Supabase 障害時は SQLite のみで動作継続（graceful degradation）
 """
 
 from __future__ import annotations
@@ -159,6 +160,27 @@ def save_judgment(
                 json.dumps(token_usage) if token_usage else None,
             ),
         )
+
+    # Supabase dual-write (best-effort)
+    try:
+        from supabase_client import is_available, save_judgment_to_supabase
+        if is_available():
+            save_judgment_to_supabase(
+                judgment_id=judgment_id,
+                situation=situation,
+                extra_context=extra_context,
+                prompt_version=prompt_version,
+                model=model,
+                referenced_rules=referenced_rules,
+                response_text=response_text,
+                response_json=response_json,
+                confidence=confidence,
+                latency_ms=latency_ms,
+                token_usage=token_usage,
+            )
+    except Exception:
+        pass  # SQLite write succeeded, Supabase failure is non-critical
+
     return judgment_id
 
 
@@ -242,6 +264,22 @@ def save_feedback(
             """,
             (fb_id, judgment_id, now_iso(), rating, correct_judgment, comment, reviewer),
         )
+
+    # Supabase dual-write (best-effort)
+    try:
+        from supabase_client import is_available, save_feedback_to_supabase
+        if is_available():
+            save_feedback_to_supabase(
+                feedback_id=fb_id,
+                judgment_id=judgment_id,
+                rating=rating,
+                correct_judgment=correct_judgment,
+                comment=comment,
+                reviewer=reviewer,
+            )
+    except Exception:
+        pass
+
     return fb_id
 
 
