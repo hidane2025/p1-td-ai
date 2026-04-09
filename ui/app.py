@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-TD判断AI — 現場用 Web UI (Streamlit) v0.3 Phase 7A
+TD判断AI — 現場用 Web UI (Streamlit) v0.4 Phase 7C
 
 現場の TD・フロアスタッフがスマホ or PC から使えるシンプルな Web UI。
 
@@ -220,7 +220,7 @@ def check_auth() -> bool:
         "このシステムは P1 事業と契約した店舗・TD のみアクセス可能です。"
         " パスワードをお持ちでない方は中野までお問い合わせください。"
     )
-    st.caption(f"© 2024 Poker TDA. TD判断AI v0.3 — P1 Tournament Director Advisor")
+    st.caption(f"© 2024 Poker TDA. TD判断AI v0.4 — P1 Tournament Director Advisor")
     st.caption(f"セッション有効期限: {AUTH_TIMEOUT_HOURS} 時間（試合中は切断されません）")
     return False
 
@@ -324,7 +324,7 @@ init_db()
 # ===== Header =====
 st.markdown('<div class="main-title">⚖️ TD判断AI</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="subtitle">P1事業 — Tournament Director 判断支援システム / TDA 2024準拠 / v0.3</div>',
+    '<div class="subtitle">P1事業 — Tournament Director 判断支援システム / TDA 2024準拠 / v0.4</div>',
     unsafe_allow_html=True,
 )
 
