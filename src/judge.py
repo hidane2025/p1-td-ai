@@ -718,6 +718,40 @@ KEYWORD_MAP: dict[str, list[str]] = {
     "ディーラー交代": ["RP-7"],
     "push": ["RP-7"],
     "交代タイミング": ["RP-7"],
+
+    # ===== Phase 7F: 最後の6未カバールール =====
+
+    # Rule-66: Dead Hands and Mucking in Stud
+    "stud": ["Rule-66", "RP-10"],
+    "スタッド": ["Rule-66", "RP-10"],
+    "razz": ["Rule-66"],
+    "7 card": ["Rule-66"],
+    "ダウンカード": ["Rule-66"],
+
+    # RP-6: Efficient Movement of Players
+    "移動効率": ["RP-6"],
+    "テーブル移動": ["RP-6", "Rule-11"],
+    "バランス": ["RP-6", "Rule-11"],
+
+    # RP-10: Tournament Stud Dealing
+    "スタッドディール": ["RP-10"],
+    "3rdストリート": ["RP-10"],
+
+    # RP-13: Dealers Stack Chips in Split-Pot
+    "スプリットポット": ["RP-13", "Rule-20"],
+    "Hi-Lo": ["RP-13"],
+    "ハイロー": ["RP-13"],
+
+    # RP-17: Tournament Draw Betting
+    "ドロー": ["RP-17"],
+    "ハイカード勝負": ["RP-17"],
+    "チョップ交渉": ["RP-17"],
+    "ICM": ["RP-17"],
+
+    # RP-20: Cards Ready for Shuffle
+    "シャッフル準備": ["RP-20"],
+    "回収": ["RP-20"],
+    "カード回収": ["RP-20"],
 }
 
 

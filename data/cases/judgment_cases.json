@@ -2509,5 +2509,975 @@
     ],
     "confidence": "high",
     "notes": "Rule-58: Non-Standard Folds. カードが forward motion でリリースされ、マック/バーン領域に近づいた場合、TD判断。意図の確認が重要。"
+  },
+  {
+    "id": "case-141-train-T68-stud-muck",
+    "category": "スタッド／デッドハンド",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "7カードスタッド。ショーダウンでプレイヤーAがアップカード4枚+ダウンカード3枚のうち、ダウンカード1枚をmuckしてしまった（6枚しか残っていない）。",
+    "expected_rules": [
+      "Rule-66",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-66"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-66: Dead Hands and Mucking in Stud."
+  },
+  {
+    "id": "case-142-train-T69-efficient-movement",
+    "category": "テーブル移動効率",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "100人大会。8テーブル→7テーブルへのバランス。3テーブルから1人ずつ移動が必要だが、最も効率的な移動方法は？",
+    "expected_rules": [
+      "RP-6",
+      "Rule-11",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-6"
+    ],
+    "recommended_rules": [
+      "Rule-11",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-6: Efficient Movement of Players."
+  },
+  {
+    "id": "case-143-train-T70-dealer-stack-split",
+    "category": "ディーラー手順／スプリット",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "Omaha Hi-Lo。スプリットポットでディーラーがハイとローのチップを正しく分けられず、ポットの分配が不正確になっている。",
+    "expected_rules": [
+      "RP-13",
+      "Rule-20",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-13"
+    ],
+    "recommended_rules": [
+      "Rule-20",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-13: Dealers Should Stack Chips in Split-Pot Games."
+  },
+  {
+    "id": "case-144-train-T71-draw-betting",
+    "category": "トーナメントドロー",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "トーナメントの最終2名。チョップ交渉が成立せず、「ハイカード1枚引きで決着」を提案。TDとしてこれを認めるか？",
+    "expected_rules": [
+      "RP-17",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-17"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-17: Tournament Draw Betting Procedures."
+  },
+  {
+    "id": "case-145-train-T72-cards-ready-shuffle",
+    "category": "シャッフル準備",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "ディーラーが前のハンドのカードをまだ回収していないのに、次のデッキのシャッフルを始めようとした。テーブルに前のハンドのカードが散らばっている。",
+    "expected_rules": [
+      "RP-20",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-20"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-20: Cards Ready for Shuffle."
+  },
+  {
+    "id": "case-146-train-T73-stud-dealing",
+    "category": "スタッド手順",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "7カードスタッドトーナメント。ディーラーが3rdストリートでプレイヤーの裏向きカードを表向きに配ってしまった。",
+    "expected_rules": [
+      "RP-10",
+      "Rule-35",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-10"
+    ],
+    "recommended_rules": [
+      "Rule-35",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "RP-10: Tournament Stud Dealing Procedures."
+  },
+  {
+    "id": "case-147-train-T74-minraise-confusion",
+    "category": "ベッティング／ミニレイズ",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "NLHE Blinds 500/1000。UTGが2,000にレイズ。MPが「4,000」と宣言。これは合法なレイズか？UTGのレイズ額は1,000なのでミニレイズは3,000では？",
+    "expected_rules": [
+      "Rule-43",
+      "Rule-40",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-43"
+    ],
+    "recommended_rules": [
+      "Rule-40",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-43: Raise Amounts. min raise = previous raise amount."
+  },
+  {
+    "id": "case-148-train-T75-verbal-raise-no-amount",
+    "category": "ベッティング／宣言不完全",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "NLHE。プレイヤーが「レイズ」とだけ言い、金額を言わず、チップもまだ出していない。次のプレイヤーが「いくら？」と聞いている。",
+    "expected_rules": [
+      "Rule-42",
+      "Rule-40",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-42"
+    ],
+    "recommended_rules": [
+      "Rule-40",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-42B: must declare amount or push chips."
+  },
+  {
+    "id": "case-149-train-T76-overbet-change-mind",
+    "category": "ベッティング／宣言変更",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "NLHE。UTGが「50,000」と宣言した直後に「あ、やっぱり25,000で」と言い直した。チップはまだ出していない。",
+    "expected_rules": [
+      "Rule-40",
+      "Rule-50",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-50"
+    ],
+    "recommended_rules": [
+      "Rule-40",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-50A: verbal declaration in turn is binding."
+  },
+  {
+    "id": "case-150-train-T77-forward-motion-bet",
+    "category": "ベッティング／フォワードモーション",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーがチップを持ち上げ、前方に動かし始めたが、手を離す前に戻した。「まだリリースしてない」と主張。対戦相手が「フォワードモーション＝ベット」と主張。",
+    "expected_rules": [
+      "Rule-56",
+      "Rule-40",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-40"
+    ],
+    "recommended_rules": [
+      "Rule-56",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-40: chips are in play when released. Forward motion without release = no bet."
+  },
+  {
+    "id": "case-151-train-T78-three-bet-sizing",
+    "category": "ベッティング／3bet",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "NLHE Blinds 1000/2000。UTG raises to 5,000。BTN re-raises to 10,000。UTGが再レイズしたいが最低いくら？",
+    "expected_rules": [
+      "Rule-43",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-43"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-43: min re-raise = previous raise amount. BTN raised 5,000 (5k to 10k), so UTG min is 15,000."
+  },
+  {
+    "id": "case-152-train-T79-winner-must-show",
+    "category": "ショーダウン／勝者公開",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "リバー後、プレイヤーAがベット。B~Eがフォールド。Aはポットを獲得したが、カードを見せずにmuckしようとした。テーブルの全員が「見せろ」と要求。",
+    "expected_rules": [
+      "Rule-18",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-18"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-18: no showdown, uncalled bet = winner has no obligation to show."
+  },
+  {
+    "id": "case-153-train-T80-cards-speak-misread",
+    "category": "ショーダウン／Cards Speak",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "ショーダウン。プレイヤーAが「ツーペア」と宣言してカードをテーブル。実際にはフラッシュが完成していた。ディーラーがツーペアとして処理しようとした。",
+    "expected_rules": [
+      "Rule-12",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-12"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-12: Cards Speak at Showdown. 宣言に関係なくカードが語る。"
+  },
+  {
+    "id": "case-154-train-T81-showdown-order",
+    "category": "ショーダウン／順番",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "リバーでチェック→チェック。ショーダウンで誰が先にカードを見せるべきか？BTNがポジション的に先だと主張。last aggressorがいない場合。",
+    "expected_rules": [
+      "Rule-17",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-17"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-17: showdown order."
+  },
+  {
+    "id": "case-155-train-T82-oot-bet-binding",
+    "category": "OOT／ベット拘束",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "NLHE。プレイヤーAを飛ばしてBが「20,000レイズ」と宣言。Aがフォールドした場合、BのOOTレイズは有効か？",
+    "expected_rules": [
+      "Rule-53",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-53"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-53A: OOT action is binding if action to OOT player does not change."
+  },
+  {
+    "id": "case-156-train-T83-oot-fold-penalty",
+    "category": "OOT／フォールドペナルティ",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーが3ハンド連続でOOTフォールドしている。故意かは不明だが、テーブルの流れを乱している。",
+    "expected_rules": [
+      "Rule-53",
+      "Rule-71",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-53"
+    ],
+    "recommended_rules": [
+      "Rule-71",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "繰り返しOOT = Rule-71ペナルティ検討対象。"
+  },
+  {
+    "id": "case-157-train-T84-smartwatch-vibrate",
+    "category": "電子機器／スマートウォッチ",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "ハンド中にプレイヤーのスマートウォッチが振動し、プレイヤーがちらっと画面を確認した。LINEの通知だった。",
+    "expected_rules": [
+      "Rule-5",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-5"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-5: electronic devices. 2024改訂でスマートウォッチも対象。"
+  },
+  {
+    "id": "case-158-train-T85-headphones-ruling",
+    "category": "電子機器／ヘッドホン",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーがノイズキャンセリングヘッドホンを装着してプレイ。ディーラーの声が聞こえず、「all-in」のコールを聞き逃した。",
+    "expected_rules": [
+      "Rule-5",
+      "Rule-2",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-5"
+    ],
+    "recommended_rules": [
+      "Rule-2",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-5C: headphones may be restricted."
+  },
+  {
+    "id": "case-159-train-T86-escalating-penalty",
+    "category": "ペナルティ／エスカレーション",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーAが本日4回目の違反（1回目:OOT、2回目:暴言、3回目:チップ隠し、4回目:携帯操作）。前3回は口頭警告→1ラウンド→2ラウンドペナルティ。4回目はどうすべき？",
+    "expected_rules": [
+      "Rule-71",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-71"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-71: escalating penalties. 4回目はDQ検討レベル。"
+  },
+  {
+    "id": "case-160-train-T87-verbal-abuse",
+    "category": "ペナルティ／暴言",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーがバッドビート後にディーラーに向かって日本語で罵倒。英語圏のプレイヤーには意味がわからないが、日本語がわかるプレイヤーは不快に感じている。",
+    "expected_rules": [
+      "Rule-70",
+      "Rule-71",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-70"
+    ],
+    "recommended_rules": [
+      "Rule-71",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-70: Etiquette Violations. 言語に関係なく暴言は違反。"
+  },
+  {
+    "id": "case-161-train-T88-p1-prize-pool-dispute",
+    "category": "P1運営／プライズプール",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "P1大会。ファイナルテーブル3名残り。チョップ交渉でICM計算を要求されたが、公式ICM計算ツールがない。プレイヤー間で配分が合わない。",
+    "expected_rules": [
+      "Rule-1",
+      "RP-8"
+    ],
+    "required_rules": [
+      "Rule-1"
+    ],
+    "recommended_rules": [
+      "RP-8"
+    ],
+    "confidence": "medium",
+    "notes": "TDAにはチョップ/ICMの明示ルールなし。Rule-1でTD裁量。"
+  },
+  {
+    "id": "case-162-train-T89-p1-photo-request",
+    "category": "P1運営／撮影",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "P1大会配信中。ファイナルテーブルでプレイヤーがハンド中に自撮りをしようとした。カメラにカードが映る可能性がある。",
+    "expected_rules": [
+      "Rule-5",
+      "Rule-4",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-5"
+    ],
+    "recommended_rules": [
+      "Rule-4",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-5 electronic devices + 配信中のセキュリティ。"
+  },
+  {
+    "id": "case-163-train-T90-p1-language-barrier",
+    "category": "P1運営／言語障壁",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "P1国際大会。中国人プレイヤーが日本語も英語もほぼ話せない。ベッティングアクションを手振りだけで行っている。誤解が頻発。",
+    "expected_rules": [
+      "Rule-6",
+      "Rule-3",
+      "Rule-9",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-6"
+    ],
+    "recommended_rules": [
+      "Rule-3",
+      "Rule-9",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-6 language + Rule-9 special needs + Rule-3 gestures."
+  },
+  {
+    "id": "case-164-train-T91-p1-spectator-signal",
+    "category": "P1運営／観客シグナル",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "P1大会。レールの観客がプレイヤーに手信号を送っているのを他のプレイヤーが発見。当該プレイヤーは「知らない人だ」と主張。",
+    "expected_rules": [
+      "Rule-67",
+      "Rule-71",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-67"
+    ],
+    "recommended_rules": [
+      "Rule-71",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-67: one player to a hand. 観客からの情報提供は違反。"
+  },
+  {
+    "id": "case-165-train-T92-p1-reentry-chips",
+    "category": "P1運営／リエントリー",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "P1大会。リエントリー可の大会でプレイヤーがバスト。すぐにリエントリーしたが、前のスタックから残っていた500チップがポケットに入っていたことが判明。",
+    "expected_rules": [
+      "Rule-8",
+      "Rule-63",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-8"
+    ],
+    "recommended_rules": [
+      "Rule-63",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-8: re-entry. Rule-63: chip pocketing."
+  },
+  {
+    "id": "case-166-train-T93-jp-nod-call",
+    "category": "日本特有／うなずき",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "日本人プレイヤーがベットに対して無言でうなずいた。コールの意思表示か単なる相槌か。チップは出していない。",
+    "expected_rules": [
+      "Rule-3",
+      "Rule-40",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-3"
+    ],
+    "recommended_rules": [
+      "Rule-40",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-3: non-standard gestures at player's risk. うなずきは曖昧。"
+  },
+  {
+    "id": "case-167-train-T94-jp-ikura-question",
+    "category": "日本特有／質問",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "日本人プレイヤーが「いくら？」と聞いた直後に「じゃあコール」と言った。実は「いくら」はベット額を聞いていたが、相手は「いくらでもコール」=any amount callと解釈。",
+    "expected_rules": [
+      "Rule-40",
+      "Rule-3",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-40"
+    ],
+    "recommended_rules": [
+      "Rule-3",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "日本語の曖昧さ。「いくら？」は質問。その後の「コール」が拘束。"
+  },
+  {
+    "id": "case-168-train-T95-jp-gomen-mistake",
+    "category": "日本特有／謝罪",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "日本人ディーラーが誤ってフロップを4枚出した。「ごめんなさい」と言って自分で1枚戻そうとした。TDはまだ呼ばれていない。",
+    "expected_rules": [
+      "Rule-39",
+      "RP-14",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-39"
+    ],
+    "recommended_rules": [
+      "RP-14",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-39: Irregular Flops. ディーラーが勝手に戻してはいけない。TDを呼ぶ。"
+  },
+  {
+    "id": "case-169-train-T96-allin-misdeal-combo",
+    "category": "複合／all-in中の誤配",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "フロップでA,Bがall-in。ターンでディーラーがカードをめくったが、実はまだall-inになっていないCのアクションが残っていた。ターンカードは表になってしまった。",
+    "expected_rules": [
+      "Rule-16",
+      "Rule-35",
+      "RP-5",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "RP-5"
+    ],
+    "recommended_rules": [
+      "Rule-16",
+      "Rule-35",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "複合ケース: all-in + premature card. Cのアクション完了後に再ディール。"
+  },
+  {
+    "id": "case-170-train-T97-oot-then-penalty",
+    "category": "複合／OOT後にペナルティ対象行為",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーAがOOTでraise。フロアがペナルティを検討中に、Aが「このルールはクソだ」と暴言。2つの違反が同時発生。",
+    "expected_rules": [
+      "Rule-53",
+      "Rule-70",
+      "Rule-71",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-71"
+    ],
+    "recommended_rules": [
+      "Rule-53",
+      "Rule-70",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "複合: OOT + 暴言。ペナルティは個別に評価・累積。"
+  },
+  {
+    "id": "case-171-train-T98-collude-then-expose",
+    "category": "複合／共謀+カード露出",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーAが友人Bにわざとカードを見せた疑い。Bはフォールドしたがカードを見てからフォールドした。AとBは同じ国から来た知り合い。",
+    "expected_rules": [
+      "Rule-67",
+      "Rule-69",
+      "Rule-14",
+      "Rule-71"
+    ],
+    "required_rules": [
+      "Rule-67"
+    ],
+    "recommended_rules": [
+      "Rule-69",
+      "Rule-14",
+      "Rule-71"
+    ],
+    "confidence": "high",
+    "notes": "複合: 共謀疑惑 + カード露出. Rule-67 one player to a hand."
+  },
+  {
+    "id": "case-172-train-T99-chiprace-bustout",
+    "category": "複合／チップレースでバスト",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "チップレースで最小デノミが廃止。プレイヤーが500チップ1枚しか持っていない。チップレースで負けたらトーナメントから消える。",
+    "expected_rules": [
+      "Rule-24",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-24"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-24A: last chip cannot be raced out. プレイヤーは最低1チップ残る。"
+  },
+  {
+    "id": "case-173-train-T100-wsop-main-slow-roll",
+    "category": "エチケット／スローロール",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "ファイナルテーブル。all-in対all-in。プレイヤーがナッツフルハウスを持っているのに、30秒以上待ってからカードを開いた。相手と観客が不快に感じた。",
+    "expected_rules": [
+      "Rule-70",
+      "Rule-16",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-70"
+    ],
+    "recommended_rules": [
+      "Rule-16",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-70: etiquette violation. スローロールは明確なエチケット違反。"
+  },
+  {
+    "id": "case-174-train-T101-angle-shoot-pump",
+    "category": "エチケット／アングルシュート",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーがチップをベッティングラインの手前で何度もpump（上下させる）。相手のリアクションを見てからチップを戻した。",
+    "expected_rules": [
+      "Rule-65",
+      "Rule-70",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-70"
+    ],
+    "recommended_rules": [
+      "Rule-65",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-70: etiquette. Pump fake = angle shooting."
+  },
+  {
+    "id": "case-175-train-T102-balance-heads-up",
+    "category": "テーブルバランス／ヘッズアップ",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "9人テーブル×5卓→残り20名。テーブル構成が7-5-4-2-2になっている。どのテーブルからどのテーブルに移動すべきか。",
+    "expected_rules": [
+      "Rule-11",
+      "RP-6",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-11"
+    ],
+    "recommended_rules": [
+      "RP-6",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-11: Balancing Tables."
+  },
+  {
+    "id": "case-176-train-T103-blind-increase-timing",
+    "category": "構造／ブラインド上昇",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "ブラインドレベルの切り替え時。次レベルのアナウンスが鳴ったが、現在のハンドはまだ進行中。このハンドは旧レベルか新レベルか。",
+    "expected_rules": [
+      "Rule-23",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-23"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-23: New Hand and New Limits."
+  },
+  {
+    "id": "case-177-train-T104-seat-open-move",
+    "category": "構造／席空き",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "6人テーブルでプレイヤーがバスト。残り5名のまま続行すべきか、他テーブルから1名移動すべきか。他テーブルは全て6名。",
+    "expected_rules": [
+      "Rule-11",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-11"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-11: tables balanced within 1 player."
+  },
+  {
+    "id": "case-178-train-T105-extra-card-dealt",
+    "category": "誤配／余分なカード",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "6人テーブルなのにディーラーが7人分配った。7枚目が空席に配られた。プレイヤーはまだカードを見ていない。",
+    "expected_rules": [
+      "Rule-35",
+      "Rule-36",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-35"
+    ],
+    "recommended_rules": [
+      "Rule-36",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-35: Misdeal. SA前なら misdeal。"
+  },
+  {
+    "id": "case-179-train-T106-river-dealt-twice",
+    "category": "誤配／リバー2枚",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "ディーラーがリバーカードを2枚同時にめくってしまった。両方表向きになっている。",
+    "expected_rules": [
+      "Rule-39",
+      "RP-14",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-39"
+    ],
+    "recommended_rules": [
+      "RP-14",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-39 + RP-14: 1枚をランダム選択、もう1枚をスタブに戻す。"
+  },
+  {
+    "id": "case-180-train-T107-denomination-error",
+    "category": "チップ管理／デノミ間違い",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーが5,000チップと思って25,000チップ（色が似ている）を出してしまった。本人は5,000のつもりだったと主張。",
+    "expected_rules": [
+      "Rule-40",
+      "Rule-45",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-40"
+    ],
+    "recommended_rules": [
+      "Rule-45",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-40: chips are in play. プレイヤーの責任。"
+  },
+  {
+    "id": "case-181-train-T108-ratholing",
+    "category": "チップ管理／ラットホーリング",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "トーナメント。プレイヤーがブレイク中に大量のチップをカバンに入れていた。ブレイク後にチップカウントが合わない。",
+    "expected_rules": [
+      "Rule-63",
+      "Rule-71",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-63"
+    ],
+    "recommended_rules": [
+      "Rule-71",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-63: ratholing/chip pocketing. 深刻な違反。"
+  },
+  {
+    "id": "case-182-train-T109-ai-tool-at-table",
+    "category": "電子機器／AI使用",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "P1大会。プレイヤーがブレイク中にスマホでChatGPTにポーカー戦略を質問していたことが判明。ハンド中ではないがトーナメント中。",
+    "expected_rules": [
+      "Rule-5",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-5"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "medium",
+    "notes": "Rule-5D 2024改訂: AI/solverツール使用。ブレイク中でもトーナメント中の使用制限。ハウスルール依存。"
+  },
+  {
+    "id": "case-183-train-T110-sunglasses-removal",
+    "category": "ID／サングラス",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "ファイナルテーブル配信中。プレイヤーが大きなミラーサングラスをかけている。対戦相手が「表情が読めない、外せ」と要求。プレイヤーは「TDAルールで許可されている」と主張。",
+    "expected_rules": [
+      "Rule-4",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-4"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-4 2024: TD may request removal of sunglasses. TD裁量。"
+  },
+  {
+    "id": "case-184-train-T111-check-in-dark",
+    "category": "ベッティング／チェックインダーク",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "フロップ前にBBが「チェックインダーク」と宣言。フロップが出た後、BBが「やっぱりベット」と言い直した。",
+    "expected_rules": [
+      "Rule-50",
+      "Rule-40",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-50"
+    ],
+    "recommended_rules": [
+      "Rule-40",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-50: check in dark is binding. 変更不可。"
+  },
+  {
+    "id": "case-185-train-T112-splash-pot",
+    "category": "ベッティング／スプラッシュ",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーがチップをポットに直接投げ込んだ（splash the pot）。正確な額が確認できない。",
+    "expected_rules": [
+      "Rule-40",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-40"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-40: プレイヤーは正確にベット。splash potは禁止。チップを整理して確認。"
+  },
+  {
+    "id": "case-186-train-T113-clock-during-allin",
+    "category": "タイミング／all-in中クロック",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーがall-inを受けた後、5分以上考えている。対戦相手が「クロック！」と要求。TDがクロックを宣言してからも30秒経過。",
+    "expected_rules": [
+      "Rule-29",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-29"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-29: Shot Clock / Time Limit. クロック宣言後のカウントダウン。"
+  },
+  {
+    "id": "case-187-train-T114-absent-allin",
+    "category": "タイミング／不在中all-in",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーがトイレ中に不在。ブラインドは自動投入。UTGがall-in、不在プレイヤーのBBにアクション。不在プレイヤーのハンドはどうなる？",
+    "expected_rules": [
+      "Rule-30",
+      "Rule-15",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-30"
+    ],
+    "recommended_rules": [
+      "Rule-15",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-30: at-seat rule. 不在=フォールド（ハンドはデッド）。"
+  },
+  {
+    "id": "case-188-train-T115-dispute-next-hand",
+    "category": "複合／紛争タイミング",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "前のハンドでポットの分配に異議があったが、次のハンドが既に始まっている（SA成立）。前のハンドの異議はまだ有効か？",
+    "expected_rules": [
+      "Rule-22",
+      "Rule-36",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-22"
+    ],
+    "recommended_rules": [
+      "Rule-36",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-22: accounting errors may be disputed until SA on next hand."
+  },
+  {
+    "id": "case-189-train-T116-player-agreement",
+    "category": "複合／プレイヤー合意",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "残り2名。両者が「次のハンドでall-inする」と合意。これは許可されるか？",
+    "expected_rules": [
+      "Rule-69",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-69"
+    ],
+    "recommended_rules": [
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-69: ethical play. 事前の合意は soft play / collusion に該当する可能性。"
+  },
+  {
+    "id": "case-190-train-T117-card-protector-knock",
+    "category": "複合／カードプロテクター",
+    "created_by": "瀬戸ミナ（Phase 7F）",
+    "situation": "プレイヤーのカードプロテクター（チップ）がテーブルから転がり落ち、カードが露出した。プロテクターはプレイヤーの責任か？",
+    "expected_rules": [
+      "Rule-2",
+      "Rule-14",
+      "Rule-1"
+    ],
+    "required_rules": [
+      "Rule-2"
+    ],
+    "recommended_rules": [
+      "Rule-14",
+      "Rule-1"
+    ],
+    "confidence": "high",
+    "notes": "Rule-2: Player Responsibilities - protect their hands."
   }
 ]
