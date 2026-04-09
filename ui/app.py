@@ -32,11 +32,14 @@ import streamlit as st
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / "src"))
 
-from judge import judge, quick_judge  # noqa: E402
+# Phase 7E: judge モジュールも importlib でリロード（Streamlit Cloud キャッシュ対策）
+import importlib
+import judge as _judge_module  # noqa: E402
+importlib.reload(_judge_module)
+judge = _judge_module.judge
+quick_judge = _judge_module.quick_judge
 
 # Phase 7A: db モジュールを importlib で明示リロード
-# Streamlit Cloud のモジュールキャッシュ対策
-import importlib
 import db as _db_module  # noqa: E402
 importlib.reload(_db_module)
 
