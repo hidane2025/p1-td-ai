@@ -37,7 +37,6 @@ import importlib
 import judge as _judge_module  # noqa: E402
 importlib.reload(_judge_module)
 judge = _judge_module.judge
-quick_judge = _judge_module.quick_judge
 
 # Phase 7A: db モジュールを importlib で明示リロード
 import db as _db_module  # noqa: E402
@@ -528,10 +527,8 @@ tab_judge, tab_search = st.tabs(["⚖️ 判断を取得", "📚 判断履歴検
 # TAB 1: 判断を取得（クイックテンプレ + フォーム）
 # =========================================================================
 with tab_judge:
-    # Phase 7B: 軽量フレーム化 — ○ プレースホルダー撤廃
-    # 各テンプレは「状況の枠組み + 確認すべきポイント」だけ。
-    # 具体数値は TD が自由記述で追加する方式（入力が早い & 間違えにくい）
-    QUICK_TEMPLATES = [
+    # Phase 7F: QUICK_TEMPLATES 削除（中野さん指示）
+    _QUICK_TEMPLATES_REMOVED = [
         # ベッティング関連
         ("💰 OOT fold",
          "状況: プレイヤーが順番前に fold を宣言した（OOT fold）。その後、前のアクションが変更された可能性あり。\n\n"
@@ -689,22 +686,7 @@ with tab_judge:
             type="primary",
         )
 
-    # ===== ⚡ ワンタップテンプレ 20 種（入力欄の下に配置） =====
-    st.markdown("#### ⚡ クイック選択（タップで入力欄にテンプレが入ります）")
-
-    # PC=5列、スマホ=2列（Streamlit Cloud は columns の CSS を制御しにくいため
-    # サーバーサイドで列数を切り替える。User-Agent 判定ではなく、
-    # Streamlit の experimental_get_query_params は使えないので固定3列で折衷）
-    template_cols_per_row = 3
-    for i in range(0, len(QUICK_TEMPLATES), template_cols_per_row):
-        batch = QUICK_TEMPLATES[i:i + template_cols_per_row]
-        cols = st.columns(len(batch))
-        for j, (label, template_text) in enumerate(batch):
-            with cols[j]:
-                if st.button(label, key=f"qt_{i+j}", use_container_width=True):
-                    st.session_state.situation_input = template_text
-                    st.session_state.situation_textarea = template_text
-                    st.rerun()
+    # クイック選択は Phase 7F で削除済み
 
     if submitted:
         if not situation.strip():
@@ -719,28 +701,8 @@ with tab_judge:
         if game_type:
             extra["game_type"] = game_type
 
-        # === Step 1: Haiku 即答（3秒） ===
-        quick_placeholder = st.empty()
-        try:
-            qr = quick_judge(
-                situation=situation.strip(),
-                extra_context=extra or None,
-            )
-            quick_placeholder.markdown(
-                f'<div style="padding:1rem 1.2rem;border-radius:10px;'
-                f'background:linear-gradient(135deg,#E8F4FD 0%,#D1ECFF 100%);'
-                f'border-left:6px solid #2196F3;margin-bottom:1rem;">'
-                f'<div style="font-size:0.8rem;color:#1565C0;font-weight:600;margin-bottom:0.3rem;">'
-                f'💡 即答（Haiku {qr["latency_ms"]/1000:.1f}秒）</div>'
-                f'<div style="font-size:1.15rem;font-weight:700;color:#1a1a1a;line-height:1.5;">'
-                f'{qr["quick_response"]}</div></div>',
-                unsafe_allow_html=True,
-            )
-        except Exception:
-            pass  # 即答失敗しても詳細判断は続行
-
-        # === Step 2: Sonnet 詳細判断 ===
-        with st.spinner("📝 詳細分析を生成中..."):
+        # Sonnet 判断
+        with st.spinner("AI が判断を生成中...（約 30-60 秒）"):
             try:
                 result = judge(
                     situation=situation.strip(),
