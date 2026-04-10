@@ -1150,6 +1150,88 @@ def judge(
     }
 
 
+def generate_player_explanation(
+    conclusion: str,
+    main_rule: str,
+    penalty: str | None = None,
+) -> str:
+    """
+    判断結果からプレイヤーに見せるためのシンプルな説明文を生成。
+    API呼び出しなし、テンプレートベースで即時生成。
+
+    Returns:
+        プレイヤー向け説明テキスト（日本語 + English）
+    """
+    # ルール番号を抽出（例: "Rule-45A" → "45A", "TDA Rule 45" → "45"）
+    rule_num_match = re.search(r"Rule[- ]?(\d+\w*)", main_rule, re.IGNORECASE)
+    rule_num = rule_num_match.group(1) if rule_num_match else ""
+    rule_label = f"TDA Rule-{rule_num}" if rule_num else main_rule
+
+    # 結論テキストを整形（改行を取り除いてコンパクトに）
+    conclusion_lines = [
+        line.strip() for line in conclusion.strip().splitlines() if line.strip()
+    ]
+    conclusion_jp = "\n".join(conclusion_lines)
+
+    # 英語の裁定キーワードマッピング（よくある判断の定型訳）
+    en_keyword_map: dict[str, str] = {
+        "call": "Call",
+        "コール": "Call",
+        "raise": "Raise",
+        "レイズ": "Raise",
+        "fold": "Fold",
+        "フォールド": "Fold",
+        "misdeal": "Misdeal",
+        "ミスディール": "Misdeal",
+        "dead hand": "Dead Hand",
+        "デッドハンド": "Dead Hand",
+        "penalty": "Penalty",
+        "ペナルティ": "Penalty",
+        "warning": "Warning",
+        "警告": "Warning",
+        "all-in": "All-In",
+        "オールイン": "All-In",
+    }
+
+    # 結論から英語キーワードを検出
+    en_ruling = ""
+    conclusion_lower = conclusion.lower()
+    for jp_key, en_val in en_keyword_map.items():
+        if jp_key.lower() in conclusion_lower:
+            en_ruling = en_val
+            break
+
+    if en_ruling:
+        en_summary = f"This is ruled as a {en_ruling} per {rule_label}."
+    else:
+        en_summary = f"Ruling based on {rule_label}."
+
+    # 組み立て
+    lines = [
+        "━━━ TD 判断 ━━━",
+        "",
+        f"【裁定】{conclusion_jp}",
+        "",
+        f"【根拠】{rule_label}",
+    ]
+
+    # ペナルティセクション
+    if penalty and penalty.strip() and penalty.strip() != "なし":
+        penalty_first = penalty.strip().splitlines()[0].strip()
+        lines.append("")
+        lines.append(f"【ペナルティ】{penalty_first}")
+
+    # 英語セクション
+    lines.append("")
+    lines.append("【English】")
+    lines.append(en_summary)
+
+    lines.append("")
+    lines.append("━━━━━━━━━━━━")
+
+    return "\n".join(lines)
+
+
 def judge_with_routing(
     situation: str,
     extra_context: dict | None = None,

@@ -37,6 +37,7 @@ import importlib
 import judge as _judge_module  # noqa: E402
 importlib.reload(_judge_module)
 judge = _judge_module.judge
+generate_player_explanation = _judge_module.generate_player_explanation
 
 # Phase 7A: db モジュールを importlib で明示リロード
 import db as _db_module  # noqa: E402
@@ -520,8 +521,8 @@ with st.sidebar:
         st.caption("まだ判断履歴はありません")
 
 
-# ===== Tabs: 判断 / 履歴検索 =====
-tab_judge, tab_search = st.tabs(["⚖️ 判断を取得", "📚 判断履歴検索"])
+# ===== Tabs: 判断 / チャット / 履歴検索 =====
+tab_judge, tab_chat, tab_search = st.tabs(["⚖️ 判断を取得", "💬 チャットで相談", "📚 判断履歴検索"])
 
 # =========================================================================
 # TAB 1: 判断を取得（クイックテンプレ + フォーム）
@@ -894,10 +895,111 @@ with tab_judge:
                     st.session_state.feedback_submitted[jid] = True
                     st.rerun()
 
+        with action_cols[5]:
+            if st.button("📱 プレイヤーに見せる", key=f"player_show_{jid}", use_container_width=True, help="プレイヤー向けの説明を大きく表示"):
+                # 説明文を生成してセッションに保存
+                player_text = generate_player_explanation(
+                    conclusion=conclusion,
+                    main_rule=main_rule,
+                    penalty=penalty if penalty else None,
+                )
+                st.session_state[f"player_explanation_{jid}"] = player_text
+                # トグル: 既に表示中なら非表示にする
+                current = st.session_state.get(f"show_player_{jid}", False)
+                st.session_state[f"show_player_{jid}"] = not current
+
         # コピー用テキスト表示（押されたら）
         if st.session_state.get(f"show_copy_{jid}"):
             st.code(copy_text, language=None)
             st.caption("☝️ 右上のコピーアイコンでテキストをクリップボードへコピーできます")
+
+        # プレイヤー向け説明カード表示（押されたら）
+        if st.session_state.get(f"show_player_{jid}"):
+            player_text = st.session_state.get(f"player_explanation_{jid}", "")
+            # ルール番号を抽出して目立たせる
+            rule_display = main_rule if main_rule else "TDA 2024"
+            _render_html(f"""
+                <div style="
+                    background: #1a1a2e;
+                    color: #e0e0e0;
+                    border-radius: 16px;
+                    padding: 2rem 2.2rem;
+                    margin: 1.2rem 0;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+                    border: 1px solid #333;
+                ">
+                    <div style="
+                        text-align: center;
+                        font-size: 14px;
+                        color: #888;
+                        letter-spacing: 3px;
+                        margin-bottom: 1.2rem;
+                        border-bottom: 1px solid #333;
+                        padding-bottom: 0.8rem;
+                    ">TD RULING</div>
+                    <div style="
+                        font-size: 22px;
+                        font-weight: 700;
+                        color: #FF6B35;
+                        margin-bottom: 1rem;
+                        line-height: 1.5;
+                    ">{conclusion}</div>
+                    <div style="
+                        background: #16213e;
+                        border-radius: 10px;
+                        padding: 1rem 1.2rem;
+                        margin-bottom: 1rem;
+                        border-left: 4px solid #4A90E2;
+                    ">
+                        <div style="font-size: 13px; color: #8ab4f8; margin-bottom: 0.4rem; font-weight: 600;">RULE</div>
+                        <div style="font-size: 20px; font-weight: 700; color: #e0e0e0;">{rule_display}</div>
+                    </div>
+                    {"<div style=" +
+                        "'background: #2d1b1b;" +
+                        "border-radius: 10px;" +
+                        "padding: 1rem 1.2rem;" +
+                        "margin-bottom: 1rem;" +
+                        "border-left: 4px solid #C62828;'" +
+                    ">" +
+                        "<div style='font-size: 13px; color: #ef9a9a; margin-bottom: 0.4rem; font-weight: 600;'>PENALTY</div>" +
+                        "<div style='font-size: 18px; color: #ffcdd2;'>" + penalty.splitlines()[0].strip() + "</div>" +
+                    "</div>"
+                    if penalty and penalty.strip() and penalty.strip() != "なし" else ""}
+                    <div style="
+                        margin-top: 1.2rem;
+                        padding-top: 1rem;
+                        border-top: 1px solid #333;
+                        color: #aaa;
+                        font-size: 14px;
+                        line-height: 1.6;
+                    ">
+                        <div style="font-size: 12px; color: #666; letter-spacing: 2px; margin-bottom: 0.5rem;">ENGLISH</div>
+                        {
+                            "This is ruled as a Call per " + rule_display + "."
+                            if "call" in conclusion.lower() or "コール" in conclusion
+                            else "This is ruled as a Raise per " + rule_display + "."
+                            if "raise" in conclusion.lower() or "レイズ" in conclusion
+                            else "This is ruled as a Fold per " + rule_display + "."
+                            if "fold" in conclusion.lower() or "フォールド" in conclusion
+                            else "This is ruled as a Misdeal per " + rule_display + "."
+                            if "misdeal" in conclusion.lower() or "ミスディール" in conclusion
+                            else "This is ruled as a Dead Hand per " + rule_display + "."
+                            if "dead" in conclusion.lower() or "デッドハンド" in conclusion
+                            else "Ruling based on " + rule_display + "."
+                        }
+                    </div>
+                    <div style="
+                        text-align: center;
+                        margin-top: 1.2rem;
+                        font-size: 11px;
+                        color: #555;
+                    ">TDA 2024</div>
+                </div>
+            """)
+            # テキスト版もコード表示（コピー用途）
+            st.code(player_text, language=None)
+            st.caption("📱 この画面をプレイヤーに見せてください / Show this screen to the player")
 
         # ===== 🔄 裁定を詰める（Phase 7E: 追加情報で再判断） =====
         refine_key = f"refine_mode_{jid}"
@@ -1097,7 +1199,122 @@ with tab_judge:
 
 
 # =========================================================================
-# TAB 2: 判断履歴検索（Phase 7A Task 5）
+# TAB 2: チャットで相談（Phase 7F — 店長でも使えるモード）
+# =========================================================================
+with tab_chat:
+    st.markdown("### 💬 チャットで相談")
+    st.caption("状況を会話形式で伝えるだけ。TDA用語を知らなくてもOK。")
+
+    # Chat history in session state
+    if "chat_messages" not in st.session_state:
+        st.session_state.chat_messages = []
+    if "chat_judgment_done" not in st.session_state:
+        st.session_state.chat_judgment_done = False
+
+    # Display chat history
+    for msg in st.session_state.chat_messages:
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+
+    # If no messages yet, show AI greeting
+    if not st.session_state.chat_messages:
+        greeting = (
+            "こんにちは！TD判断AIです。\n\n"
+            "テーブルで何が起きたか、普段の言葉で教えてください。\n\n"
+            "例えば：\n"
+            "- 「プレイヤーが黙ってチップをバラバラに出した」\n"
+            "- 「誰かが順番を飛ばしてフォールドした」\n"
+            "- 「携帯を触ってたプレイヤーがいる」\n\n"
+            "わからないことは私から質問します。"
+        )
+        st.session_state.chat_messages.append({"role": "assistant", "content": greeting})
+        st.rerun()
+
+    # Chat input
+    user_input = st.chat_input("何が起きましたか？")
+
+    if user_input:
+        # Add user message
+        st.session_state.chat_messages.append({"role": "user", "content": user_input})
+
+        # Build conversation for API call
+        try:
+            from anthropic import Anthropic
+            client = Anthropic()
+
+            # System prompt for chat mode
+            chat_system = (
+                "あなたはポーカートーナメントのTD判断AIアシスタントです。\n"
+                "相手はTDA用語を知らない店長やスタッフです。やさしい日本語で対応してください。\n\n"
+                "あなたの役割:\n"
+                "1. 状況を正確に把握するために、足りない情報を質問する\n"
+                "2. 十分な情報が揃ったら、裁定を出す\n\n"
+                "質問すべき情報（不足していたら聞く）:\n"
+                "- 誰が何をしたか（プレイヤーの位置: UTG/MP/CO/BTN/SB/BB）\n"
+                "- 口頭で何か言ったか（発声の有無と内容）\n"
+                "- チップの額と枚数\n"
+                "- いつ気づいたか（アクション前か後か）\n"
+                "- 他のプレイヤーのリアクション\n\n"
+                "裁定を出す時のフォーマット:\n"
+                "━━━ TD 判断 ━━━\n"
+                "【裁定】具体的な判断\n"
+                "【理由】なぜそうなるか（やさしい日本語で）\n"
+                "【根拠ルール】TDA Rule-XX\n"
+                "【プレイヤーへの伝え方】そのまま読み上げれば通じる文\n"
+                "━━━━━━━━━━━━\n\n"
+                "情報が足りない場合は裁定を出さず、1〜2個だけ質問してください。\n"
+                "質問は簡潔に。専門用語は使わず「チップをどう出しましたか？」のように聞く。"
+            )
+
+            # Convert chat history to API format
+            api_messages = []
+            for msg in st.session_state.chat_messages:
+                if msg["role"] in ("user", "assistant"):
+                    api_messages.append({"role": msg["role"], "content": msg["content"]})
+
+            response = client.messages.create(
+                model="claude-sonnet-4-5",
+                max_tokens=1500,
+                system=chat_system,
+                messages=api_messages,
+            )
+
+            assistant_reply = response.content[0].text
+
+            # Add assistant response
+            st.session_state.chat_messages.append({"role": "assistant", "content": assistant_reply})
+
+            # Check if judgment was made (contains 裁定)
+            if "【裁定】" in assistant_reply:
+                st.session_state.chat_judgment_done = True
+
+        except Exception as e:
+            st.session_state.chat_messages.append({
+                "role": "assistant",
+                "content": f"エラーが発生しました: {e}"
+            })
+
+        st.rerun()
+
+    # Action buttons after judgment
+    if st.session_state.chat_judgment_done:
+        chat_col1, chat_col2 = st.columns(2)
+        with chat_col1:
+            if st.button("🔄 新しい相談", key="chat_new", use_container_width=True):
+                st.session_state.chat_messages = []
+                st.session_state.chat_judgment_done = False
+                st.rerun()
+        with chat_col2:
+            if st.button("📋 判断をコピー", key="chat_copy", use_container_width=True):
+                # Find the last judgment message
+                for msg in reversed(st.session_state.chat_messages):
+                    if msg["role"] == "assistant" and "【裁定】" in msg["content"]:
+                        st.code(msg["content"], language=None)
+                        break
+
+
+# =========================================================================
+# TAB 3: 判断履歴検索（Phase 7A Task 5）
 # =========================================================================
 with tab_search:
     st.markdown("### 📚 判断履歴検索")
