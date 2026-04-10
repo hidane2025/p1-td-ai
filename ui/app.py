@@ -247,12 +247,12 @@ st.markdown(
     .main-title {
         font-size: 2.2rem;
         font-weight: 700;
-        color: #1a1a1a;
+        color: #FFFFFF;
         margin-bottom: 0;
     }
     .subtitle {
         font-size: 1rem;
-        color: #666;
+        color: #AAAAAA;
         margin-top: 0;
         margin-bottom: 1.5rem;
     }
@@ -273,8 +273,8 @@ st.markdown(
     .footer {
         margin-top: 3rem;
         padding-top: 1rem;
-        border-top: 1px solid #e0e0e0;
-        color: #999;
+        border-top: 1px solid #333;
+        color: #888;
         font-size: 0.85rem;
         text-align: center;
     }
@@ -520,14 +520,65 @@ with st.sidebar:
         st.caption("まだ判断履歴はありません")
 
 
-# ===== Tabs: 判断 / 履歴検索 =====
-tab_judge, tab_search = st.tabs(["⚖️ 判断を取得", "📚 判断履歴検索"])
+# ===== Tabs: 判断 / 履歴検索 / クイズ =====
+tab_judge, tab_search, tab_quiz = st.tabs(["⚖️ 判断を取得", "📚 判断履歴検索", "🎓 TDAクイズ"])
 
 # =========================================================================
 # TAB 1: 判断を取得（クイックテンプレ + フォーム）
 # =========================================================================
 with tab_judge:
-    # Phase 7F: QUICK_TEMPLATES 削除（中野さん指示）
+    # ===== 段階的ドロップダウン（Virtual TD inspired） =====
+    SITUATION_TREE = {
+        "ベッティング": {
+            "無言で高額チップを1枚出した": "プレイヤーが無言で、コール額より大きなチップを1枚だけ出した。これはコールかレイズか？\n\n確認すべき点:\n- コール額はいくらか\n- チップのデノミと枚数\n- 発言の有無（Rule 44/45）",
+            "複数枚チップを無言で出した": "プレイヤーが無言で複数枚のチップを押し出した。合計額が不明瞭。\n\n確認すべき点:\n- コール額はいくらか\n- チップの内訳（デノミ×枚数）\n- 最小チップ1枚を引いた額がcall額未満か（Rule 45A）",
+            "チップを2回以上に分けて出した（String bet）": "プレイヤーがチップを2回以上に分けて前に出した。ストリングベットの疑い。\n\n確認すべき点:\n- 1回目と2回目の間隔\n- 宣言の有無（Rule 42/56）",
+            "レイズ額が足りない": "プレイヤーがレイズしたが、最小レイズ額に達していない。\n\n確認すべき点:\n- 前のベット/レイズ額\n- 出された額\n- 50%ルールに該当するか（Rule 43/52）",
+            "発声とチップ額が違う": "プレイヤーが口頭で宣言した額と、実際に出したチップの額が異なる。\n\n確認すべき点:\n- 口頭宣言の内容と額\n- 実際のチップ額\n- どちらが先か（Rule 40）",
+            "順番外のアクション（OOT）": "プレイヤーが順番前にアクション（fold/call/raise）した。\n\n確認すべき点:\n- 誰がスキップされたか\n- OOT後にアクションが変わったか\n- binding かどうか（Rule 53）",
+        },
+        "カード・ディーリング": {
+            "配牌中にカードが露出した": "ディーリング中にカードが表向きになった。\n\n確認すべき点:\n- 何枚目のカードか\n- プレイヤーはカードを見たか\n- SA成立前か（Rule 35/37）",
+            "フロップが多く/少なくめくられた": "ディーラーがフロップを正しくない枚数めくった。\n\n確認すべき点:\n- 何枚めくられたか\n- SA成立前か\n- ランダム処理の適用（Rule 39/RP-14）",
+            "ターン/リバーが先にめくられた": "まだアクション中なのにディーラーが次のカードをめくった。\n\n確認すべき点:\n- アクション中のプレイヤーは誰か\n- SA成立前か（RP-5）",
+            "バーンカード忘れ": "ディーラーがバーンせずにカードをめくった。SA後に気づいた。\n\n確認すべき点:\n- いつ気づいたか\n- SA成立済みか（Rule 38）",
+        },
+        "ショーダウン": {
+            "All-inでカードを見せずにmuck": "All-in対All-inの状況でプレイヤーがカードを見せずにmuckしようとした。\n\n確認すべき点:\n- 全員all-inか\n- カードはまだ特定可能か（Rule 16）",
+            "カードの読み間違い": "ディーラーまたはプレイヤーがハンドを読み間違えてポットを渡した。\n\n確認すべき点:\n- 次のハンドが始まる前か（Rule 12/22）",
+            "1枚しか見せなかった": "ショーダウンでプレイヤーが2枚のうち1枚しかテーブルしなかった。\n\n確認すべき点:\n- 勝者か敗者か\n- Rule 13/15 該当",
+        },
+        "プレイヤー行為": {
+            "携帯・電子機器の使用": "プレイヤーがハンド中に携帯電話やスマートウォッチを操作した。\n\n確認すべき点:\n- 通話か画面操作か\n- ハンド中かブレイク中か（Rule 5）",
+            "暴言・マナー違反": "プレイヤーがディーラーや他プレイヤーに対して不適切な言動をした。\n\n確認すべき点:\n- 具体的な言動\n- 過去の違反歴（Rule 70/71）",
+            "ソフトプレイ・共謀疑惑": "特定のプレイヤー同士で共謀やソフトプレイの疑いがある。\n\n確認すべき点:\n- 具体的なパターンと回数\n- 関係性（Rule 67/69）",
+            "ブラインド回避（Dodging）": "プレイヤーがBB直前に繰り返し離席している。\n\n確認すべき点:\n- 連続回数\n- 意図的か（Rule 33/71）",
+        },
+        "トーナメント進行": {
+            "クロック要求": "プレイヤーが長考中、他プレイヤーがクロックを要求した。\n\n確認すべき点:\n- 経過時間\n- ショットクロック設定の有無（Rule 29）",
+            "チップレース": "チップレースで最小デノミが廃止。最後の1枚のプレイヤーがいる。\n\n確認すべき点:\n- 残チップ数\n- 最後1枚はraced out禁止（Rule 24A）",
+            "テーブルバランス": "テーブル間の人数差が大きい。バランスが必要か。\n\n確認すべき点:\n- 各テーブルの人数\n- 1人差以内ルール（Rule 11）",
+            "ハンドフォーハンド": "バブル付近。HFH宣言中に複数名がバスト。\n\n確認すべき点:\n- 同時バストの人数\n- チップカウントで順位決定（RP-8）",
+        },
+    }
+
+    st.markdown("#### 🎯 状況を選択")
+    cat_options = ["（直接入力する）"] + list(SITUATION_TREE.keys())
+    selected_cat = st.selectbox("カテゴリー", cat_options, key="dd_cat", label_visibility="collapsed")
+
+    if selected_cat != "（直接入力する）" and selected_cat in SITUATION_TREE:
+        sub_options = ["選択してください"] + list(SITUATION_TREE[selected_cat].keys())
+        selected_sub = st.selectbox("具体的な状況", sub_options, key="dd_sub", label_visibility="collapsed")
+        if selected_sub != "選択してください":
+            template_text = SITUATION_TREE[selected_cat][selected_sub]
+            if st.button("📝 この状況を入力欄に反映", use_container_width=True, type="primary"):
+                st.session_state.situation_input = template_text
+                st.session_state.situation_textarea = template_text
+                st.rerun()
+
+    st.markdown("---")
+
+    # Phase 7F: 以下の QUICK_TEMPLATES は参照されないが互換性のため残す
     _QUICK_TEMPLATES_REMOVED = [
         # ベッティング関連
         ("💰 OOT fold",
@@ -1136,6 +1187,113 @@ with tab_search:
                                 "referenced_rules_context": json.loads(detail["referenced_rules"]) if detail["referenced_rules"] else [],
                             }
                             st.rerun()
+
+
+# =========================================================================
+# TAB 3: TDAクイズ（Phase 7F）
+# =========================================================================
+with tab_quiz:
+    st.markdown("### 🎓 TDAクイズ")
+    st.caption("TDA 2024ルールの理解度をテスト。TD研修やスキルアップに。")
+
+    # 判例DBからランダムにクイズ生成
+    import random
+
+    QUIZ_CASES_PATH = BASE_DIR / "data" / "cases" / "judgment_cases.json"
+    if QUIZ_CASES_PATH.exists():
+        with open(QUIZ_CASES_PATH, "r", encoding="utf-8") as f:
+            quiz_all_cases = json.load(f)
+
+        # Filter to cases with required_rules
+        quiz_pool = [c for c in quiz_all_cases if c.get("required_rules")]
+
+        if "quiz_case" not in st.session_state:
+            st.session_state.quiz_case = None
+            st.session_state.quiz_answered = False
+            st.session_state.quiz_score = {"correct": 0, "total": 0}
+
+        col_q1, col_q2 = st.columns([3, 1])
+        with col_q1:
+            if st.button("🎲 新しい問題を出す", use_container_width=True, type="primary"):
+                st.session_state.quiz_case = random.choice(quiz_pool)
+                st.session_state.quiz_answered = False
+                st.rerun()
+        with col_q2:
+            score = st.session_state.quiz_score
+            if score["total"] > 0:
+                pct = score["correct"] / score["total"] * 100
+                st.metric("正答率", f"{pct:.0f}% ({score['correct']}/{score['total']})")
+
+        if st.session_state.quiz_case:
+            qc = st.session_state.quiz_case
+            st.markdown("---")
+            st.markdown(
+                f'<div style="padding:1.2rem;border-radius:10px;'
+                f'background:#0F3460;border-left:5px solid #E94560;margin-bottom:1rem;">'
+                f'<div style="font-size:0.85rem;color:#E94560;font-weight:600;margin-bottom:0.5rem;">'
+                f'📋 問題 — {qc.get("category", "")}</div>'
+                f'<div style="font-size:1.05rem;color:#FFFFFF;line-height:1.6;">'
+                f'{qc["situation"]}</div></div>',
+                unsafe_allow_html=True,
+            )
+
+            st.markdown("**この状況で適用すべき主要ルールは？**")
+
+            if not st.session_state.quiz_answered:
+                # 正解 + ダミー3つで4択
+                correct_rules = qc.get("required_rules", [])
+                correct_answer = ", ".join(correct_rules)
+
+                # ダミー生成（正解と被らないルール）
+                all_rule_ids = [f"Rule-{i}" for i in range(1, 72)] + [f"RP-{i}" for i in range(1, 23)]
+                dummy_pool = [r for r in all_rule_ids if r not in correct_rules]
+                random.shuffle(dummy_pool)
+
+                choices = [correct_answer]
+                for _ in range(3):
+                    dummy = ", ".join(random.sample(dummy_pool, min(len(correct_rules), len(dummy_pool))))
+                    if dummy not in choices:
+                        choices.append(dummy)
+
+                # 不足分補填
+                while len(choices) < 4:
+                    dummy = ", ".join(random.sample(dummy_pool, 1))
+                    if dummy not in choices:
+                        choices.append(dummy)
+
+                random.shuffle(choices)
+
+                # Store choices in session state
+                if "quiz_choices" not in st.session_state or st.session_state.get("quiz_case_id") != qc["id"]:
+                    st.session_state.quiz_choices = choices
+                    st.session_state.quiz_case_id = qc["id"]
+
+                for i, choice in enumerate(st.session_state.quiz_choices):
+                    if st.button(f"{chr(65+i)}. {choice}", key=f"quiz_opt_{i}", use_container_width=True):
+                        st.session_state.quiz_answered = True
+                        st.session_state.quiz_score["total"] += 1
+                        if choice == correct_answer:
+                            st.session_state.quiz_user_correct = True
+                            st.session_state.quiz_score["correct"] += 1
+                        else:
+                            st.session_state.quiz_user_correct = False
+                        st.session_state.quiz_correct_answer = correct_answer
+                        st.session_state.quiz_user_choice = choice
+                        st.rerun()
+            else:
+                # 回答済み
+                if st.session_state.quiz_user_correct:
+                    st.success(f"✅ 正解！ {st.session_state.quiz_correct_answer}")
+                else:
+                    st.error(f"❌ 不正解。あなたの回答: {st.session_state.quiz_user_choice}")
+                    st.info(f"正解: {st.session_state.quiz_correct_answer}")
+
+                # 解説
+                notes = qc.get("notes", "")
+                if notes:
+                    st.markdown(f"**📖 解説:** {notes}")
+    else:
+        st.warning("判例DBが見つかりません。")
 
 
 # ===== Footer =====
