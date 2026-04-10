@@ -40,7 +40,9 @@ CREATE TABLE IF NOT EXISTS judgments (
     response_json TEXT,             -- Parsed structured response if available
     confidence TEXT,                -- high | medium | low
     latency_ms INTEGER,
-    token_usage TEXT                -- JSON {input, output, cache_read}
+    token_usage TEXT,               -- JSON {input, output, cache_read}
+    table_number TEXT,              -- Phase 7F: テーブル番号
+    staff_name TEXT                 -- Phase 7F: スタッフ名
 );
 
 CREATE INDEX IF NOT EXISTS idx_judgments_created ON judgments(created_at);
@@ -108,6 +110,15 @@ def init_db() -> None:
     """Create tables if they don't exist. Safe to call on every startup."""
     with connect() as conn:
         conn.executescript(SCHEMA_SQL)
+        # Phase 7F: テーブル番号・スタッフ名カラムのマイグレーション
+        try:
+            conn.execute("SELECT table_number FROM judgments LIMIT 1")
+        except Exception:
+            try:
+                conn.execute("ALTER TABLE judgments ADD COLUMN table_number TEXT")
+                conn.execute("ALTER TABLE judgments ADD COLUMN staff_name TEXT")
+            except Exception:
+                pass
 
 
 def now_iso() -> str:
@@ -132,6 +143,8 @@ def save_judgment(
     confidence: str | None = None,
     latency_ms: int | None = None,
     token_usage: dict | None = None,
+    table_number: str | None = None,
+    staff_name: str | None = None,
 ) -> str:
     """Persist a judgment and return its id."""
     judgment_id = new_id("j")
@@ -142,8 +155,8 @@ def save_judgment(
                 id, created_at, situation, extra_context,
                 prompt_version, model, referenced_rules,
                 response_text, response_json, confidence,
-                latency_ms, token_usage
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                latency_ms, token_usage, table_number, staff_name
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 judgment_id,
@@ -158,6 +171,8 @@ def save_judgment(
                 confidence,
                 latency_ms,
                 json.dumps(token_usage) if token_usage else None,
+                table_number,
+                staff_name,
             ),
         )
 
@@ -200,6 +215,70 @@ def list_recent_judgments(limit: int = 20) -> list[dict]:
             (limit,),
         ).fetchall()
         return [dict(r) for r in rows]
+
+
+def search_similar_judgments(situation: str, limit: int = 3) -> list[dict]:
+    """
+    SQLite LIKE search for similar past judgments.
+    Returns list of dicts with: id, created_at, situation, confidence,
+    response_text, table_number, staff_name.
+
+    Uses simple keyword matching: splits the situation into words,
+    searches for any that match in past judgments. Order by created_at DESC.
+    Gracefully handles missing table_number / staff_name columns.
+    """
+    # Extract meaningful keywords (skip short particles / noise)
+    words = [w for w in situation.split() if len(w) >= 2]
+    if not words:
+        return []
+
+    # Check if optional columns exist (graceful fallback)
+    has_table_number = False
+    has_staff_name = False
+    with connect() as conn:
+        cursor = conn.execute("PRAGMA table_info(judgments)")
+        columns = {row["name"] for row in cursor.fetchall()}
+        has_table_number = "table_number" in columns
+        has_staff_name = "staff_name" in columns
+
+    # Build WHERE clause: match any keyword in situation or response_text
+    conditions = []
+    params: list = []
+    for word in words[:10]:  # Cap at 10 keywords to keep query bounded
+        conditions.append("(situation LIKE ? OR response_text LIKE ?)")
+        like = f"%{word}%"
+        params.extend([like, like])
+
+    where_clause = " OR ".join(conditions)
+
+    # Build SELECT with optional columns
+    select_cols = [
+        "id", "created_at", "situation", "confidence", "response_text",
+    ]
+    if has_table_number:
+        select_cols.append("table_number")
+    if has_staff_name:
+        select_cols.append("staff_name")
+
+    query = (
+        f"SELECT {', '.join(select_cols)} FROM judgments"
+        f" WHERE ({where_clause})"
+        f" ORDER BY created_at DESC LIMIT ?"
+    )
+    params.append(limit)
+
+    with connect() as conn:
+        rows = conn.execute(query, params).fetchall()
+        results = []
+        for row in rows:
+            d = dict(row)
+            # Ensure keys exist even if columns are absent
+            if not has_table_number:
+                d["table_number"] = None
+            if not has_staff_name:
+                d["staff_name"] = None
+            results.append(d)
+        return results
 
 
 def search_judgments(

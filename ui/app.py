@@ -63,6 +63,13 @@ import_judgments_dump = getattr(
     lambda dump: (0, 0)
 )
 
+# search_similar_judgments は Phase 7F で追加。古い DB モジュールでも動くようフォールバック
+if hasattr(_db_module, "search_similar_judgments"):
+    search_similar_judgments = _db_module.search_similar_judgments
+else:
+    def search_similar_judgments(situation: str, limit: int = 3) -> list[dict]:
+        return []
+
 # search_judgments は Phase 7A で追加。古い DB モジュールでも動くようフォールバック
 if hasattr(_db_module, "search_judgments"):
     search_judgments = _db_module.search_judgments
@@ -450,6 +457,138 @@ with st.sidebar:
         index=version_options.index(current_version) if current_version in version_options else 0,
     )
 
+    # ── House Rules Section ──
+    st.markdown("---")
+    with st.expander("🏠 ハウスルール設定"):
+        try:
+            from house_rules import load_house_rules, save_house_rules
+            _hr = load_house_rules()
+        except Exception:
+            _hr = {
+                "venue_name": "P1",
+                "straddle_allowed": True,
+                "bomb_pot_allowed": False,
+                "shot_clock_seconds": 30,
+                "language": "日本語（英語可）",
+                "late_reg_levels": 8,
+                "re_entry_allowed": True,
+                "re_entry_max": 1,
+                "bounty_format": False,
+                "ante_type": "BBA",
+                "custom_rules": [],
+            }
+
+        hr_venue = st.text_input(
+            "会場名",
+            value=_hr.get("venue_name", "P1"),
+            key="hr_venue",
+        )
+        hr_straddle = st.toggle(
+            "ストラドル許可",
+            value=_hr.get("straddle_allowed", True),
+            key="hr_straddle",
+        )
+        hr_bomb = st.toggle(
+            "ボムポット許可",
+            value=_hr.get("bomb_pot_allowed", False),
+            key="hr_bomb",
+        )
+        hr_re_entry = st.toggle(
+            "リエントリー許可",
+            value=_hr.get("re_entry_allowed", True),
+            key="hr_reentry",
+        )
+        hr_bounty = st.toggle(
+            "バウンティ形式",
+            value=_hr.get("bounty_format", False),
+            key="hr_bounty",
+        )
+        hr_shot_clock = st.number_input(
+            "ショットクロック（秒）",
+            min_value=0,
+            max_value=120,
+            value=int(_hr.get("shot_clock_seconds", 30)),
+            step=5,
+            key="hr_shot_clock",
+        )
+        hr_late_reg = st.number_input(
+            "レイトレジストレーション（レベル）",
+            min_value=0,
+            max_value=30,
+            value=int(_hr.get("late_reg_levels", 8)),
+            step=1,
+            key="hr_late_reg",
+        )
+        hr_re_max = st.number_input(
+            "リエントリー上限（回）",
+            min_value=0,
+            max_value=10,
+            value=int(_hr.get("re_entry_max", 1)),
+            step=1,
+            key="hr_re_max",
+        )
+        hr_ante = st.selectbox(
+            "アンテ方式",
+            options=["BBA", "BB Ante", "Traditional", "No Ante"],
+            index=["BBA", "BB Ante", "Traditional", "No Ante"].index(
+                _hr.get("ante_type", "BBA")
+            ) if _hr.get("ante_type", "BBA") in ["BBA", "BB Ante", "Traditional", "No Ante"] else 0,
+            key="hr_ante",
+        )
+        hr_language = st.text_input(
+            "使用言語",
+            value=_hr.get("language", "日本語（英語可）"),
+            key="hr_language",
+        )
+
+        # Custom rules as free text (one rule per line)
+        _existing_custom = _hr.get("custom_rules", [])
+        _custom_text = "\n".join(
+            c.get("rule", "") for c in _existing_custom if c.get("rule")
+        )
+        hr_custom_text = st.text_area(
+            "カスタムルール（1行1ルール）",
+            value=_custom_text,
+            height=100,
+            key="hr_custom",
+            help="店舗固有のルールを1行ずつ入力。例: 「チップは100点単位」",
+        )
+
+        if st.button("💾 保存", key="hr_save", use_container_width=True):
+            # Parse custom rules from text area
+            _custom_list = []
+            for line in hr_custom_text.strip().split("\n"):
+                line = line.strip()
+                if line:
+                    _custom_list.append({"rule": line, "description": ""})
+
+            _new_hr = {
+                "venue_name": hr_venue,
+                "straddle_allowed": hr_straddle,
+                "bomb_pot_allowed": hr_bomb,
+                "shot_clock_seconds": hr_shot_clock,
+                "language": hr_language,
+                "late_reg_levels": hr_late_reg,
+                "re_entry_allowed": hr_re_entry,
+                "re_entry_max": hr_re_max,
+                "bounty_format": hr_bounty,
+                "ante_type": hr_ante,
+                "custom_rules": _custom_list,
+            }
+            try:
+                save_house_rules(_new_hr)
+                st.success("✅ ハウスルール保存完了")
+            except Exception as e:
+                st.error(f"保存エラー: {e}")
+
+        # Show current settings summary
+        st.caption(
+            f"現在: {_hr.get('venue_name', 'P1')} / "
+            f"ストラドル{'✅' if _hr.get('straddle_allowed') else '❌'} / "
+            f"リエントリー{'✅' if _hr.get('re_entry_allowed') else '❌'} / "
+            f"クロック{_hr.get('shot_clock_seconds', 30)}秒"
+        )
+
     st.markdown("---")
     st.markdown("### 💾 DB バックアップ")
     st.caption("⚠️ Streamlit Cloud は再起動時に DB が消える可能性があります。定期的にエクスポートしてください。")
@@ -732,6 +871,21 @@ with tab_judge:
                 index=1,
             )
 
+        # Phase 7F: テーブル番号・スタッフ名
+        tcol1, tcol2 = st.columns(2)
+        with tcol1:
+            table_number = st.text_input(
+                "テーブル番号 (任意)",
+                placeholder="例: 5 / A-3",
+                key="form_table_number",
+            )
+        with tcol2:
+            staff_name = st.text_input(
+                "スタッフ名 (任意)",
+                placeholder="例: 田中 / Mike",
+                key="form_staff_name",
+            )
+
         submitted = st.form_submit_button(
             "⚖️ 判断を取得",
             use_container_width=True,
@@ -762,6 +916,18 @@ with tab_judge:
                     prompt_version=selected_version,
                 )
                 result["situation"] = situation.strip()
+                result["table_number"] = table_number.strip() if table_number else None
+                result["staff_name"] = staff_name.strip() if staff_name else None
+                # テーブル番号・スタッフ名をDBに保存
+                if table_number or staff_name:
+                    try:
+                        with _db_module.connect() as _conn:
+                            _conn.execute(
+                                "UPDATE judgments SET table_number=?, staff_name=? WHERE id=?",
+                                (result["table_number"], result["staff_name"], result["judgment_id"]),
+                            )
+                    except Exception:
+                        pass
                 st.session_state.last_judgment = result
                 st.session_state.feedback_submitted[result["judgment_id"]] = False
                 st.session_state.situation_input = ""
@@ -833,6 +999,52 @@ with tab_judge:
                   ⚠️ <b>ペナルティ</b>: {penalty_oneline}
                 </div>
             """)
+
+        # ===== Phase 7F: 類似判断アラート =====
+        _current_situation = result.get("situation", "")
+        _current_jid = result.get("judgment_id", "")
+        if _current_situation:
+            _similar = search_similar_judgments(_current_situation, limit=3)
+            # Exclude the current judgment from results
+            _similar = [s for s in _similar if s["id"] != _current_jid]
+            if _similar:
+                st.info("💡 類似の過去判断が見つかりました")
+                for _sim in _similar:
+                    # Format timestamp for display
+                    _sim_ts = _sim.get("created_at", "")
+                    _sim_label = _sim_ts[5:16] if len(_sim_ts) >= 16 else _sim_ts
+                    # Build one-line summary
+                    _sim_table = (
+                        f" [テーブル{_sim['table_number']}]"
+                        if _sim.get("table_number")
+                        else ""
+                    )
+                    _sim_staff = (
+                        f" — by {_sim['staff_name']}"
+                        if _sim.get("staff_name")
+                        else ""
+                    )
+                    _sim_conf = _sim.get("confidence") or "?"
+                    _sim_sit_short = (
+                        _sim["situation"][:40] + "..."
+                        if len(_sim.get("situation", "")) > 40
+                        else _sim.get("situation", "")
+                    )
+                    _sim_header = (
+                        f"{_sim_label}{_sim_table}"
+                        f" [{_sim_conf}] {_sim_sit_short}{_sim_staff}"
+                    )
+                    with st.expander(_sim_header):
+                        st.text(_sim.get("situation", ""))
+                        _sim_resp = _sim.get("response_text", "")
+                        if _sim_resp:
+                            _sim_sections = parse_judgment_sections(_sim_resp)
+                            _sim_concl = _sim_sections.get("conclusion", "").strip()
+                            _sim_rule = _sim_sections.get("main_rule", "").strip()
+                            if _sim_concl:
+                                st.markdown(f"**推奨判断:** {_sim_concl}")
+                            if _sim_rule:
+                                st.markdown(f"**適用ルール:** {_sim_rule}")
 
         # ===== Phase 7B: 即時アクション行（上位配置） =====
         # B-3: 新しい判断 + コピー、Hidden #11: FB ボタン即横

@@ -1036,6 +1036,9 @@ def judge(
     t0 = time.time()
 
     version_id, system_prompt = load_system_prompt(prompt_version)
+
+    # ハウスルール: Phase 7F で中止（中野さん指示）
+
     relevant_rules = search_rules(situation)
     rules_context = "\n\n".join(
         f"### {r['id']}: {r['title']}\n{r['body']}" for r in relevant_rules
