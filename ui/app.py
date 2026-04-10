@@ -520,8 +520,8 @@ with st.sidebar:
         st.caption("まだ判断履歴はありません")
 
 
-# ===== Tabs: 判断 / 履歴検索 / クイズ =====
-tab_judge, tab_search, tab_quiz = st.tabs(["⚖️ 判断を取得", "📚 判断履歴検索", "🎓 TDAクイズ"])
+# ===== Tabs: 判断 / 履歴検索 =====
+tab_judge, tab_search = st.tabs(["⚖️ 判断を取得", "📚 判断履歴検索"])
 
 # =========================================================================
 # TAB 1: 判断を取得（クイックテンプレ + フォーム）
@@ -1187,113 +1187,6 @@ with tab_search:
                                 "referenced_rules_context": json.loads(detail["referenced_rules"]) if detail["referenced_rules"] else [],
                             }
                             st.rerun()
-
-
-# =========================================================================
-# TAB 3: TDAクイズ（Phase 7F）
-# =========================================================================
-with tab_quiz:
-    st.markdown("### 🎓 TDAクイズ")
-    st.caption("TDA 2024ルールの理解度をテスト。TD研修やスキルアップに。")
-
-    # 判例DBからランダムにクイズ生成
-    import random
-
-    QUIZ_CASES_PATH = BASE_DIR / "data" / "cases" / "judgment_cases.json"
-    if QUIZ_CASES_PATH.exists():
-        with open(QUIZ_CASES_PATH, "r", encoding="utf-8") as f:
-            quiz_all_cases = json.load(f)
-
-        # Filter to cases with required_rules
-        quiz_pool = [c for c in quiz_all_cases if c.get("required_rules")]
-
-        if "quiz_case" not in st.session_state:
-            st.session_state.quiz_case = None
-            st.session_state.quiz_answered = False
-            st.session_state.quiz_score = {"correct": 0, "total": 0}
-
-        col_q1, col_q2 = st.columns([3, 1])
-        with col_q1:
-            if st.button("🎲 新しい問題を出す", use_container_width=True, type="primary"):
-                st.session_state.quiz_case = random.choice(quiz_pool)
-                st.session_state.quiz_answered = False
-                st.rerun()
-        with col_q2:
-            score = st.session_state.quiz_score
-            if score["total"] > 0:
-                pct = score["correct"] / score["total"] * 100
-                st.metric("正答率", f"{pct:.0f}% ({score['correct']}/{score['total']})")
-
-        if st.session_state.quiz_case:
-            qc = st.session_state.quiz_case
-            st.markdown("---")
-            st.markdown(
-                f'<div style="padding:1.2rem;border-radius:10px;'
-                f'background:#0F3460;border-left:5px solid #E94560;margin-bottom:1rem;">'
-                f'<div style="font-size:0.85rem;color:#E94560;font-weight:600;margin-bottom:0.5rem;">'
-                f'📋 問題 — {qc.get("category", "")}</div>'
-                f'<div style="font-size:1.05rem;color:#FFFFFF;line-height:1.6;">'
-                f'{qc["situation"]}</div></div>',
-                unsafe_allow_html=True,
-            )
-
-            st.markdown("**この状況で適用すべき主要ルールは？**")
-
-            if not st.session_state.quiz_answered:
-                # 正解 + ダミー3つで4択
-                correct_rules = qc.get("required_rules", [])
-                correct_answer = ", ".join(correct_rules)
-
-                # ダミー生成（正解と被らないルール）
-                all_rule_ids = [f"Rule-{i}" for i in range(1, 72)] + [f"RP-{i}" for i in range(1, 23)]
-                dummy_pool = [r for r in all_rule_ids if r not in correct_rules]
-                random.shuffle(dummy_pool)
-
-                choices = [correct_answer]
-                for _ in range(3):
-                    dummy = ", ".join(random.sample(dummy_pool, min(len(correct_rules), len(dummy_pool))))
-                    if dummy not in choices:
-                        choices.append(dummy)
-
-                # 不足分補填
-                while len(choices) < 4:
-                    dummy = ", ".join(random.sample(dummy_pool, 1))
-                    if dummy not in choices:
-                        choices.append(dummy)
-
-                random.shuffle(choices)
-
-                # Store choices in session state
-                if "quiz_choices" not in st.session_state or st.session_state.get("quiz_case_id") != qc["id"]:
-                    st.session_state.quiz_choices = choices
-                    st.session_state.quiz_case_id = qc["id"]
-
-                for i, choice in enumerate(st.session_state.quiz_choices):
-                    if st.button(f"{chr(65+i)}. {choice}", key=f"quiz_opt_{i}", use_container_width=True):
-                        st.session_state.quiz_answered = True
-                        st.session_state.quiz_score["total"] += 1
-                        if choice == correct_answer:
-                            st.session_state.quiz_user_correct = True
-                            st.session_state.quiz_score["correct"] += 1
-                        else:
-                            st.session_state.quiz_user_correct = False
-                        st.session_state.quiz_correct_answer = correct_answer
-                        st.session_state.quiz_user_choice = choice
-                        st.rerun()
-            else:
-                # 回答済み
-                if st.session_state.quiz_user_correct:
-                    st.success(f"✅ 正解！ {st.session_state.quiz_correct_answer}")
-                else:
-                    st.error(f"❌ 不正解。あなたの回答: {st.session_state.quiz_user_choice}")
-                    st.info(f"正解: {st.session_state.quiz_correct_answer}")
-
-                # 解説
-                notes = qc.get("notes", "")
-                if notes:
-                    st.markdown(f"**📖 解説:** {notes}")
-    else:
-        st.warning("判例DBが見つかりません。")
 
 
 # ===== Footer =====
