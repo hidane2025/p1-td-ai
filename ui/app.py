@@ -205,6 +205,24 @@ def check_auth() -> bool:
         layout="centered",
     )
 
+    # Phase 7G: ログイン画面でも Streamlit デフォルト UI を隠す
+    st.markdown(
+        """
+        <style>
+        #MainMenu {visibility: hidden !important;}
+        header[data-testid="stHeader"] {visibility: hidden !important;}
+        footer {visibility: hidden !important;}
+        .stDeployButton {display: none !important;}
+        [data-testid="stToolbar"] {display: none !important;}
+        [data-testid="stStatusWidget"] {display: none !important;}
+        .viewerBadge_container__1QSob {display: none !important;}
+        a[href*="github.com"] {display: none !important;}
+        a[href*="streamlit.io"] {display: none !important;}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.markdown("# 🔐 TD判断AI")
     st.markdown("P1事業 契約店舗向け")
     st.markdown("---")
