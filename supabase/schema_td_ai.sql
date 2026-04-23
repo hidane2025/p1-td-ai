@@ -5,7 +5,7 @@
 --
 -- 実行前準備:
 --   1. Supabase ダッシュボード → Database → Extensions → "vector" を enable
---   2. プロジェクト: plsyhqlqiaqatshcoerx (既存)
+--   2. プロジェクト ID は環境変数 SUPABASE_URL で指定
 --
 -- 実行方法:
 --   Supabase SQL Editor で本ファイルをペーストして実行、または

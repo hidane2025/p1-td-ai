@@ -21,7 +21,7 @@
       "description": "初回で明らかな誤解ならペナルティなし。ただし CO には Rule 41/45 の注意喚起（『raise 時は先に宣言』）を口頭で行うこと。"
     },
     "confidence": "high",
-    "notes": "TDA Rule 45A Ex-1 と同型の典型例。中野さんの判例にも頻出するはず。",
+    "notes": "TDA Rule 45A Ex-1 と同型の典型例。",
     "required_rules": [
       "Rule-45"
     ],
@@ -57,7 +57,7 @@
       "description": "CO に OOT 行為の口頭警告（Rule 71）。繰り返しなら missed hand/round にエスカレート。"
     },
     "confidence": "high",
-    "notes": "OOT は Rule 53A の『action changes』判定が最頻出論点。中野さんの経験でも類似ケースが多いはず。",
+    "notes": "OOT は Rule 53A の『action changes』判定が最頻出論点。",
     "required_rules": [
       "Rule-53"
     ],
@@ -922,27 +922,27 @@
     "notes": "テーブルバランスは複雑だが頻発するため、TD 判断 AI で標準化する価値が高い。"
   },
   {
-    "id": "case-031-negreanu-raise-muck",
+    "id": "case-031-raise-then-self-muck",
     "category": "ショーダウン／Raise then Muck",
-    "created_by": "瀬戸ミナ（Hustler Casino Live 実例）",
-    "situation": "Hustler Casino Live の cash game（本件の条文解釈は tournament TD にも適用可能）。Negreanu が UTG から open limp。Martirosian (BTN) が Negreanu のリンプを見逃して raise 8K。SB/BB fold。Martirosian は「自分が勝った」と思い込み、Negreanu のアクション前にカードを muck。実際はまだ Negreanu のアクションが残っていた。TD が呼ばれた。",
+    "created_by": "瀬戸ミナ（典型ケース）",
+    "situation": "公開ライブ配信のキャッシュゲーム（条文解釈はトーナメントTDにも適用可能）。プレイヤー① が UTG から open limp。プレイヤー② (BTN) がリンプを見逃して raise 8K。SB/BB fold。プレイヤー② は「自分が勝った」と思い込み、プレイヤー① のアクション前にカードを muck。実際はまだプレイヤー① のアクションが残っていた。TD が呼ばれた。",
     "tournament_phase": "Cash game（条文参照）",
     "blinds": "BB equivalent",
     "game_type": "NLHE",
-    "prior_actions": "Preflop: Negreanu UTG limp → Martirosian BTN raise 8K → SB/BB fold → Martirosian self-mucks before Negreanu acts",
-    "expected_judgment": "Martirosian のハンドは dead。8K raise 分は Martirosian に返金（un-called raise）。Negreanu は base pot（ブラインド + リンプ）を獲得。",
+    "prior_actions": "Preflop: P1 UTG limp → P2 BTN raise 8K → SB/BB fold → P2 self-mucks before P1 acts",
+    "expected_judgment": "プレイヤー② のハンドは dead。8K raise 分はプレイヤー② に返金（un-called raise）。プレイヤー① は base pot（ブラインド + リンプ）を獲得。",
     "expected_rules": [
       "Rule-65",
       "Rule-16"
     ],
-    "expected_reasoning": "Rule 65A『Accidentally Killed / Fouled Hands』により、raiser が自発的に muck した場合、まだ call されていない raise 分は uncalled bet として返却される。Matt Savage（TDA 元議長）も X で同じ解釈を公表。OOT fold が binding である Rule 58 は本件には適用されない（本件は raiser 本人が自分のハンドを殺した case）。",
+    "expected_reasoning": "Rule 65A『Accidentally Killed / Fouled Hands』により、raiser が自発的に muck した場合、まだ call されていない raise 分は uncalled bet として返却される。OOT fold が binding である Rule 58 は本件には適用されない（本件は raiser 本人が自分のハンドを殺した case）。",
     "alternatives": [],
     "penalty": {
       "level": "verbal_warning",
-      "description": "Martirosian にアクション順序確認の口頭警告。繰り返しなら missed hand。"
+      "description": "プレイヤー② にアクション順序確認の口頭警告。繰り返しなら missed hand。"
     },
     "confidence": "high",
-    "notes": "2023-09 Hustler Casino Live の実例。v0.2 で誤答（Rule-58 引用）、v0.3 で Rule-65A 的中。",
+    "notes": "公開ライブ配信を参考にした典型ケース。v0.2 で誤答（Rule-58 引用）、v0.3 で Rule-65A 的中。",
     "required_rules": [
       "Rule-65"
     ],
@@ -952,15 +952,15 @@
     ]
   },
   {
-    "id": "case-032-laptopgate-wsop",
+    "id": "case-032-solver-during-hand",
     "category": "電子機器違反（Rule 5）",
-    "created_by": "瀬戸ミナ（WSOP 2022 実例）",
-    "situation": "WSOP Main Event Day 3、Rule-5 違反。プレイヤー A がハンド進行中、テーブル下でノートパソコンを開いて GTO ソルバーを参照していたところ、隣のプレイヤー B が気づいて挙手。A はハンド自体は fold 済みだが、直前のハンドで大きなポットを獲得していた。TD が呼ばれた。",
+    "created_by": "瀬戸ミナ（典型ケース）",
+    "situation": "国際大会 Main Event Day 3、Rule-5 違反。プレイヤー A がハンド進行中、テーブル下でノートパソコンを開いて GTO ソルバーを参照していたところ、隣のプレイヤー B が気づいて挙手。A はハンド自体は fold 済みだが、直前のハンドで大きなポットを獲得していた。TD が呼ばれた。",
     "tournament_phase": "Day 3",
     "blinds": "5,000-10,000 BBA 10,000",
     "game_type": "NLHE",
     "prior_actions": "A's previous hand: won large pot. Current hand: A already folded. Laptop discovered during next hand.",
-    "expected_judgment": "即座に DQ（失格）。チップ没収、ポット返却の再計算は原則なし（直前のハンドには手を加えない）。WSOP 本人権限で前ハンドのポット処理は個別判断。",
+    "expected_judgment": "即座に DQ（失格）。チップ没収、ポット返却の再計算は原則なし（直前のハンドには手を加えない）。大会本部権限で前ハンドのポット処理は個別判断。",
     "expected_rules": [
       "Rule-5",
       "Rule-71"
@@ -977,13 +977,13 @@
       "description": "Rule 5D + Rule 71 による即失格。"
     },
     "confidence": "high",
-    "notes": "WSOP 2022 実例（Laptopgate）。Rule-5D の 2024 改訂で solver output 明示禁止となった起点ケース。"
+    "notes": "Rule-5D の 2024 改訂で solver output 明示禁止となった典型ケース。"
   },
   {
-    "id": "case-033-millionaire-maker-double-elim",
+    "id": "case-033-overcall-pot-recount",
     "category": "ショーダウン／誤判定",
-    "created_by": "瀬戸ミナ（WSOP MM 2024 実例）",
-    "situation": "WSOP Millionaire Maker Day 3 バブル直前。プレイヤー A (short stack) が all-in、プレイヤー B (big stack) が call。B の call 額が A の stack を超過。showdown 前にディーラーが誤って B の余剰チップをポットに混入させた後、A が勝利。ポット返還額の計算で B が 『call 額が間違っている、私はもっとチップを返すべき』とクレーム。",
+    "created_by": "瀬戸ミナ（典型ケース）",
+    "situation": "大型大会 Day 3 バブル直前。プレイヤー A (short stack) が all-in、プレイヤー B (big stack) が call。B の call 額が A の stack を超過。showdown 前にディーラーが誤って B の余剰チップをポットに混入させた後、A が勝利。ポット返還額の計算で B が 『call 額が間違っている、私はもっとチップを返すべき』とクレーム。",
     "tournament_phase": "バブル直前 Day 3",
     "blinds": "10,000-20,000 BBA 20,000",
     "game_type": "NLHE",
@@ -1000,7 +1000,7 @@
       "description": "ディーラー個人への口頭注意のみ。"
     },
     "confidence": "medium",
-    "notes": "WSOP MM 2024 類似ケース。showdown 前の手続きエラーは即座に復元可能というのがポイント。"
+    "notes": "大型大会の典型ケース。showdown 前の手続きエラーは即座に復元可能というのがポイント。"
   },
   {
     "id": "case-034-angle-shooting-deep-bet",
@@ -1065,10 +1065,10 @@
     "notes": "Chip dumping は最も慎重な事実認定が必要なケース。冤罪は訴訟リスクが高い。"
   },
   {
-    "id": "case-036-jp-masaking-call-fold",
+    "id": "case-036-jp-verbal-call-on-allin",
     "category": "ベッティング／コール宣言",
-    "created_by": "瀬戸ミナ（X 実例 2025-02 SHIBUYA POKER FES）",
-    "situation": "SHIBUYA POKER FES の River でプレイヤー① が KT で all-in。プレイヤー② が「コルコルコル」と発声しながら AT を見せた。ディーラーが「コールと言わずにショーしたのでコール扱いにならない」と判定。フロアが呼ばれ、両プレイヤーがハンドを開いたままプレイヤー② のアクション継続を指示。プレイヤー② はその後 fold を宣言し、チップを払わずハンド終了。生配信で「コルコルコル」発声の音声証拠が残っている。",
+    "created_by": "瀬戸ミナ（典型ケース）",
+    "situation": "国内ライブイベントの River でプレイヤー① が KT で all-in。プレイヤー② が「コルコルコル」と発声しながら AT を見せた。ディーラーが「コールと言わずにショーしたのでコール扱いにならない」と判定。フロアが呼ばれ、両プレイヤーがハンドを開いたままプレイヤー② のアクション継続を指示。プレイヤー② はその後 fold を宣言し、チップを払わずハンド終了。配信に「コルコルコル」発声の音声証拠が残っている。",
     "tournament_phase": "Live event",
     "blinds": "—",
     "game_type": "NLHE",
@@ -1086,7 +1086,7 @@
       "description": "プレイヤー② への注意喚起のみ（次回からは『コール』と明確に発声するよう）"
     },
     "confidence": "high",
-    "notes": "X で大炎上した実例。マサキングは後日謝罪。配信に音声証拠が残っているケースは事実認定が確定するため Rule 41 が機械適用される。",
+    "notes": "音声証拠が残っているケースは事実認定が確定するため Rule 41 が機械適用される。",
     "required_rules": [
       "Rule-40",
       "Rule-41"
@@ -1096,10 +1096,10 @@
     ]
   },
   {
-    "id": "case-037-jp-tpc-collusion",
+    "id": "case-037-jp-collusion-suspicion",
     "category": "Collusion／組打ち疑惑",
-    "created_by": "瀬戸ミナ（X 実例 TPC 大阪）",
-    "situation": "TPC（Top of Poker Championship）大阪のファイナルテーブルで、特定の 3 人のプレイヤーが事前打ち合わせの疑い。お互いを避け、特定 1 人にチップを集中させる動きが繰り返された。結果として 1 位・2 位・3 位を独占。RFID 配信映像で組打ちが疑われ、SNS で大炎上。他プレイヤーから複数の苦情申告。TD として疑惑段階でどう対応するか、確定後はどう処分するか。",
+    "created_by": "瀬戸ミナ（典型ケース）",
+    "situation": "国内大会のファイナルテーブルで、特定の 3 人のプレイヤーが事前打ち合わせの疑い。お互いを避け、特定 1 人にチップを集中させる動きが繰り返された。結果として 1 位・2 位・3 位を独占。RFID 配信映像で組打ちが疑われ、他プレイヤーから複数の苦情申告。TD として疑惑段階でどう対応するか、確定後はどう処分するか。",
     "tournament_phase": "Final Table",
     "blinds": "Final Table blinds",
     "game_type": "NLHE",
@@ -1138,10 +1138,10 @@
     ]
   },
   {
-    "id": "case-038-jp-jopt-privacy",
+    "id": "case-038-jp-operator-privacy-leak",
     "category": "運営オペレーション／TDA 範囲外",
-    "created_by": "瀬戸ミナ（X 実例 JOPT 2022-07）",
-    "situation": "JOPT（Japan Open Poker Tour）の公式 X アカウントが Day 2 のシートドローを画像で公開した際、画像に参加者の住所・電話番号などの個人情報が含まれていた。数時間後にツイ消し → 後日訂正版を再投稿したが、運営からの説明・謝罪はなし。個人情報保護法違反の疑いで X 上で炎上。TD としてこの状況をどう判断するか。",
+    "created_by": "瀬戸ミナ（典型ケース）",
+    "situation": "ある運営団体が Day 2 のシートドローを画像で公開した際、画像に参加者の住所・電話番号などの個人情報が含まれていた。数時間後に削除 → 後日訂正版を再投稿したが、運営からの説明・謝罪はなし。個人情報保護法違反の疑いが指摘された。TD としてこの状況をどう判断するか。",
     "tournament_phase": "Day 2",
     "blinds": "—",
     "game_type": "NLHE",

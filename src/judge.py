@@ -452,7 +452,7 @@ KEYWORD_MAP: dict[str, list[str]] = {
     "バランス": ["Rule-11"],
     "テーブルバランス": ["Rule-11"],
 
-    # Rule-65A: Unprotected hand / Raiser mucks own hand (最重要: Negreanuケース)
+    # Rule-65A: Unprotected hand / Raiser mucks own hand (公開ライブ配信で議論された典型ケース)
     # レイザーが自分で muck → raise 返却、ベースポットのみ他プレイヤーに
     "unprotected hand": ["Rule-65"],
     "unprotected": ["Rule-65"],
@@ -1037,7 +1037,7 @@ def judge(
 
     version_id, system_prompt = load_system_prompt(prompt_version)
 
-    # ハウスルール: Phase 7F で中止（中野さん指示）
+    # ハウスルール: Phase 7F で中止（運用方針変更）
 
     relevant_rules = search_rules(situation)
     rules_context = "\n\n".join(

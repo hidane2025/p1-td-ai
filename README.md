@@ -186,7 +186,7 @@ cli.py metrics --export report.md   # Markdown 出力
 4. 新バージョンで直近1週間を A/B テスト
 5. 結果良好なら永続切り替え、悪ければロールバック
 
-### 四半期（ミナ＋中野さん）
+### 四半期（ミナ＋プロジェクト責任者）
 1. 蓄積判例を Rule 別にレビュー
 2. TDA公式ルール改訂時の対応（2025版発表時など）
 3. 新機能検討（多言語・音声入力・Slack Bot 等）
@@ -200,7 +200,7 @@ cli.py metrics --export report.md   # Markdown 出力
 - [x] 判断ログ・フィードバック・プロンプト履歴が DB に蓄積
 - [x] メトリクス・月次レポートが出る
 - [ ] 判例10件中8件以上で「正しい判断」を返す ← API キー設定後テスト
-- [ ] 中野さんが「使える」と言う ← 実測
+- [ ] プロジェクト責任者が「使える」と言う ← 実測
 
 ---
 
@@ -235,7 +235,7 @@ cli.py metrics --export report.md   # Markdown 出力
 - **LLM**: Claude Sonnet 4.5 (Phase 0) → Opus 4.6 for edge cases
 - **Language**: Python 3.9+
 - **DB (Phase 0)**: SQLite（`data/td_ai.db`）
-- **DB (Phase 2+)**: Supabase PostgreSQL（`plsyhqlqiaqatshcoerx`）
+- **DB (Phase 2+)**: Supabase PostgreSQL（接続情報は環境変数で管理）
 - **RAG (Phase 0)**: Keyword search
 - **RAG (Phase 1+)**: Supabase Vector + Voyage embeddings
 - **Deploy**: Vercel（Web UI）+ Supabase（バックエンド）
@@ -267,6 +267,6 @@ https://www.pokertda.com, All rights reserved."
 
 ---
 
-**プロジェクト責任者**: 中野（P1事業責任者）
+**プロジェクト責任者**: P1事業責任者
 **AI実装・運用**: 瀬戸ミナ（AI-013）
 **開始日**: 2026-04-08

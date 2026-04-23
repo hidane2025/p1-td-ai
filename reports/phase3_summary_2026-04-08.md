@@ -119,7 +119,7 @@ print(result["routing"])  # "haiku_only" or "escalated_to_sonnet"
 
 **意義**:
 - プロンプト進化が**永続ループ化**
-- 中野さんの手動介入なしで品質が上がり続ける
+- プロジェクト責任者の手動介入なしで品質が上がり続ける
 - 新バージョンを雑に投入できる（劣化なら自動 reject）
 
 ---
@@ -198,7 +198,7 @@ Phase 3 (1 バッチ = 5 判例同時):
 ### 🔥 最優先（環境依存）
 1. **Supabase Vector 本番投入**
    - schema_td_ai.sql は設計完了、migrate_to_supabase.py は dry-run 動作確認済
-   - 必要: 中野さんが `SUPABASE_SERVICE_KEY`, `VOYAGE_API_KEY` を設定
+   - 必要: プロジェクト責任者が `SUPABASE_SERVICE_KEY`, `VOYAGE_API_KEY` を設定
 2. **Slack Bot / LINE Bot**
    - 現場 TD が 1 タップでフィードバックできる UI
    - 必要: Slack App トークンまたは LINE Messaging API トークン

@@ -228,7 +228,7 @@ def check_auth() -> bool:
     st.markdown("---")
     st.caption(
         "このシステムは P1 事業と契約した店舗・TD のみアクセス可能です。"
-        " パスワードをお持ちでない方は中野までお問い合わせください。"
+        " パスワードをお持ちでない方は運営までお問い合わせください。"
     )
     st.caption(f"© 2024 Poker TDA. TD判断AI v0.5 — P1 Tournament Director Advisor")
     st.caption(f"セッション有効期限: {AUTH_TIMEOUT_HOURS} 時間（試合中は切断されません）")
@@ -238,6 +238,41 @@ def check_auth() -> bool:
 # === 認証チェック ===
 if not check_auth():
     st.stop()
+
+
+# ===== Phase 7G: レート制限（API 連打防止 / コスト保護） =====
+RATE_LIMIT_PER_MINUTE = 5       # 1分間に5回まで
+RATE_LIMIT_PER_SESSION = 100    # 1セッション 100回まで
+
+
+def _check_rate_limit() -> tuple[bool, str]:
+    """連打防止チェック。OK=(True, '')、NG=(False, error_message)。"""
+    now = datetime.now()
+    history = st.session_state.get("judge_history", [])
+    recent = [t for t in history if (now - t).total_seconds() < 60]
+    if len(recent) >= RATE_LIMIT_PER_MINUTE:
+        wait = max(1, int(60 - (now - recent[0]).total_seconds()))
+        return (
+            False,
+            f"⚠️ 連打防止: 1分間に{RATE_LIMIT_PER_MINUTE}回までです。"
+            f"あと約 {wait} 秒お待ちください。",
+        )
+    if len(history) >= RATE_LIMIT_PER_SESSION:
+        return (
+            False,
+            f"⚠️ 1セッションの判断上限（{RATE_LIMIT_PER_SESSION}回）に達しました。"
+            f"再ログインしてください。",
+        )
+    return True, ""
+
+
+def _record_judge() -> None:
+    """判断実行を1件記録。直近5分のみ保持。"""
+    now = datetime.now()
+    history = st.session_state.get("judge_history", [])
+    history.append(now)
+    history = [t for t in history if (now - t).total_seconds() < 300]
+    st.session_state.judge_history = history[-200:]
 
 
 # ===== Page Config =====
@@ -252,6 +287,17 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    /* Phase 7G: Streamlit デフォルト UI を隠す（リポジトリリンク・Deploy ボタン等の露出防止） */
+    #MainMenu {visibility: hidden !important;}
+    header[data-testid="stHeader"] {visibility: hidden !important;}
+    footer {visibility: hidden !important;}
+    .stDeployButton {display: none !important;}
+    [data-testid="stToolbar"] {display: none !important;}
+    [data-testid="stStatusWidget"] {display: none !important;}
+    .viewerBadge_container__1QSob {display: none !important;}
+    a[href*="github.com"] {display: none !important;}
+    a[href*="streamlit.io"] {display: none !important;}
+
     .main-title {
         font-size: 2.2rem;
         font-weight: 700;
@@ -406,7 +452,7 @@ if not os.environ.get("ANTHROPIC_API_KEY"):
 if not os.environ.get("ANTHROPIC_API_KEY"):
     st.error(
         "❌ システム設定エラー: API Key が設定されていません。\n\n"
-        "管理者（中野）にお問い合わせください。"
+        "管理者にお問い合わせください。"
     )
     st.stop()
 
@@ -775,6 +821,12 @@ with tab_judge:
         if game_type:
             extra["game_type"] = game_type
 
+        # Phase 7G: レート制限チェック
+        ok, rl_msg = _check_rate_limit()
+        if not ok:
+            st.error(rl_msg)
+            st.stop()
+
         # Sonnet 判断
         with st.spinner("AI が判断を生成中...（約 30-60 秒）"):
             try:
@@ -783,6 +835,7 @@ with tab_judge:
                     extra_context=extra or None,
                     prompt_version=selected_version,
                 )
+                _record_judge()
                 result["situation"] = situation.strip()
                 result["table_number"] = table_number.strip() if table_number else None
                 result["staff_name"] = staff_name.strip() if staff_name else None
@@ -1112,6 +1165,11 @@ with tab_judge:
                             f"【追加情報（TD からの補足）】\n{additional_info.strip()}\n\n"
                             f"上記の追加情報を踏まえて、裁定を再検討してください。"
                         )
+                        # Phase 7G: レート制限チェック（再判断も対象）
+                        ok2, rl_msg2 = _check_rate_limit()
+                        if not ok2:
+                            st.error(rl_msg2)
+                            st.stop()
                         with st.spinner("追加情報を踏まえて再判断中..."):
                             try:
                                 refined_result = judge(
@@ -1119,6 +1177,7 @@ with tab_judge:
                                     extra_context=None,
                                     prompt_version=selected_version,
                                 )
+                                _record_judge()
                                 st.session_state.last_judgment = refined_result
                                 st.session_state.feedback_submitted[refined_result["judgment_id"]] = False
                                 st.session_state[refine_key] = False
@@ -1264,7 +1323,7 @@ with tab_judge:
                 reviewer = st.text_input(
                     "入力者名",
                     key=f"reviewer_{result['judgment_id']}",
-                    placeholder="中野 / TD名など",
+                    placeholder="TD名 / スタッフ名など",
                 )
                 if st.button("💾 コメント付きで保存", key=f"save_comment_{result['judgment_id']}"):
                     save_feedback(
@@ -1404,7 +1463,7 @@ with tab_search:
     with search_col1:
         search_keyword = st.text_input(
             "🔍 キーワード",
-            placeholder="例: misdeal / muck / Negreanu / 75,000",
+            placeholder="例: misdeal / muck / all-in / 75,000",
             key="search_kw",
         )
     with search_col2:

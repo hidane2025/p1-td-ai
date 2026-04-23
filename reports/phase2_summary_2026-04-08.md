@@ -146,7 +146,7 @@ Phase 2 (2 サイクル):
 ### 🔥 最優先
 1. **Supabase Vector 本番導入** (schema 設計済み)
    - pgvector 拡張を enable
-   - 中野さんが Supabase project key + Voyage API key を設定
+   - プロジェクト責任者が Supabase project key + Voyage API key を設定
    - migrate_to_supabase.py を本番モードで実行
 2. **Slack Bot / LINE Bot**
    - 現場 TD が 1 タップでフィードバックできる UI
